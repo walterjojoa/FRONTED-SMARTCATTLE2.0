@@ -9,7 +9,6 @@ import { hasPicture, type HerdCount } from '../../services'
 import { FadeUp, staggerDelay } from '../../motion'
 import type { FarmEvent } from '../../types/domain'
 import { AlertCenter } from './AlertCenter'
-import { DailyReportCard } from './DailyReportCard'
 import { farmCondition, statusHeadline } from './dashboardModel'
 import { FarmStatusHeader } from './FarmStatusHeader'
 import { FieldLog } from './FieldLog'
@@ -67,8 +66,7 @@ export function DashboardPage() {
         now={now} onAction={live.updateAlert} reduceMotion={reduceMotion} />
       <HerdSummary card className={styles.herd} delay={staggerDelay(9)}
         registered={data.registered} detected={detected} stale={offline} />
-      <DailyReportCard className={styles.report} delay={staggerDelay(10)} />
-      <FieldLog className={styles.log} delay={staggerDelay(11)}
+      <FieldLog className={styles.log} delay={staggerDelay(10)}
         events={events} cameras={live.cameras} securityHours={data.securityHours.data ?? null} now={now} />
     </div>
   </div>
