@@ -44,7 +44,9 @@ export function SetupFarmPage() {
   const cameraList = cameras.data ?? []
   const isOwner = session ? can(session.user.role, 'farm:edit') : false
   const startPage = (session && onboardingOf(session.user.id)?.start) || '/'
-  const startLabel = `Ir a ${START_PAGES.find(page => page.id === startPage)?.title.toLowerCase() ?? 'el panel'}`
+  // "Ir a" + "el panel" would read "Ir a el panel": Spanish contracts that pair.
+  const startTitle = START_PAGES.find(page => page.id === startPage)?.title.toLowerCase() ?? 'el panel'
+  const startLabel = startTitle.startsWith('el ') ? `Ir al ${startTitle.slice(3)}` : `Ir a ${startTitle}`
 
   const choose = (value: Kind) => {
     setKind(value)
