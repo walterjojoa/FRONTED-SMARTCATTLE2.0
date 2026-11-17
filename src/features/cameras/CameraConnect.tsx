@@ -220,6 +220,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   const [scanError, setScanError] = useState('')
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
+  const [linkError, setLinkError] = useState('')
   const [saving, setSaving] = useState(false)
   const [busyId, setBusyId] = useState('')
   const [loginFor, setLoginFor] = useState('')
@@ -275,9 +276,11 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
     const address = cameraSourceFrom(link)
     const wrong = addressProblem(address)
     if (wrong) {
-      setResult({ tone: 'critical', text: wrong })
+      // Under the field rather than in the page notice: the value to correct is right there.
+      setLinkError(wrong)
       return
     }
+    setLinkError('')
     if (!reachesLocalCameras && onlyInsideItsNetwork(link)) {
       setNeedsFarmPc(true)
       setResult({ tone: 'critical', text: 'Esa dirección solo existe dentro del wifi de la cámara y no se puede abrir desde internet. Usa «Este celular o PC» para transmitir sin dirección, escribe una dirección pública o enlaza un PC en la finca.' })
@@ -489,7 +492,8 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
       <form className={styles.quickForm} onSubmit={submit}>
         <TextField label="Nombre" value={name} onChange={event => setName(event.target.value)} required maxLength={80}
           placeholder="Potrero norte" autoComplete="off" />
-        <TextField label="Enlace o IP de la cámara" value={link} onChange={event => setLink(event.target.value)} required
+        <TextField label="Enlace o IP de la cámara" value={link} error={linkError || undefined}
+          onChange={event => { setLink(event.target.value); if (linkError) setLinkError('') }} required
           placeholder="192.168.1.20 o rtsp://…" autoComplete="off" inputMode="url" />
         <Button type="submit" icon={Plug} loading={saving || Boolean(busyId)} className={styles.quickSubmit}>Conectar</Button>
       </form>

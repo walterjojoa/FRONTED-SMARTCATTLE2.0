@@ -3,6 +3,7 @@ import { deleteJson, getJson, postJson } from '../api/httpClient'
 import { mockCameras } from '../mocks/mockData'
 import type { Sourced } from '../types/domain'
 import type { CameraSource } from './cameraSetupService'
+import { DEVICE_SOURCE } from './deviceCamera'
 import type { ServiceOptions } from './options'
 
 // The cameras of this account, kept by the backend. Saving one opens nothing: only connecting it starts the video and
@@ -81,11 +82,35 @@ export function connectionFor(source: string, login?: CameraLogin): CameraSource
 // The ports of SmartCattle itself, which people copy from the browser's address bar.
 const OWN_PORTS = /:(5173|4173|8000|8090)(\/|$)/
 
+// The same shapes the backend accepts, checked here so the answer arrives while the
+// field is still on screen instead of as a 400 after the round trip.
+// The path matters: a DroidCam phone found on the network is saved as "192.168.1.20:4747/video".
+const IPV4 = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})(:\d{1,5})?(\/\S*)?$/
+const STREAM_URL = /^(rtsp|https?):\/\/[^\s/]+/i
+/** An Imou serial as its label prints it, and a webcam of the machine running the AI service, by index. */
+const IMOU_SERIAL = /^[0-9A-Z]{9,20}$/
+const WEBCAM_INDEX = /^\d{1,2}$/
+
+const UNREACHABLE = 'Escribe la dirección de la cámara: una IP como 192.168.1.50 (con puerto si lo usa), un enlace rtsp:// o http:// , el número de serie Imou, o el número de una cámara web (0).'
+
+function reachable(source: string): boolean {
+  const parts = IPV4.exec(source)
+  if (parts) {
+    const port = parts[5] ? Number(parts[5].slice(1)) : 80
+    return parts.slice(1, 5).every(octet => Number(octet) <= 255) && port >= 1 && port <= 65535
+  }
+  return STREAM_URL.test(source) || WEBCAM_INDEX.test(source) || IMOU_SERIAL.test(source)
+}
+
 /** What is wrong with an address before saving it, in the words of the person typing it; null if it may be a camera. */
 export function addressProblem(source: string): string | null {
-  return OWN_PORTS.test(source.trim())
-    ? 'Esa es la dirección de este panel, no la de una cámara. Escribe la IP que muestra la app de la cámara o del celular.'
-    : null
+  const value = source.trim()
+  if (OWN_PORTS.test(value)) {
+    return 'Esa es la dirección de este panel, no la de una cámara. Escribe la IP que muestra la app de la cámara o del celular.'
+  }
+  // The device sources are placeholders for "this phone or PC", not addresses.
+  if (!value || value === DEVICE_SOURCE) return value ? null : UNREACHABLE
+  return reachable(value) ? null : UNREACHABLE
 }
 
 /** Browsers fill this field with the email of the app's own login; a camera's user is something like "admin". */
