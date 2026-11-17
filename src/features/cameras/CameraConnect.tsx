@@ -232,7 +232,12 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   const [loginFor, setLoginFor] = useState('')
   // Saving goes to the backend, connecting to the AI service: either can be the slow one.
   const waking = useSlowRequest(saving || Boolean(busyId))
-  const [othersOpen, setOthersOpen] = useState(() => new URLSearchParams(globalThis.location.search).get('con') === 'celular')
+  // null until someone opens or closes it by hand. Until then the answer comes
+  // from whether this account has a camera yet: with none, the ways of adding one
+  // are the page, and the phone should not be the one folded away. The welcome
+  // used to offer it directly and no longer does.
+  const [othersToggled, setOthersToggled] = useState<boolean | null>(
+    () => new URLSearchParams(globalThis.location.search).get('con') === 'celular' ? true : null)
   const [result, setResult] = useState<{ tone: 'safe' | 'critical'; text: string } | null>(null)
   const broadcastEnded = useCallback((text: string) => setResult({ tone: 'critical', text }), [])
   const { videoRef: deviceVideo, activeId: broadcastingId, weakSignal, open: openDevice, send: sendFromDevice, stop: stopDevice } = useDeviceCamera(broadcastEnded)
@@ -241,6 +246,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   const reachesLocalCameras = Boolean(farmPc.data) || Boolean(serviceBase && !serviceBase.startsWith('https://'))
   const refreshList = () => REFRESH_AFTER_MS.forEach(delay => setTimeout(() => { onChanged?.(); reloadSaved() }, delay))
   const list = saved.data ?? []
+  const othersOpen = othersToggled ?? (saved.data !== null && list.length === 0)
   const liveOf = (id: string) => cameras.find(camera => camera.id === id)
 
   // With a camera in the account, the app no longer needs to bring this person back here.
@@ -471,7 +477,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
       </ul>}
     </section>
 
-    <details className={styles.others} open={othersOpen} onToggle={event => setOthersOpen(event.currentTarget.open)}>
+    <details className={styles.others} open={othersOpen} onToggle={event => setOthersToggled(event.currentTarget.open)}>
       <summary className={styles.othersTitle}>Otras formas: un celular, buscar en la red o QR</summary>
       <Instructions />
       <div className={styles.modes} role="group" aria-label="Cómo agregarla">
