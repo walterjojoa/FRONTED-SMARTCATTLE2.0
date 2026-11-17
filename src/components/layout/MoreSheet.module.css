@@ -15,11 +15,27 @@
 }
 .sheet::backdrop { background: transparent; }
 
+/*
+ * Belt and braces over the dialog's own display:none when closed. A full-screen
+ * host that stays hittable after it shuts takes every click on the page with it,
+ * and the symptom -- nothing responds, anywhere -- says nothing about the sheet.
+ * visibility waits out the exit animation so it does not cut it short; the two
+ * properties below take effect at once, which is the point.
+ */
+.sheet:not([open]), .sheet:not([open]) .scrim, .sheet:not([open]) .panel {
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear var(--duration-base);
+}
+
 .scrim {
   position: absolute;
   inset: 0;
   background: var(--color-backdrop);
 }
+
+/* Only while it is open does the scrim mean "tap here to close". */
+.sheet[open] .scrim { pointer-events: auto; }
 
 .panel {
   position: absolute;
@@ -96,3 +112,7 @@
 .item > :not(.marker) { position: relative; z-index: 1; }
 @media (hover: hover) { .close:hover, .item:hover:not([aria-current='page']) { background: var(--color-hover); color: var(--color-mint-ink); } }
 .item[aria-current='page'] { color: var(--color-brand-strong); font-weight: var(--weight-semibold); }
+
+/* Last in the list and set apart: it leaves the app, the others move around it. */
+.leave { width: 100%; margin-top: var(--space-2); border-top: 1px solid var(--glass-border-subtle); padding-top: var(--space-3); text-align: left; }
+.leave .icon { background: var(--color-alarm-surface); color: var(--color-alarm-ink); }

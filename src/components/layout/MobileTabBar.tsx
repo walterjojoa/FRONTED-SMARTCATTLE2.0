@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Ellipsis } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
@@ -16,6 +16,15 @@ function ActiveMarker() {
 export function MobileTabBar() {
   const [open, setOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const wasOpen = useRef(false)
+
+  // After it closes, not while the dialog's own close event is still running:
+  // focusing there landed nowhere, because the browser restores focus itself
+  // right afterwards and the sheet's buttons are still on their way out.
+  useEffect(() => {
+    if (wasOpen.current && !open) triggerRef.current?.focus()
+    wasOpen.current = open
+  }, [open])
   const { pathname } = useLocation()
   const moreActive = [...navItems.filter(item => !item.primaryOnMobile), profileItem]
     .some(item => pathname === item.path || pathname.startsWith(`${item.path}/`))
@@ -35,6 +44,6 @@ export function MobileTabBar() {
         <Ellipsis size={20} strokeWidth={1.75} aria-hidden="true" /><span>Más</span>
       </button>
     </nav>
-    <MoreSheet open={open} onClose={() => { setOpen(false); triggerRef.current?.focus() }} />
+    <MoreSheet open={open} onClose={() => setOpen(false)} />
   </>
 }

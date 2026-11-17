@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { X } from 'lucide-react'
-import { NavLink } from 'react-router'
+import { LogOut, X } from 'lucide-react'
+import { NavLink, useLocation, useNavigate } from 'react-router'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useAuth } from '../../app/auth/useAuth'
 import { navItems, profileItem } from '../../app/navigation'
 import { duration, ease } from '../../motion'
 import styles from './MoreSheet.module.css'
@@ -17,6 +18,10 @@ function ActiveMarker() {
 export function MoreSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const reduce = useReducedMotion()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+  const [leaving, setLeaving] = useState(false)
   const [closing, setClosing] = useState(false)
   const [wasOpen, setWasOpen] = useState(open)
   if (wasOpen !== open) {
@@ -33,6 +38,14 @@ export function MoreSheet({ open, onClose }: { open: boolean; onClose: () => voi
     if (open && !dialog.open) dialog.showModal()
     if (!open && dialog.open) dialog.close()
   }, [open])
+
+  // Any navigation closes it, not only the links inside: a route can change from
+  // the alarm banner, from the back button, or from code, and a sheet left over a
+  // new page is a sheet nobody asked for.
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (dialog?.open) dialog.close()
+  }, [pathname])
 
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 1024px)')
@@ -69,6 +82,15 @@ export function MoreSheet({ open, onClose }: { open: boolean; onClose: () => voi
                 <span>{label}</span>
               </>}
             </NavLink>)}
+          {/* Within reach from anywhere, instead of only at the end of /profile. */}
+          <button type="button" className={`${styles.item} ${styles.leave}`} disabled={leaving}
+            onClick={async () => {
+              setLeaving(true)
+              try { await logout() } finally { navigate('/login', { replace: true }) }
+            }}>
+            <span className={styles.icon}><LogOut size={20} strokeWidth={1.75} aria-hidden="true" /></span>
+            <span>{leaving ? 'Cerrando sesión…' : 'Cerrar sesión'}</span>
+          </button>
         </nav>
       </motion.div>}
     </AnimatePresence>
