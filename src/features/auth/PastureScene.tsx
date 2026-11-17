@@ -4,6 +4,7 @@ import { animate, motion, useMotionValue, useReducedMotion, useTransform } from 
 import pastureSmall from '../../assets/login/pasture-dusk-1200.jpg'
 import pastureLarge from '../../assets/login/pasture-dusk-2400.jpg'
 import { BrandMark } from '../../components/ui/BrandMark'
+import { useLightMode } from '../../lib/useLightMode'
 import { ease, staggerDelay } from '../../motion'
 import styles from './PastureScene.module.css'
 
@@ -52,6 +53,7 @@ function Confidence({ value, delay }: { value: number; delay: number }) {
 
 export function PastureScene({ focusX }: { focusX?: number }) {
   const reduce = useReducedMotion()
+  const light = useLightMode()
   const points = zoneVertices.map(point => point.join(',')).join(' ')
   // Labels position themselves with a CSS transform, so only SVG shapes get the scale pop.
   const appear = (delay: number, pop = false) => ({
@@ -62,9 +64,13 @@ export function PastureScene({ focusX }: { focusX?: number }) {
 
   return <figure className={styles.scene} style={{ '--focus-x': focusX } as CSSProperties}>
     <div className={styles.frame} aria-hidden="true">
-      <img src={pastureLarge} srcSet={`${pastureSmall} 1200w, ${pastureLarge} 2400w`}
-        sizes="(min-width: 1024px) 60vw, 100vw" alt="" decoding="async" fetchPriority="high" />
-      <svg viewBox={`0 0 ${photoWidth} ${photoHeight}`} preserveAspectRatio="none" focusable="false">
+      {/* Decoration, so it yields to the form: the fields are what the page is for.
+          Asked for less motion, or paying for the data, it stays the small still. */}
+      {light
+        ? <img src={pastureSmall} alt="" decoding="async" fetchPriority="low" loading="lazy" />
+        : <img src={pastureLarge} srcSet={`${pastureSmall} 1200w, ${pastureLarge} 2400w`}
+          sizes="(min-width: 1024px) 60vw, 100vw" alt="" decoding="async" fetchPriority="low" />}
+      {!light && <svg viewBox={`0 0 ${photoWidth} ${photoHeight}`} preserveAspectRatio="none" focusable="false">
         <motion.polygon className={styles.zoneFill} points={points}
           initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }}
           transition={{ delay: ZONE_DRAW.delay + ZONE_DRAW.duration * 0.6, duration: 0.6 }} />
@@ -78,10 +84,10 @@ export function PastureScene({ focusX }: { focusX?: number }) {
           x={box.x} y={box.y} width={box.width} height={box.height} rx="6" vectorEffect="non-scaling-stroke"
           style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
           {...appear(detectionDelay(index), true)} />)}
-      </svg>
-      <span className={styles.scan} />
+      </svg>}
+      {!light && <span className={styles.scan} />}
       {/* Labels are HTML so they keep a legible size at any scale. */}
-      <div className={styles.labels}>
+      {!light && <div className={styles.labels}>
         <motion.span className={styles.zoneLabel}
           style={{ left: toPercent(zoneVertices[1][0], photoWidth), top: toPercent(zoneVertices[1][1], photoHeight) }}
           {...appear(ZONE_DRAW.delay + ZONE_DRAW.duration)}>
@@ -97,7 +103,7 @@ export function PastureScene({ focusX }: { focusX?: number }) {
           {...appear(detectionDelay(index) + 0.1)}>
           {box.outside ? 'fuera de zona' : 'bovino'} · <Confidence value={box.confidence} delay={detectionDelay(index) + 0.1} />
         </motion.span>)}
-      </div>
+      </div>}
     </div>
     <div className={styles.scrim} aria-hidden="true" />
 
