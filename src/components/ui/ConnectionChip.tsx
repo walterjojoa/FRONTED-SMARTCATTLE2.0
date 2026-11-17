@@ -1,4 +1,4 @@
-import { CloudOff, FlaskConical, RefreshCw, type LucideIcon } from 'lucide-react'
+import { CloudOff, FlaskConical, RefreshCw, VideoOff, type LucideIcon } from 'lucide-react'
 import type { LiveConnection } from '../../live/liveState'
 import styles from './ConnectionChip.module.css'
 
@@ -10,10 +10,27 @@ const copy: Record<LiveConnection, { label: string; title: string; icon: LucideI
   demo: { label: 'Datos de demostración', title: 'Modo demostración: la IA está simulada en el navegador.', icon: FlaskConical },
 }
 
-/** Where the numbers on screen come from right now: one glance answers "is this live?". */
-export function ConnectionChip({ connection, className }: { connection: LiveConnection; className?: string }) {
-  const { label, title, icon: Icon } = copy[connection]
-  return <span className={[styles.chip, styles[connection], className].filter(Boolean).join(' ')} title={title} role="status">
+const NO_CAMERAS = {
+  label: 'Sin cámaras',
+  title: 'No hay ninguna cámara conectada, así que no llega nada que mostrar.',
+  icon: VideoOff as LucideIcon | null,
+}
+
+/**
+ * Where the numbers on screen come from right now: one glance answers "is this live?".
+ *
+ * A live socket with no camera on the other end still said "En vivo", which answered
+ * the wrong question: the link was up, nothing was watching.
+ */
+export function ConnectionChip({ connection, cameras = null, className }: {
+  connection: LiveConnection
+  /** Cameras delivering a picture; null while unknown. Zero outranks the connection. */
+  cameras?: number | null
+  className?: string
+}) {
+  const { label, title, icon: Icon } = cameras === 0 && connection !== 'demo' ? NO_CAMERAS : copy[connection]
+  const tone = cameras === 0 && connection !== 'demo' ? 'offline' : connection
+  return <span className={[styles.chip, styles[tone], className].filter(Boolean).join(' ')} title={title} role="status">
     {Icon ? <Icon size={15} strokeWidth={2} aria-hidden="true" /> : <span className={styles.dot} aria-hidden="true" />}
     {label}
   </span>

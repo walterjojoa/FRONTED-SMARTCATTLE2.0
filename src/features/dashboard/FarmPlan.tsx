@@ -101,6 +101,9 @@ export function FarmPlan({
   const svgRef = useRef<SVGSVGElement>(null)
   const poses = useRef(new Map<string, Pose>())
   const animated = !reduceMotion
+  // Null while the list has not arrived; zero means nothing is watching, which is
+  // different from "watching and all calm".
+  const connectedCameras = cameras === null ? null : cameras.filter(camera => camera.status === 'online').length
   const cows = agents.filter(agent => agent.kind === 'cow')
   const people = agents.filter(agent => agent.kind !== 'cow')
   const alertByCamera = new Map<string, Severity>()
@@ -205,7 +208,7 @@ export function FarmPlan({
       <div className={styles.headingText}>
         <div className={styles.titleRow}>
           <h2 id="farm-plan-title" className={styles.title}>Monitoreo en vivo</h2>
-          <ConnectionChip connection={connection} />
+          <ConnectionChip connection={connection} cameras={connectedCameras} />
         </div>
         <p className={styles.note}>
           Cada vaca y cada persona está donde la ubicó la cámara de su lote
@@ -227,7 +230,13 @@ export function FarmPlan({
       </ul>
     </div>
     <p className="visually-hidden" aria-live="polite">
-      {outsideCows.length === 0 ? 'Todo el ganado está dentro del perímetro.' : outsideCows.map(cow => `${cow.name} fuera del perímetro ${lotName(cow.lotId)}.`).join(' ')}
+      {/* No camera means no reading: "all inside the perimeter" would be a claim about
+          cattle nothing is looking at. */}
+      {connectedCameras === 0
+        ? 'Sin datos de cámaras.'
+        : outsideCows.length === 0
+          ? 'Todo el ganado está dentro del perímetro.'
+          : outsideCows.map(cow => `${cow.name} fuera del perímetro ${lotName(cow.lotId)}.`).join(' ')}
     </p>
 
     <div className={styles.canvas}>

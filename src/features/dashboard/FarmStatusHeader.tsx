@@ -1,4 +1,5 @@
-import { CircleCheck, CircleDashed, Clock3, OctagonAlert, TriangleAlert, type LucideIcon } from 'lucide-react'
+import { CircleCheck, CircleDashed, Clock3, OctagonAlert, TriangleAlert, Video, type LucideIcon } from 'lucide-react'
+import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
 import { HerdStrip } from '../../components/herd/HerdStrip'
 import { Skeleton } from '../../components/ui'
@@ -42,6 +43,10 @@ export function FarmStatusHeader({ farmName, condition, headline, status, camera
           transition={{ duration: reduce ? duration.micro : 0.22, ease: ease.out }}>{headline}</motion.span>
         : <Skeleton width="14ch" height="4rem" className={styles.skeleton} />}
     </h1>
+    {/* Nothing is watching: the way out of that state is one tap away. */}
+    {condition === 'no-cameras' && <Link to="/cameras" className={styles.connect}>
+      <Video size={16} strokeWidth={2} aria-hidden="true" />Conectar una cámara
+    </Link>}
     <div className={styles.meta}>
       <ul className={styles.system} aria-label="Estado del sistema">
         {pills.map((pill, index) => {

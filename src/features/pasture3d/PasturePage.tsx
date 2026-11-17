@@ -57,7 +57,7 @@ export function PasturePage() {
   return (
     <div className={styles.page}>
       <FadeUp className={styles.head}>
-        <PageHeader title="Potrero 3D" actions={<ConnectionChip connection={live.connection} />} />
+        <PageHeader title="Potrero 3D" actions={<ConnectionChip connection={live.connection} cameras={live.updatedAt === null ? null : live.cameras.filter(camera => camera.status === 'online').length} />} />
         <p className={styles.intro} id="pasture-help">
           La finca con lo que ven las cámaras ahora mismo: cada vaca y cada persona que detecta la IA aparece en su
           lote. Arrastra para girar, usa la rueda o pellizca para acercar. Cuando una vaca sale de su zona segura, la

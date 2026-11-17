@@ -49,16 +49,29 @@ export function recentAlerts(events: readonly FarmEvent[], now: Date, windowMs =
     .sort((a, b) => severityRank[b.severity] - severityRank[a.severity] || b.occurredAt.getTime() - a.occurredAt.getTime())
 }
 
-export type FarmCondition = 'calm' | 'warning' | 'critical' | 'unknown'
+export type FarmCondition = 'calm' | 'warning' | 'critical' | 'unknown' | 'no-cameras'
 
-/** Without event data the farm state is unknown: never report "all clear" by default. */
-export function farmCondition(alerts: readonly { severity: Severity }[], hasEventData = true): FarmCondition {
+/**
+ * Without event data the farm state is unknown: never report "all clear" by default.
+ *
+ * With no camera connected there is nothing watching, so "all clear" would be an
+ * invention rather than a reading. An open alert still wins: one already raised is
+ * worth seeing even if nothing is watching now, and hiding it behind an invitation
+ * to connect a camera would be worse than the false calm this replaces.
+ */
+export function farmCondition(
+  alerts: readonly { severity: Severity }[],
+  hasEventData = true,
+  connectedCameras: number | null = null,
+): FarmCondition {
   if (alerts.some(alert => alert.severity === 'critical')) return 'critical'
   if (alerts.length > 0) return 'warning'
+  if (connectedCameras === 0) return 'no-cameras'
   return hasEventData ? 'calm' : 'unknown'
 }
 
 export function statusHeadline(condition: FarmCondition, alertCount: number): string {
+  if (condition === 'no-cameras') return 'Conecta tu primera cámara'
   if (condition === 'unknown') return 'Estado desconocido'
   if (condition === 'calm') return 'Todo en orden'
   return alertCount === 1 ? '1 alerta abierta' : `${alertCount} alertas abiertas`
