@@ -3,6 +3,7 @@ import { Check, ChevronDown, Circle, Clock3, Info, Loader2, Lock, LockKeyhole, M
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 'motion/react'
 import { useLocation, useNavigate } from 'react-router'
 import { useAuth } from '../../app/auth/useAuth'
+import { useSlowRequest, WAKING_NOTE } from '../../lib/useSlowRequest'
 import { Button, Notice, TextField } from '../../components/ui'
 import { demoAccounts, demoPassword } from '../../mocks/mockAuth'
 import { duration, ease, staggerDelay } from '../../motion'
@@ -226,6 +227,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
     setNotice(null)
   }
 
+  const waking = useSlowRequest(pending)
   const contentState = pending ? 'pending' : success ? 'success' : cooldownActive ? 'cooldown' : 'idle'
   const buttonLabel = pending
     ? (isRegistration ? 'Creando cuenta…' : 'Ingresando…')
@@ -350,6 +352,8 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
             </motion.span>
           </AnimatePresence>
         </Button>
+        {/* Render's free plan parks the service; a silent minute reads as broken. */}
+        {waking && <p className={styles.note} role="status">{WAKING_NOTE}</p>}
       </motion.div></motion.div>
     </motion.form>
 

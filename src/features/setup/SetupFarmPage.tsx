@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router'
 import { describeApiError } from '../../api/errors'
 import { useAuth } from '../../app/auth/useAuth'
 import { Button, TextField } from '../../components/ui'
+import { useSlowRequest, WAKING_NOTE } from '../../lib/useSlowRequest'
 import { can } from '../../lib/permissions'
 import { useResource } from '../../lib/useResource'
 import { duration, ease } from '../../motion'
@@ -36,6 +37,7 @@ export function SetupFarmPage() {
   const [location, setLocation] = useState('')
   const [lots, setLots] = useState<FarmSetupLot[]>([{ name: '', cameraId: null }])
   const [saving, setSaving] = useState(false)
+  const waking = useSlowRequest(saving)
   const [error, setError] = useState('')
   const cameras = useResource(signal => listAllCameras({ signal }), { refreshMs: 10_000 })
   const cameraList = cameras.data ?? []
@@ -135,7 +137,8 @@ export function SetupFarmPage() {
         {error && <p className={styles.error} role="alert">{error}</p>}
         <div className={styles.actions}>
           <Button type="button" variant="ghost" icon={ArrowLeft} onClick={() => setStep('kind')}>Atrás</Button>
-          <Button type="submit" loading={saving}>Guardar y seguir</Button>
+          <Button type="submit" loading={saving} loadingLabel="Guardando…">Guardar y seguir</Button>
+        {waking && <p className={styles.note} role="status">{WAKING_NOTE}</p>}
         </div>
       </motion.form>}
 

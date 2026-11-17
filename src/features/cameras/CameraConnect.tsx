@@ -7,6 +7,7 @@ import { skipCameraSetup } from '../../app/auth/cameraSetupSkip'
 import { withSessionToken } from '../../api/session'
 import { Button, GlassCard, StatusPill, TextField } from '../../components/ui'
 import { useResource } from '../../lib/useResource'
+import { useSlowRequest, WAKING_NOTE } from '../../lib/useSlowRequest'
 import {
   DEVICE_SOURCE, activeService, addCamera, addressProblem, cameraProblem, cameraSourceFrom, connectionFor, deleteSavedCamera, getFarmPc, getServiceHost, isDeviceCamera, listSavedCameras, onlyInsideItsNetwork,
   loginProblem, phoneLink, removeCamera, saveCamera, scanCameras, serviceRoot, startFarmPcPairing, startPairing, waitForCamera,
@@ -220,6 +221,8 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   const [saving, setSaving] = useState(false)
   const [busyId, setBusyId] = useState('')
   const [loginFor, setLoginFor] = useState('')
+  // Saving goes to the backend, connecting to the AI service: either can be the slow one.
+  const waking = useSlowRequest(saving || Boolean(busyId))
   const [othersOpen, setOthersOpen] = useState(() => new URLSearchParams(globalThis.location.search).get('con') === 'celular')
   const [result, setResult] = useState<{ tone: 'safe' | 'critical'; text: string } | null>(null)
   const broadcastEnded = useCallback((text: string) => setResult({ tone: 'critical', text }), [])
@@ -431,8 +434,9 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
         <TextField label="Enlace o IP de la cámara" value={link} error={linkError || undefined}
           onChange={event => { setLink(event.target.value); if (linkError) setLinkError('') }} required
           placeholder="192.168.1.20 o rtsp://…" autoComplete="off" inputMode="url" />
-        <Button type="submit" icon={Plug} loading={saving || Boolean(busyId)} className={styles.quickSubmit}>Conectar</Button>
+        <Button type="submit" icon={Plug} loading={saving || Boolean(busyId)} loadingLabel="Conectando…" className={styles.quickSubmit}>Conectar</Button>
       </form>
+      {waking && <p className={styles.note} role="status">{WAKING_NOTE}</p>}
     </section>
 
     {(needsFarmPc || !serviceBase) && !farmPc.data && farmPc.status !== 'loading' && <FarmPcPanel />}
