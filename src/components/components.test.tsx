@@ -3,7 +3,9 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { alarm } from '../lib/alarm'
 import { AlarmBanner } from './layout/AlarmBanner'
 import { TopBar } from './layout/TopBar'
-import { Button, Notice, StatusPill, TextField } from './ui'
+import { SESSION_STORAGE_KEY, tokenStore } from '../api/session'
+import { safeStorage } from '../lib/safeStorage'
+import { Button, DataSourceBadge, Notice, StatusPill, TextField } from './ui'
 
 describe('Button', () => {
   it('defaults to a non-submitting button', () => {
@@ -82,5 +84,23 @@ describe('alarm controls', () => {
     const muted = renderToStaticMarkup(<TopBar />)
     expect(muted).toContain('aria-pressed="true"')
     expect(muted).toContain('aria-label="Activar sonido de alarma"')
+  })
+})
+
+describe('DataSourceBadge', () => {
+  it('no marca como demostración los datos de una cuenta real', () => {
+    // En un despliegue híbrido el distintivo salía para todos, y una finca con
+    // cámaras y ganado de verdad leía que su propia información era inventada.
+    safeStorage.setJson(SESSION_STORAGE_KEY, { source: 'api', accessToken: 'jwt-123' })
+    try {
+      expect(renderToStaticMarkup(<DataSourceBadge />)).toBe('')
+    } finally {
+      tokenStore.clear()
+    }
+  })
+
+  it('lo muestra cuando no hay sesión real detrás de los datos', () => {
+    tokenStore.clear()
+    expect(renderToStaticMarkup(<DataSourceBadge />)).toContain('Datos de demostración')
   })
 })
