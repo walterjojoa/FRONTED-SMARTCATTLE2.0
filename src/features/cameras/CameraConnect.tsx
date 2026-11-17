@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { Cctv, Laptop, Plug, QrCode as QrIcon, Radar, Smartphone, Trash2, Unplug, Usb, Wifi } from 'lucide-react'
+import { Cctv, Laptop, Plug, QrCode as QrIcon, Radar, Smartphone, SwitchCamera, Trash2, Unplug, Usb, Wifi } from 'lucide-react'
 import { aiServiceUrl } from '../../api/config'
 import { ApiError, describeApiError } from '../../api/errors'
 import { skipCameraSetup } from '../../app/auth/cameraSetupSkip'
@@ -14,6 +14,7 @@ import {
   type CameraScan, type FoundCamera, type SavedCamera,
 } from '../../services'
 import type { Camera, CameraStatus } from '../../types/domain'
+import { BROADCAST_MESSAGE, broadcastBlock } from './broadcastReadiness'
 import { QrCode } from './QrCode'
 import { useDeviceCamera } from './useDeviceCamera'
 import styles from './CameraConnect.module.css'
@@ -214,8 +215,11 @@ type Way = 'device' | 'scan' | 'qr'
 export function CameraConnect({ cameras, onChanged, previews = true }: { cameras: readonly Camera[]; onChanged?: () => void; previews?: boolean }) {
   const reduce = useReducedMotion()
   const farmPc = useResource(signal => getFarmPc({ signal }), { refreshMs: 10_000 })
-  // This account's PC, once it answers; a service set up for this page otherwise, as when everything runs on one PC.
-  const serviceBase = activeService(cameras, farmPc.data || aiServiceUrl)
+  // Three places video can go, in order: a camera already streaming, this account's
+  // own PC, the service the backend offers everyone. VITE_AI_SERVICE_URL is last and
+  // is only set when the whole thing runs on one machine -- in production it is empty,
+  // which is why this came out blank and the button stayed grey.
+  const serviceBase = activeService(cameras, farmPc.data?.pc || farmPc.data?.shared || aiServiceUrl)
   const [waitingForPhone, setWaitingForPhone] = useState(false)
   const saved = useResource(signal => listSavedCameras({ signal }))
   const [way, setWay] = useState<Way>('device')
@@ -235,10 +239,18 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   const [othersOpen, setOthersOpen] = useState(() => new URLSearchParams(globalThis.location.search).get('con') === 'celular')
   const [result, setResult] = useState<{ tone: 'safe' | 'critical'; text: string } | null>(null)
   const broadcastEnded = useCallback((text: string) => setResult({ tone: 'critical', text }), [])
-  const { videoRef: deviceVideo, activeId: broadcastingId, weakSignal, open: openDevice, send: sendFromDevice, stop: stopDevice } = useDeviceCamera(broadcastEnded)
+  const { videoRef: deviceVideo, activeId: broadcastingId, weakSignal, open: openDevice, send: sendFromDevice, stop: stopDevice, facing, flip } = useDeviceCamera(broadcastEnded)
+  // Why broadcasting is unavailable, if it is, so the button can say so instead of
+  // being grey. Recomputed on render: the service arrives after the first paint.
+  const block = broadcastBlock({
+    serviceReady: Boolean(serviceBase),
+    userAgent: navigator.userAgent,
+    media: navigator.mediaDevices,
+  })
+  const blockMessage = block ? BROADCAST_MESSAGE[block] : null
   const reloadSaved = saved.refresh
   // Something on a local network can reach its cameras: a linked PC, or a service running on this network. In the cloud, no.
-  const reachesLocalCameras = Boolean(farmPc.data) || Boolean(serviceBase && !serviceBase.startsWith('https://'))
+  const reachesLocalCameras = Boolean(farmPc.data?.pc) || Boolean(serviceBase && !serviceBase.startsWith('https://'))
   const refreshList = () => REFRESH_AFTER_MS.forEach(delay => setTimeout(() => { onChanged?.(); reloadSaved() }, delay))
   const list = saved.data ?? []
   const liveOf = (id: string) => cameras.find(camera => camera.id === id)
@@ -435,6 +447,20 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   ]
 
   return <div className={styles.wrap}>
+    {/* First on the page, and not inside a disclosure: a phone is what most people
+        have before they have an IP camera, and it needs no address at all. */}
+    <section aria-labelledby="phone-camera-title" className={styles.quick}>
+      <h2 id="phone-camera-title" className={styles.quickTitle}>📱 Usar este celular como cámara</h2>
+      <p className={styles.note}>Sin IP, sin contraseña y sin instalar nada. Ponle un nombre y acepta el permiso de la cámara.</p>
+      <form className={styles.anyForm} onSubmit={addDevice}>
+        <TextField label="Nombre" value={deviceName} onChange={event => setDeviceName(event.target.value)} required maxLength={80}
+          placeholder="Corral del ternero" autoComplete="off" />
+        <Button type="submit" icon={Smartphone} loading={saving} loadingLabel="Conectando…"
+          disabled={Boolean(block) || Boolean(broadcastingId)} className={styles.quickSubmit}>Transmitir</Button>
+      </form>
+      {blockMessage && <p className={styles.note} role="status">{blockMessage}</p>}
+    </section>
+
     <section aria-labelledby="camera-connect-title" className={styles.quick}>
       <h2 id="camera-connect-title" className={styles.quickTitle}>Agrega una cámara</h2>
       <form className={styles.quickForm} onSubmit={submit}>
@@ -453,6 +479,11 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
 
     <div className={styles.broadcast} hidden={!broadcastingId}>
       <video ref={deviceVideo} className={styles.broadcastVideo} muted playsInline aria-label="Lo que ve la cámara de este dispositivo" />
+      <div className={styles.broadcastActions}>
+        <Button variant="secondary" size="sm" icon={SwitchCamera} onClick={flip}>
+          {facing === 'environment' ? 'Usar la cámara frontal' : 'Usar la cámara trasera'}
+        </Button>
+      </div>
       <p className={weakSignal ? styles.error : styles.ok} role="status">
         {weakSignal
           ? 'Sin señal por el momento. Sigue intentando; no cierres esta página.'
@@ -486,7 +517,9 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
           <TextField label="Nombre" value={deviceName} onChange={event => setDeviceName(event.target.value)} required maxLength={80}
             placeholder="Corral del ternero" autoComplete="off" />
         </div>
-        <Button type="submit" icon={Smartphone} loading={saving} disabled={!serviceBase || Boolean(broadcastingId)} className={styles.action}>Transmitir</Button>
+        <Button type="submit" icon={Smartphone} loading={saving} loadingLabel="Conectando…"
+          disabled={Boolean(block) || Boolean(broadcastingId)} className={styles.action}>Transmitir</Button>
+        {blockMessage && <p className={styles.note} role="status">{blockMessage}</p>}
         <OpenOnPhone />
       </form>}
 
