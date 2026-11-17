@@ -110,7 +110,7 @@ export function PastureScene({ focusX }: { focusX?: number }) {
     <div className={styles.overlay}>
       <div className={styles.topRow}>
         <p className={styles.chip}><span className={styles.hudDot} aria-hidden="true" />Potrero Norte · Demostración</p>
-        <p className={`${styles.chip} ${styles.status}`}><span className={styles.liveDot} aria-hidden="true" />Sistema operativo</p>
+        <p className={`${styles.chip} ${styles.status}`}><span className={styles.liveDot} aria-hidden="true" />Sistema en línea</p>
       </div>
       <motion.div className={styles.story}
         initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}

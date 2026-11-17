@@ -370,6 +370,6 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
         </div>
       </div>
     </motion.details>}
-    {isRegistration && <p className={styles.note}>Las cuentas de trabajador se crean por invitación del dueño de la finca. Esa función llegará cuando el backend la ofrezca.</p>}
+    {isRegistration && <p className={styles.note}>Las cuentas de trabajador se crean por invitación del dueño de la finca. Próximamente.</p>}
   </>
 }
