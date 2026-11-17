@@ -1,4 +1,5 @@
-import { CircleCheck, CircleDashed, Clock3, OctagonAlert, TriangleAlert, type LucideIcon } from 'lucide-react'
+import { CircleCheck, CircleDashed, Clock3, OctagonAlert, TriangleAlert, Video, type LucideIcon } from 'lucide-react'
+import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
 import { Skeleton } from '../../components/ui'
 import { formatTime } from '../../lib/format'
@@ -41,6 +42,10 @@ export function FarmStatusHeader({ farmName, condition, headline, status, camera
           ? <span className={styles[condition]}>{headline}</span>
           : <Skeleton width="14ch" height="0.9em" className={styles.skeleton} />}
       </h1>
+      {/* Nothing is watching: the way out of that state is one tap away. */}
+      {condition === 'no-cameras' && <Link to="/cameras" className={styles.connect}>
+        <Video size={16} strokeWidth={2} aria-hidden="true" />Conectar una cámara
+      </Link>}
       <ul className={styles.system} aria-label="Estado del sistema">
         {pills.map((pill, index) => {
           const Icon = pillIcon[pill.tone]

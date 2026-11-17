@@ -28,8 +28,10 @@ export function DashboardPage() {
   const offline = live.connection === 'offline'
   const known = live.updatedAt !== null && !offline
   const open = live.alerts.filter(alert => alert.status === 'open')
-  // Stale or missing data cannot prove the farm is calm.
-  const condition = farmCondition(open, known)
+  // Null until the list arrives, so the first paint does not flash the invitation.
+  const connected = live.updatedAt === null ? null : live.cameras.filter(camera => camera.status === 'online').length
+  // Stale or missing data cannot prove the farm is calm, and neither can having nothing to watch with.
+  const condition = farmCondition(open, known, connected)
   const videoIds = data.snapshots.data
     ? new Set(Object.entries(data.snapshots.data).filter(([, snapshot]) => hasPicture(snapshot.stream)).map(([id]) => id))
     : undefined

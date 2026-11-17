@@ -88,3 +88,27 @@ describe('dashboardModel', () => {
     expect(segments[0].end).toBeCloseTo(14 / 24)
   })
 })
+
+describe('nothing is watching', () => {
+  it('does not call the farm calm when no camera is connected', () => {
+    // The dashboard used to read "Todo en orden" with zero cameras, which is a
+    // claim about a farm nobody is looking at.
+    expect(farmCondition([], true, 0)).toBe('no-cameras')
+    expect(statusHeadline('no-cameras', 0)).toBe('Conecta tu primera cámara')
+  })
+
+  it('still shows an alert that is already open', () => {
+    // Hiding a raised alert behind an invitation would be worse than the false calm.
+    expect(farmCondition([{ severity: 'critical' }], true, 0)).toBe('critical')
+    expect(farmCondition([{ severity: 'warning' }], true, 0)).toBe('warning')
+  })
+
+  it('says nothing about cameras until the list has arrived', () => {
+    expect(farmCondition([], true, null)).toBe('calm')
+    expect(farmCondition([], false, null)).toBe('unknown')
+  })
+
+  it('goes back to calm once a camera is connected', () => {
+    expect(farmCondition([], true, 1)).toBe('calm')
+  })
+})
