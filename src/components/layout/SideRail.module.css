@@ -40,7 +40,7 @@
 
 .bottom { margin-top: auto; display: grid; gap: var(--space-3); min-width: 0; }
 .badge { display: flex; padding: var(--space-2); }
-.user { border-top: 2px solid rgb(250 250 245 / 0.25); }
+.user { border-top: 2px solid rgb(247 243 234 / 0.25); }
 
 .avatar {
   flex: 0 0 34px;

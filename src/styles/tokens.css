@@ -1,84 +1,84 @@
 :root {
   color-scheme: light;
 
-  /* Poster inks: the whole palette. Each one sets the text that stays legible on it. */
-  --ink-verde: #00A650;
-  --ink-maiz: #FFC800;
-  --ink-fucsia: #DB0A73;
-  --ink-cobalto: #1B2FD8;
-  --ink-naranja: #FF5A1F;
-  --ink-tinta: #15120E;
-  --ink-papel: #FAFAF5;
+  /* Poster inks in the "Pradera al atardecer" palette (Camilo's): cream paper, forest green, amber. */
+  --ink-verde: #1F5E3B;
+  --ink-maiz: #E08A2E;
+  --ink-fucsia: #C2412D;
+  --ink-cobalto: #2F6F8F;
+  --ink-naranja: #D9A21B;
+  --ink-tinta: #1F2A24;
+  --ink-papel: #F7F3EA;
 
   /* Color - surfaces */
-  --color-ground: #FAFAF5;
+  --color-ground: #F7F3EA;
   --color-surface: #FFFFFF;
   --color-surface-raised: #FFFFFF;
-  --color-well: #F0F0E6;
-  --color-rule: #D9D8CC;
-  --color-rule-strong: #15120E;
+  --color-well: #EFE8DA;
+  --color-rule: #E3DCCD;
+  --color-rule-strong: #1F2A24;
 
   /* Color - ink */
-  --color-ink: #15120E;
-  --color-ink-muted: #3F3B33;
-  --color-ink-subtle: #5C574C;
+  --color-ink: #1F2A24;
+  --color-ink-muted: #46524B;
+  --color-ink-subtle: #5B6660;
 
   /* Color - brand */
-  --color-brand: #008A43;
-  --color-brand-strong: #006E35;
-  --color-brand-hover: #00A650;
-  --color-on-brand: #FFFFFF;
-  --color-on-brand-muted: #DCFCE7;
+  --color-brand: #1F5E3B;
+  --color-brand-strong: #174A2E;
+  --color-brand-hover: #174A2E;
+  --color-on-brand: #F7F3EA;
+  --color-on-brand-muted: #DCEBDF;
 
   /* Color - pastel accents (legacy earth tokens now carry the sky role) */
-  --color-mint: #C7F2D4;
-  --color-mint-ink: #14532D;
-  --color-sky: #CDEBFF;
-  --color-sky-ink: #075985;
-  --color-butter: #FFF1B8;
-  --color-butter-ink: #713F12;
-  --color-peach: #FFD9C7;
-  --color-peach-ink: #7C2D12;
-  --color-lilac: #E4DCFF;
-  --color-lilac-ink: #4C1D95;
-  --color-earth: #0284C7;
-  --color-earth-surface: #CDEBFF;
-  --color-earth-ink: #075985;
+  --color-mint: #DCEBDF;
+  --color-mint-ink: #1F5E3B;
+  --color-sky: #DEEAF0;
+  --color-sky-ink: #22526A;
+  --color-butter: #FBEBD6;
+  --color-butter-ink: #1F2A24;
+  --color-peach: #F7E2DE;
+  --color-peach-ink: #8E2E1F;
+  --color-lilac: #DCEBDF;
+  --color-lilac-ink: #1F5E3B;
+  --color-earth: #2F6F8F;
+  --color-earth-surface: #DEEAF0;
+  --color-earth-ink: #22526A;
   --color-on-brand-surface: rgb(255 255 255 / 0.14);
-  --color-backdrop: rgb(14 26 19 / 0.48);
-  --color-sage: #4ADE80;
+  --color-backdrop: rgb(20 35 27 / 0.48);
+  --color-sage: #2E8B57;
 
   /* Color - states */
-  --color-safe: #16A34A;
+  --color-safe: #2E8B57;
   /* Text on tinted state surfaces needs a darker ink to reach 4.5:1. */
-  --color-safe-ink: #14532D;
-  --color-inactive-ink: #3D5446;
-  --color-safe-surface: #DCFCE7;
-  --color-warning: #D97706;
-  --color-warning-ink: #92400E;
-  --color-warning-surface: #FEF3C7;
-  --color-critical: #EF233C;
-  --color-critical-ink: #B3132B;
-  --color-critical-surface: #FFE4E8;
-  --color-alarm: #EF233C;
-  --color-alarm-hover: #C81E35;
-  --color-alarm-ink: #B3132B;
-  --color-alarm-surface: #FFE4E8;
-  --color-info: #0284C7;
-  --color-info-ink: #075985;
-  --color-info-surface: #E0F2FE;
-  --color-inactive: #5C7365;
-  --color-inactive-surface: #ECF8EF;
+  --color-safe-ink: #1E5C39;
+  --color-inactive-ink: #5B6660;
+  --color-safe-surface: #DCEBDF;
+  --color-warning: #D9A21B;
+  --color-warning-ink: #6E5009;
+  --color-warning-surface: #FBEBD6;
+  --color-critical: #C2412D;
+  --color-critical-ink: #8E2E1F;
+  --color-critical-surface: #F7E2DE;
+  --color-alarm: #C2412D;
+  --color-alarm-hover: #A33425;
+  --color-alarm-ink: #8E2E1F;
+  --color-alarm-surface: #F7E2DE;
+  --color-info: #2F6F8F;
+  --color-info-ink: #22526A;
+  --color-info-surface: #DEEAF0;
+  --color-inactive: #5B6660;
+  --color-inactive-surface: #EFE8DA;
 
   /* Color - camera stage */
-  --color-stage: #0E1A13;
-  --color-stage-raised: #16251C;
-  --color-stage-ink: #F7FCF8;
-  --color-stage-ink-muted: #B9CFC0;
-  --color-overlay-cattle: #4ADE80;
-  --color-overlay-person: #FACC15;
+  --color-stage: #14231B;
+  --color-stage-raised: #1C2F24;
+  --color-stage-ink: #F7F3EA;
+  --color-stage-ink-muted: #D9E3DC;
+  --color-overlay-cattle: #2E8B57;
+  --color-overlay-person: #E08A2E;
   --color-overlay-lindero: #FFFFFF;
-  --color-overlay-outside: #FF3355;
+  --color-overlay-outside: #C2412D;
 
   /* Focus */
   --focus-ring: 0 0 0 2px var(--color-surface-raised), 0 0 0 4px var(--color-brand);
@@ -141,9 +141,9 @@
   --radius-full: 4px;
 
   /* Elevation */
-  --shadow-raised: 0 2px 4px rgb(21 18 14 / 0.08), 0 12px 24px -12px rgb(21 18 14 / 0.3);
-  --shadow-overlay: 0 24px 48px -16px rgb(21 18 14 / 0.45);
-  --shadow-glow-brand: 0 8px 18px -8px rgb(21 18 14 / 0.5);
+  --shadow-raised: 0 2px 4px rgb(31 42 36 / 0.08), 0 12px 24px -12px rgb(31 42 36 / 0.3);
+  --shadow-overlay: 0 24px 48px -16px rgb(31 42 36 / 0.45);
+  --shadow-glow-brand: 0 8px 18px -8px rgb(31 42 36 / 0.5);
 
   /* Motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -162,7 +162,7 @@
   --content-max: 1440px;
 
   /* Base UI components */
-  --color-hover: rgb(22 163 74 / 0.08);
+  --color-hover: rgb(31 94 59 / 0.08);
   --control-sm: 44px;
   --pill-padding-inline: 10px;
   --duration-spin: 700ms;
@@ -180,16 +180,16 @@
 
 :root {
   /* Camera stage overlays */
-  --color-stage-tag: rgb(14 26 19 / 0.78);
-  --color-stage-tag-outside: rgb(179 19 43 / 0.94);
-  --color-stage-scrim: rgb(14 26 19 / 0.64);
+  --color-stage-tag: rgb(20 35 27 / 0.78);
+  --color-stage-tag-outside: rgb(142 46 31 / 0.94);
+  --color-stage-scrim: rgb(20 35 27 / 0.64);
 
   /* Authentication scene */
-  --color-auth-zone: rgb(199 242 212 / 0.12);
-  --color-auth-tag: rgb(14 26 19 / 0.78);
-  --color-auth-outside-tag: rgb(179 19 43 / 0.94);
-  --color-auth-pill: rgb(14 26 19 / 0.62);
-  --color-auth-shade: rgb(14 26 19 / 0.68);
+  --color-auth-zone: rgb(220 235 223 / 0.12);
+  --color-auth-tag: rgb(20 35 27 / 0.78);
+  --color-auth-outside-tag: rgb(142 46 31 / 0.94);
+  --color-auth-pill: rgb(20 35 27 / 0.62);
+  --color-auth-shade: rgb(20 35 27 / 0.68);
   --auth-scene-min-height: 220px;
   --duration-pasture-drift: 28s;
   --duration-lindero-reveal: 900ms;
@@ -203,16 +203,16 @@
   --glass-fill: var(--color-surface);
   --glass-fill-strong: var(--color-surface);
   --glass-fill-subtle: var(--color-well);
-  --glass-fill-brand: rgb(255 200 0 / 0.22);
+  --glass-fill-brand: rgb(224 138 46 / 0.22);
   --glass-border: var(--ink-tinta);
-  --glass-border-subtle: rgb(21 18 14 / 0.16);
+  --glass-border-subtle: rgb(31 42 36 / 0.16);
   --glass-highlight: 0 0 #0000;
   --glass-blur: 0px;
   --glass-saturate: 100%;
   --glass-shadow: 0 0 #0000;
-  --glass-shadow-hover: 0 12px 22px -14px rgb(21 18 14 / 0.5);
-  --glass-dark-fill: rgb(21 18 14 / 0.82);
-  --glass-dark-border: rgb(250 250 245 / 0.3);
+  --glass-shadow-hover: 0 12px 22px -14px rgb(31 42 36 / 0.5);
+  --glass-dark-fill: rgb(31 42 36 / 0.82);
+  --glass-dark-border: rgb(247 243 234 / 0.3);
   --gradient-brand: linear-gradient(var(--ink-tinta), var(--ink-tinta));
   --gradient-brand-soft: linear-gradient(var(--ink-maiz), var(--ink-maiz));
 }

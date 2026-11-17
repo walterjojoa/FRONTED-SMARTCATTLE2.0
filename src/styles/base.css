@@ -46,7 +46,7 @@ body {
 
 /* Each page prints in its own ink. */
 :root, [data-ink='tinta'] { --route-ink: var(--ink-tinta); --route-on-ink: var(--ink-papel); --route-accent: var(--ink-maiz); }
-[data-ink='verde'] { --route-ink: var(--ink-verde); --route-on-ink: var(--ink-tinta); --route-accent: var(--ink-maiz); }
+[data-ink='verde'] { --route-ink: var(--ink-verde); --route-on-ink: var(--ink-papel); --route-accent: var(--ink-maiz); }
 [data-ink='cobalto'] { --route-ink: var(--ink-cobalto); --route-on-ink: #FFFFFF; --route-accent: var(--ink-maiz); }
 [data-ink='naranja'] { --route-ink: var(--ink-naranja); --route-on-ink: var(--ink-tinta); --route-accent: var(--ink-papel); }
 [data-ink='maiz'] { --route-ink: var(--ink-maiz); --route-on-ink: var(--ink-tinta); --route-accent: var(--ink-fucsia); }
