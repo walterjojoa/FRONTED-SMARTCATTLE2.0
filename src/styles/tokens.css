@@ -1,78 +1,147 @@
 :root {
   color-scheme: light;
 
-  /* Color - surfaces */
-  --color-ground: #F7FCF8;
+  /*
+   * "Pradera al atardecer" is the palette. Everything below refers to these
+   * twenty values, and the names the components already use are aliases onto
+   * them: a component asking for --color-brand gets --color-primary, so the
+   * palette changes in one place instead of across eighty stylesheets.
+   */
+
+  /* Palette - backgrounds */
+  --color-bg: #F7F3EA;
   --color-surface: #FFFFFF;
-  --color-surface-raised: #FFFFFF;
-  --color-well: #ECF8EF;
-  --color-rule: #C7E4D0;
-  --color-rule-strong: #6B8574;
+  --color-surface-alt: #EFE8DA;
+  --color-border: #E3DCCD;
 
-  /* Color - ink */
-  --color-ink: #0F2418;
-  --color-ink-muted: #3D5446;
-  --color-ink-subtle: #5C7365;
+  /* Palette - text */
+  --color-text: #1F2A24;
+  --color-text-muted: #5B6660;
+  --color-text-inverse: #F7F3EA;
 
-  /* Color - brand */
-  --color-brand: #16A34A;
-  --color-brand-strong: #15803D;
-  --color-brand-hover: #22C55E;
-  --color-on-brand: #FFFFFF;
-  --color-on-brand-muted: #DCFCE7;
+  /* Palette - brand */
+  --color-primary: #1F5E3B;
+  --color-primary-hover: #174A2E;
+  --color-primary-soft: #DCEBDF;
+  --color-accent: #E08A2E;
+  --color-accent-hover: #C9761F;
+  --color-accent-soft: #FBEBD6;
 
-  /* Color - pastel accents (legacy earth tokens now carry the sky role) */
-  --color-mint: #C7F2D4;
-  --color-mint-ink: #14532D;
-  --color-sky: #CDEBFF;
-  --color-sky-ink: #075985;
-  --color-butter: #FFF1B8;
-  --color-butter-ink: #713F12;
-  --color-peach: #FFD9C7;
-  --color-peach-ink: #7C2D12;
-  --color-lilac: #E4DCFF;
-  --color-lilac-ink: #4C1D95;
-  --color-earth: #0284C7;
-  --color-earth-surface: #CDEBFF;
-  --color-earth-ink: #075985;
-  --color-on-brand-surface: rgb(255 255 255 / 0.14);
-  --color-backdrop: rgb(14 26 19 / 0.48);
-  --color-sage: #4ADE80;
+  /* Palette - sidebar */
+  --color-sidebar: #14231B;
+  --color-sidebar-text: #D9E3DC;
+  --color-sidebar-active: #1F5E3B;
 
-  /* Color - states */
-  --color-safe: #16A34A;
-  /* Text on tinted state surfaces needs a darker ink to reach 4.5:1. */
-  --color-safe-ink: #14532D;
-  --color-inactive-ink: #3D5446;
-  --color-safe-surface: #DCFCE7;
-  --color-warning: #D97706;
-  --color-warning-ink: #92400E;
-  --color-warning-surface: #FEF3C7;
-  --color-critical: #EF233C;
-  --color-critical-ink: #B3132B;
-  --color-critical-surface: #FFE4E8;
-  --color-alarm: #EF233C;
-  --color-alarm-hover: #C81E35;
-  --color-alarm-ink: #B3132B;
-  --color-alarm-surface: #FFE4E8;
-  --color-info: #0284C7;
-  --color-info-ink: #075985;
-  --color-info-surface: #E0F2FE;
-  --color-inactive: #5C7365;
-  --color-inactive-surface: #ECF8EF;
+  /* Palette - states */
+  --color-success: #2E8B57;
+  --color-warning: #D9A21B;
+  --color-danger: #C2412D;
+  --color-info: #2F6F8F;
 
-  /* Color - camera stage */
-  --color-stage: #0E1A13;
-  --color-stage-raised: #16251C;
-  --color-stage-ink: #F7FCF8;
-  --color-stage-ink-muted: #B9CFC0;
-  --color-overlay-cattle: #4ADE80;
-  --color-overlay-person: #FACC15;
+  /*
+   * Inks for text sitting on a tinted surface. The palette's own colours are
+   * chosen against white and do not all clear 4.5:1 on their own tint, so each
+   * one has a darker partner. Checked, not guessed: tools/check-contrast.mjs.
+   */
+  --color-success-ink: #1E5C39;
+  --color-warning-ink: #6E5009;
+  /*
+   * The amber of --color-warning reaches only 2.08:1 on the cream page, so a thin
+   * line or a lone icon drawn in it is not perceivable (3:1 is the bar for a
+   * non-text graphic). It stays as specified wherever it is a fill with dark ink
+   * over it -- pills, hatches, badges -- and anything drawn as a stroke uses this
+   * darker one instead, at 3.51:1.
+   */
+  --color-warning-strong: #A87912;
+  --color-danger-ink: #8E2E1F;
+  --color-info-ink: #22526A;
+  --color-success-soft: #DCEBDF;
+  --color-warning-soft: #FBEBD6;
+  --color-danger-soft: #F7E2DE;
+  --color-info-soft: #DEEAF0;
+
+  /* Color - surfaces (aliases) */
+  --color-ground: var(--color-bg);
+  --color-surface-raised: var(--color-surface);
+  --color-well: var(--color-surface-alt);
+  --color-rule: var(--color-border);
+  --color-rule-strong: var(--color-text-muted);
+
+  /* Color - ink (aliases) */
+  --color-ink: var(--color-text);
+  --color-ink-muted: var(--color-text-muted);
+  --color-ink-subtle: var(--color-text-muted);
+
+  /* Color - brand (aliases) */
+  --color-brand: var(--color-primary);
+  --color-brand-strong: var(--color-primary-hover);
+  --color-brand-hover: var(--color-primary-hover);
+  --color-on-brand: var(--color-text-inverse);
+  --color-on-brand-muted: var(--color-primary-soft);
+
+  /*
+   * The five pastels carried the wizard steps and the badges. They now alternate
+   * between the two soft tints, and every ink on an amber tint is --color-text:
+   * white on amber fails, and amber on amber cannot be read at all.
+   */
+  --color-mint: var(--color-primary-soft);
+  --color-mint-ink: var(--color-primary);
+  --color-sky: var(--color-accent-soft);
+  --color-sky-ink: var(--color-text);
+  --color-butter: var(--color-accent-soft);
+  --color-butter-ink: var(--color-text);
+  --color-peach: var(--color-accent-soft);
+  --color-peach-ink: var(--color-text);
+  --color-lilac: var(--color-primary-soft);
+  --color-lilac-ink: var(--color-primary);
+  --color-earth: var(--color-info);
+  --color-earth-surface: var(--color-info-soft);
+  --color-earth-ink: var(--color-info-ink);
+  --color-on-brand-surface: rgb(247 243 234 / 0.14);
+  --color-backdrop: rgb(20 35 27 / 0.48);
+  --color-sage: var(--color-success);
+
+  /* Color - states (aliases) */
+  --color-safe: var(--color-success);
+  --color-safe-ink: var(--color-success-ink);
+  --color-safe-surface: var(--color-success-soft);
+  --color-warning-surface: var(--color-warning-soft);
+  --color-critical: var(--color-danger);
+  --color-critical-ink: var(--color-danger-ink);
+  --color-critical-surface: var(--color-danger-soft);
+  --color-alarm: var(--color-danger);
+  --color-alarm-hover: #A33425;
+  --color-alarm-ink: var(--color-danger-ink);
+  --color-alarm-surface: var(--color-danger-soft);
+  --color-info-surface: var(--color-info-soft);
+  --color-inactive: var(--color-text-muted);
+  --color-inactive-ink: var(--color-text-muted);
+  --color-inactive-surface: var(--color-surface-alt);
+
+  /* Color - camera stage: dark, so it borrows the sidebar's end of the palette */
+  --color-stage: var(--color-sidebar);
+  --color-stage-raised: #1C2F24;
+  --color-stage-ink: var(--color-text-inverse);
+  --color-stage-ink-muted: var(--color-sidebar-text);
+
+  /* Detections: inside the zone, a person, the boundary, outside the zone */
+  --color-overlay-cattle: var(--color-success);
+  --color-overlay-person: var(--color-accent);
   --color-overlay-lindero: #FFFFFF;
-  --color-overlay-outside: #FF3355;
+  --color-overlay-outside: var(--color-danger);
 
-  /* Focus */
-  --focus-ring: 0 0 0 2px var(--color-surface-raised), 0 0 0 4px var(--color-brand);
+  /* Focus: amber, so it reads against both the cream page and the green buttons */
+  --focus-ring: 0 0 0 3px rgb(224 138 46 / 0.45);
+
+  /*
+   * Shadows and a highlight. Here rather than loose in the stylesheets that drop
+   * them, and tinted with the text colour instead of pure black: black over cream
+   * reads grey, the palette's own dark green-grey keeps the page warm.
+   */
+  --color-shadow-soft: rgb(31 42 36 / 0.16);
+  --color-shadow-strong: rgb(31 42 36 / 0.25);
+  --color-shadow-deep: rgb(20 35 27 / 0.6);
+  --color-glint: rgb(255 255 255 / 0.45);
 
   /* Hatch - outside-zone / critical pattern */
   --hatch-critical: repeating-linear-gradient(135deg, var(--color-critical) 0 2px, transparent 2px 7px);
@@ -130,9 +199,9 @@
   --radius-full: 999px;
 
   /* Elevation */
-  --shadow-raised: 0 2px 4px rgb(15 36 24 / 0.04), 0 12px 28px rgb(22 163 74 / 0.08);
-  --shadow-overlay: 0 20px 50px rgb(15 36 24 / 0.16), 0 8px 24px rgb(22 163 74 / 0.08);
-  --shadow-glow-brand: 0 0 0 4px rgb(34 197 94 / 0.16), 0 8px 24px rgb(34 197 94 / 0.18);
+  --shadow-raised: 0 2px 4px rgb(31 42 36 / 0.05), 0 12px 28px rgb(31 94 59 / 0.08);
+  --shadow-overlay: 0 20px 50px rgb(31 42 36 / 0.16), 0 8px 24px rgb(31 94 59 / 0.08);
+  --shadow-glow-brand: 0 0 0 4px rgb(224 138 46 / 0.20), 0 8px 24px rgb(31 94 59 / 0.18);
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -151,7 +220,7 @@
   --content-max: 1440px;
 
   /* Base UI components */
-  --color-hover: rgb(22 163 74 / 0.08);
+  --color-hover: rgb(31 94 59 / 0.08);
   --control-sm: 44px;
   --pill-padding-inline: 10px;
   --duration-spin: 700ms;
@@ -169,16 +238,16 @@
 
 :root {
   /* Camera stage overlays */
-  --color-stage-tag: rgb(14 26 19 / 0.78);
-  --color-stage-tag-outside: rgb(179 19 43 / 0.94);
-  --color-stage-scrim: rgb(14 26 19 / 0.64);
+  --color-stage-tag: rgb(20 35 27 / 0.78);
+  --color-stage-tag-outside: rgb(142 46 31 / 0.94);
+  --color-stage-scrim: rgb(20 35 27 / 0.64);
 
   /* Authentication scene */
-  --color-auth-zone: rgb(199 242 212 / 0.12);
-  --color-auth-tag: rgb(14 26 19 / 0.78);
-  --color-auth-outside-tag: rgb(179 19 43 / 0.94);
-  --color-auth-pill: rgb(14 26 19 / 0.62);
-  --color-auth-shade: rgb(14 26 19 / 0.68);
+  --color-auth-zone: rgb(220 235 223 / 0.12);
+  --color-auth-tag: rgb(20 35 27 / 0.78);
+  --color-auth-outside-tag: rgb(142 46 31 / 0.94);
+  --color-auth-pill: rgb(20 35 27 / 0.62);
+  --color-auth-shade: rgb(20 35 27 / 0.68);
   --auth-scene-min-height: 220px;
   --duration-pasture-drift: 28s;
   --duration-lindero-reveal: 900ms;
@@ -189,29 +258,29 @@
 :root {
   /* Glass (Dashboard V15) - page backdrop */
   --glass-backdrop:
-    radial-gradient(60rem 40rem at 8% -10%, rgb(187 247 208 / 0.75), transparent 60%),
-    radial-gradient(50rem 36rem at 100% 0%, rgb(205 235 255 / 0.7), transparent 60%),
-    radial-gradient(44rem 34rem at 70% 110%, rgb(255 241 184 / 0.55), transparent 60%),
-    linear-gradient(180deg, #F3FBF5 0%, #EEF8F2 100%);
+    radial-gradient(60rem 40rem at 8% -10%, rgb(220 235 223 / 0.85), transparent 60%),
+    radial-gradient(50rem 36rem at 100% 0%, rgb(251 235 214 / 0.75), transparent 60%),
+    radial-gradient(44rem 34rem at 70% 110%, rgb(239 232 218 / 0.8), transparent 60%),
+    linear-gradient(180deg, #F7F3EA 0%, #F2ECE0 100%);
 
   /* Glass - panels */
   --glass-fill: rgb(255 255 255 / 0.62);
   --glass-fill-strong: rgb(255 255 255 / 0.78);
   --glass-fill-subtle: rgb(255 255 255 / 0.42);
-  --glass-fill-brand: rgb(22 163 74 / 0.10);
+  --glass-fill-brand: rgb(31 94 59 / 0.10);
   --glass-border: rgb(255 255 255 / 0.72);
-  --glass-border-subtle: rgb(15 36 24 / 0.08);
+  --glass-border-subtle: rgb(31 42 36 / 0.08);
   --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.85);
   --glass-blur: 18px;
   --glass-saturate: 160%;
-  --glass-shadow: 0 1px 2px rgb(15 36 24 / 0.04), 0 18px 40px -12px rgb(22 101 52 / 0.18);
-  --glass-shadow-hover: 0 2px 4px rgb(15 36 24 / 0.05), 0 26px 56px -14px rgb(22 101 52 / 0.26);
+  --glass-shadow: 0 1px 2px rgb(31 42 36 / 0.05), 0 18px 40px -12px rgb(31 94 59 / 0.18);
+  --glass-shadow-hover: 0 2px 4px rgb(31 42 36 / 0.06), 0 26px 56px -14px rgb(31 94 59 / 0.26);
 
   /* Glass - dark (over photos and the camera stage) */
-  --glass-dark-fill: rgb(14 26 19 / 0.46);
+  --glass-dark-fill: rgb(20 35 27 / 0.46);
   --glass-dark-border: rgb(255 255 255 / 0.18);
 
   /* Glass - accents */
-  --gradient-brand: linear-gradient(135deg, #22C55E 0%, #16A34A 55%, #15803D 100%);
-  --gradient-brand-soft: linear-gradient(135deg, rgb(187 247 208 / 0.9), rgb(205 235 255 / 0.8));
+  --gradient-brand: linear-gradient(135deg, #2E8B57 0%, #1F5E3B 55%, #174A2E 100%);
+  --gradient-brand-soft: linear-gradient(135deg, rgb(220 235 223 / 0.9), rgb(251 235 214 / 0.85));
 }

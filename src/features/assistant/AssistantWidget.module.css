@@ -15,7 +15,7 @@
   color: var(--color-safe-ink);
   cursor: pointer;
 }
-.launcherRobot { width: 100%; height: auto; filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.18)); }
+.launcherRobot { width: 100%; height: auto; filter: drop-shadow(0 6px 10px var(--color-shadow-soft)); }
 .headRobot { width: 2.75rem; height: 3.25rem; flex-shrink: 0; }
 
 /* Says who she is once, then gets out of the way. */
@@ -54,7 +54,7 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   background: var(--color-surface, Canvas);
-  box-shadow: var(--glass-highlight), 0 12px 32px rgb(0 0 0 / 0.25);
+  box-shadow: var(--glass-highlight), 0 12px 32px var(--color-shadow-strong);
 }
 
 .head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-rule); }

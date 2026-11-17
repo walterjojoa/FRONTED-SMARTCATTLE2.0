@@ -27,7 +27,7 @@
 .time { padding-top: 1px; color: var(--color-ink-muted); font-size: var(--text-sm); font-weight: var(--weight-medium); }
 .icon { margin-top: 1px; }
 .info .icon { color: var(--color-ink-subtle); }
-.warning .icon { color: var(--color-warning); }
+.warning .icon { color: var(--color-warning-strong); }
 .critical .icon { color: var(--color-critical); }
 
 .body { display: grid; min-width: 0; }

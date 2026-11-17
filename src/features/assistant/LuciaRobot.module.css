@@ -1,27 +1,27 @@
 /* Lucía's own colours, the same in both themes: she is a character, not part of the interface. */
 .robot {
-  --lucia-line: #1f2a44;
-  --lucia-metal: #e4e8f0;
-  --lucia-shade: #cbd2df;
-  --lucia-visor: #1d4058;
-  --lucia-light: #5ff0f5;
-  --lucia-straw: #e8c068;
-  --lucia-straw-line: #a57a26;
-  --lucia-band: #15803d;
+  --lucia-line: var(--color-text);
+  --lucia-metal: var(--color-surface-alt);
+  --lucia-shade: var(--color-border);
+  --lucia-visor: var(--color-sidebar);
+  --lucia-light: var(--color-accent);
+  --lucia-straw: var(--color-accent-soft);
+  --lucia-straw-line: var(--color-accent-hover);
+  --lucia-band: var(--color-primary);
   display: block;
   overflow: visible;
 }
 
 .metal { fill: var(--lucia-metal); stroke: var(--lucia-line); stroke-width: 4; stroke-linejoin: round; }
 .shade { fill: var(--lucia-shade); }
-.seam { fill: none; stroke: #2fc9d0; stroke-width: 2.5; stroke-linejoin: round; }
+.seam { fill: none; stroke: var(--color-accent); stroke-width: 2.5; stroke-linejoin: round; }
 .visor { fill: var(--lucia-visor); stroke: var(--lucia-line); stroke-width: 4; }
-.glint { fill: none; stroke: rgb(255 255 255 / 0.45); stroke-width: 4; stroke-linecap: round; }
+.glint { fill: none; stroke: var(--color-glint); stroke-width: 4; stroke-linecap: round; }
 .light { fill: var(--lucia-light); }
 .straw { fill: var(--lucia-straw); stroke: var(--lucia-line); stroke-width: 4; stroke-linejoin: round; }
 .band { fill: var(--lucia-band); stroke: var(--lucia-line); stroke-width: 3; }
 .weave { fill: none; stroke: var(--lucia-straw-line); stroke-width: 2; stroke-linecap: round; }
-.shadow { fill: rgb(31 42 68 / 0.16); }
+.shadow { fill: var(--color-shadow-soft); }
 
 /* Every moving part turns around its real joint, in the drawing's own coordinates. */
 .figure, .head, .hat, .armLeft, .armRight, .eyes, .mouth, .shadow { transform-box: view-box; }
