@@ -9,6 +9,14 @@
   --ink-naranja: #D9A21B;
   --ink-tinta: #1F2A24;
   --ink-papel: #F7F3EA;
+  /*
+   * Two accents for the inside of a coloured block, because one does not reach.
+   * --ink-maiz over --ink-verde is 2.88:1 and over --ink-fucsia 1.92:1, under the
+   * 3:1 a non-text graphic needs; these clear it on every ground they are used on.
+   * Measured by tools/check-contrast.mjs, which fails the build if that stops being true.
+   */
+  --ink-maiz-claro: #F5C98B;
+  --ink-verde-hondo: #174A2E;
 
   /* Color - surfaces */
   --color-ground: #F7F3EA;
