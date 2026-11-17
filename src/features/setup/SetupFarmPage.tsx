@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Fence, LandPlot, LogOut, Plus, Trash2 } from 'lu
 import { useNavigate } from 'react-router'
 import { describeApiError } from '../../api/errors'
 import { useAuth } from '../../app/auth/useAuth'
+import { onboardingOf, START_PAGES } from '../onboarding/onboardingModel'
 import { Button, TextField } from '../../components/ui'
 import { useSlowRequest, WAKING_NOTE } from '../../lib/useSlowRequest'
 import { can } from '../../lib/permissions'
@@ -42,6 +43,8 @@ export function SetupFarmPage() {
   const cameras = useResource(signal => listAllCameras({ signal }), { refreshMs: 10_000 })
   const cameraList = cameras.data ?? []
   const isOwner = session ? can(session.user.role, 'farm:edit') : false
+  const startPage = (session && onboardingOf(session.user.id)?.start) || '/'
+  const startLabel = `Ir a ${START_PAGES.find(page => page.id === startPage)?.title.toLowerCase() ?? 'el panel'}`
 
   const choose = (value: Kind) => {
     setKind(value)
@@ -145,7 +148,9 @@ export function SetupFarmPage() {
       {step === 'cameras' && <motion.div key="cameras" className={styles.form} {...swap}>
         <CameraConnect cameras={cameraList} onChanged={cameras.reload} />
         <div className={styles.actions}>
-          <Button type="button" onClick={() => navigate('/', { replace: true })}>Ir al panel</Button>
+          {/* Where they said they wanted to land, back in the welcome. Sending
+              everyone to the dashboard made that question decorative. */}
+          <Button type="button" onClick={() => navigate(startPage, { replace: true })}>{startLabel}</Button>
         </div>
       </motion.div>}
     </AnimatePresence>

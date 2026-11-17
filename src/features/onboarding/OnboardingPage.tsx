@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Check, Cctv, Smartphone, Clock } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useAuth } from '../../app/auth/useAuth'
@@ -12,20 +12,21 @@ import { firstNameOf } from '../../lib/personName'
 import { GOALS, saveOnboarding, START_PAGES, type Goal, type StartPage } from './onboardingModel'
 import styles from './OnboardingPage.module.css'
 
-type Step = 'hello' | 'goals' | 'start' | 'camera'
-const INK: Record<Step, string> = { hello: 'verde', goals: 'fucsia', start: 'cobalto', camera: 'maiz' }
+type Step = 'hello' | 'goals' | 'start'
+const INK: Record<Step, string> = { hello: 'verde', goals: 'fucsia', start: 'cobalto' }
 
 export function OnboardingPage() {
   useDocumentTitle()
-  const { session, can } = useAuth()
+  const { session } = useAuth()
   const navigate = useNavigate()
   const reduce = useReducedMotion()
   const [step, setStep] = useState<Step>('hello')
   const [goals, setGoals] = useState<Goal[]>([])
   const [start, setStart] = useState<StartPage>('/')
   const name = session ? firstNameOf(session.user) : null
-  const configures = can('cameras:configure')
-  const steps: Step[] = configures ? ['hello', 'goals', 'start', 'camera'] : ['hello', 'goals', 'start']
+  // The camera is asked for once, in /setup, which is where it can actually be
+  // connected. Asking here as well made two wizards out of one arrival.
+  const steps: Step[] = ['hello', 'goals', 'start']
   const index = steps.indexOf(step)
 
   const finish = (to: string) => {
@@ -86,29 +87,13 @@ export function OnboardingPage() {
           </div>
         </>}
 
-        {step === 'camera' && <>
-          <h1 id="onboarding-question" className={styles.question}>¿Conectamos tu primera cámara?</h1>
-          <p className={styles.lead}>Solo le pones un nombre y pegas su enlace. También sirve un celular.</p>
-          <div className={styles.options}>
-            <button type="button" className={styles.option} onClick={() => finish('/cameras')}>
-              <Cctv size={28} aria-hidden="true" /><span className={styles.optionTitle}>Tengo una cámara</span><span>Con su enlace o su IP.</span>
-            </button>
-            <button type="button" className={styles.option} onClick={() => finish('/cameras?con=celular')}>
-              <Smartphone size={28} aria-hidden="true" /><span className={styles.optionTitle}>Usaré un celular</span><span>Sin enlace ni contraseña.</span>
-            </button>
-            <button type="button" className={styles.option} onClick={() => finish(start)}>
-              <Clock size={28} aria-hidden="true" /><span className={styles.optionTitle}>Más tarde</span><span>Te lo recordaré en Cámaras.</span>
-            </button>
-          </div>
-        </>}
-
         <div className={styles.actions}>
           {index > 0 && <button type="button" className={styles.back} onClick={() => setStep(steps[index - 1])}>
             <ArrowLeft size={20} aria-hidden="true" />Atrás
           </button>}
-          {step !== 'camera' && <button type="button" className={styles.next} onClick={next}>
-            {step === 'hello' ? 'Empecemos' : 'Seguir'}<ArrowRight size={20} aria-hidden="true" />
-          </button>}
+          <button type="button" className={styles.next} onClick={next}>
+            {step === 'start' ? 'Listo' : step === 'hello' ? 'Empecemos' : 'Seguir'}<ArrowRight size={20} aria-hidden="true" />
+          </button>
           <p className={styles.progress}>Paso {index + 1} de {steps.length}</p>
         </div>
       </motion.section>
