@@ -63,8 +63,17 @@ describe('addressProblem', () => {
   })
 
   it('lets cameras and phones through', () => {
-    for (const address of ['192.168.1.20:8080', '192.168.1.20:4747/video', 'rtsp://192.168.1.30', '1']) {
+    for (const address of ['192.168.1.20:8080', '192.168.1.20:4747/video', 'rtsp://192.168.1.30', '1',
+      'http://192.168.1.50:8080/video', '192.168.1.50:554', '7J0A12ABCDEF345']) {
       expect(addressProblem(address)).toBeNull()
+    }
+  })
+
+  it('stops text no camera can be reached at, before the request leaves', () => {
+    // Saving "abc" answered 201 and the camera simply never came online, with
+    // nothing on screen tying the silence to the value that was typed.
+    for (const address of ['abc', 'mi camara', 'ftp://192.168.1.50/live', '999.1.1.1', '192.168.1.50:70000']) {
+      expect(addressProblem(address)).toMatch(/Escribe la dirección de la cámara/)
     }
   })
 })
