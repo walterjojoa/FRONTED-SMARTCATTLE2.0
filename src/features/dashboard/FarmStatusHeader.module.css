@@ -48,7 +48,7 @@
   text-decoration: none;
 }
 
-.connect:hover { background: var(--ink-maiz); color: var(--ink-tinta); }
+.connect:hover { background: var(--ink-papel); color: var(--ink-tinta); }
 .connect:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
 .skeleton { display: inline-block; vertical-align: middle; }
