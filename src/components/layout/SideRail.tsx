@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
+import { displayName, initialsOf } from '../../lib/personName'
 import { navItems, profileItem } from '../../app/navigation'
 import { BrandMark } from '../ui/BrandMark'
 import { DataSourceBadge } from '../ui/DataSourceBadge'
@@ -17,7 +18,7 @@ function ActiveMarker() {
 export function SideRail() {
   const { session } = useAuth()
   const user = session?.user
-  const initials = user?.name.trim().split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase()
+  const initials = user ? initialsOf(user) : ''
   return <header className={styles.rail}>
     <div className={styles.wordmark}><BrandMark /></div>
     <nav aria-label="Principal" className={styles.navigation}>
@@ -38,7 +39,7 @@ export function SideRail() {
           {isActive && <ActiveMarker />}
           <span className={styles.avatar} aria-hidden="true">{initials}</span>
           <span className={styles.identity}>
-            <span className={styles.name}>{user?.name}</span>
+            <span className={styles.name}>{user ? displayName(user) : ''}</span>
             <span className={styles.role}>{user?.role === 'owner' ? 'Dueño' : 'Trabajador'}</span>
           </span>
         </>}

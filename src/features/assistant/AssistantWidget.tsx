@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Send, X } from 'lucide-react'
 import { useReducedMotion, motion } from 'motion/react'
 import { useAuth } from '../../app/auth/useAuth'
+import { displayName } from '../../lib/personName'
 import { herdCount } from '../../live/liveState'
 import { useLive } from '../../live/useLive'
 import { askAssistantModel, getAlertReport, getDailyReport, type AssistantTurn } from '../../services'
@@ -23,7 +24,9 @@ export function AssistantWidget() {
   const { session } = useAuth()
   const live = useLive()
   const reduce = useReducedMotion()
-  const name = session?.user.name
+  // Resolved here, so an account with no name is greeted by what is before the @
+  // instead of with a bare "¡Hola!".
+  const name = session ? displayName(session.user) : undefined
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)

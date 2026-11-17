@@ -7,7 +7,8 @@ import { useDocumentTitle } from '../../app/useDocumentTitle'
 import { PrintedCow } from '../../components/herd/PrintedCow'
 import { ease } from '../../motion'
 import { Lucero } from '../assistant/Lucero'
-import { ASSISTANT_NAME, firstName } from '../assistant/assistantEngine'
+import { ASSISTANT_NAME } from '../assistant/assistantEngine'
+import { firstNameOf } from '../../lib/personName'
 import { GOALS, saveOnboarding, START_PAGES, type Goal, type StartPage } from './onboardingModel'
 import styles from './OnboardingPage.module.css'
 
@@ -22,7 +23,7 @@ export function OnboardingPage() {
   const [step, setStep] = useState<Step>('hello')
   const [goals, setGoals] = useState<Goal[]>([])
   const [start, setStart] = useState<StartPage>('/')
-  const name = firstName(session?.user.name)
+  const name = session ? firstNameOf(session.user) : null
   const configures = can('cameras:configure')
   const steps: Step[] = configures ? ['hello', 'goals', 'start', 'camera'] : ['hello', 'goals', 'start']
   const index = steps.indexOf(step)
