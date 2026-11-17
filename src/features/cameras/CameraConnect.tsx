@@ -121,6 +121,9 @@ function SavedCard({ camera, live, previews, busy, canConnect, asksLogin, onConn
 }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // Removing a camera cannot be undone from here -- it would have to be added and
+  // connected again -- and the button sat next to Conectar, one slip away.
+  const [confirming, setConfirming] = useState(false)
   const status: CameraStatus = live?.status ?? camera.status
   const connected = status === 'online'
   const name = camera.name
@@ -144,7 +147,13 @@ function SavedCard({ camera, live, previews, busy, canConnect, asksLogin, onConn
       {connected
         ? <Button variant="secondary" size="sm" icon={Unplug} loading={busy} onClick={onDisconnect}>Desconectar</Button>
         : <Button size="sm" icon={Plug} loading={busy} disabled={!canConnect} onClick={() => { onConnect(username, password); setPassword('') }}>Conectar</Button>}
-      <Button variant="ghost" size="sm" icon={Trash2} disabled={busy} onClick={onDelete} aria-label={`Quitar ${name}`}>Quitar</Button>
+      {confirming
+        ? <span className={styles.confirm} role="group" aria-label={`Confirmar quitar ${name}`}>
+          <span className={styles.confirmAsk}>¿Quitar {name}?</span>
+          <Button variant="danger" size="sm" loading={busy} loadingLabel="Quitando…" onClick={onDelete}>Sí, quitar</Button>
+          <Button variant="ghost" size="sm" disabled={busy} onClick={() => setConfirming(false)}>Cancelar</Button>
+        </span>
+        : <Button variant="ghost" size="sm" icon={Trash2} disabled={busy} onClick={() => setConfirming(true)} aria-label={`Quitar ${name}`}>Quitar</Button>}
     </div>
   </GlassCard>
 }
