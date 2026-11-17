@@ -19,6 +19,8 @@ import styles from './CamerasPage.module.css'
 export function CamerasPage() {
   const { session } = useAuth()
   const [now, setNow] = useState(() => new Date())
+  // Seeing this page once is enough: from here on Inicio opens the dashboard instead of sending the person back.
+  useEffect(() => { skipCameraSetup() }, [])
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 30_000)
     return () => clearInterval(timer)
