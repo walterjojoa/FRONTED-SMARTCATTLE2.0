@@ -45,6 +45,10 @@ export function getPasswordStrength(value: string): PasswordStrength {
   const score = checks.filter(check => check.met).length
   // Registration requires all five checks, so only a full score is called strong.
   const labels = ['Muy débil', 'Muy débil', 'Débil', 'Media', 'Casi lista', 'Fuerte'] as const
+  // Length is the floor, not one more box to tick. "Abc12" meets four of the five
+  // and read as "Media", which tells someone their five-character password is
+  // halfway acceptable when it is refused outright.
+  if (!checks[0].met) return { score, label: labels[0], checks }
   return { score, label: labels[score], checks }
 }
 

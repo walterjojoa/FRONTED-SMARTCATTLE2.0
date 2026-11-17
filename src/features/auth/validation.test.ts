@@ -64,3 +64,16 @@ describe('auth validation', () => {
     expect(validatePasswordConfirmation('Abcdef1!', 'Abcdef1!')).toBeNull()
   })
 })
+
+describe('la longitud manda sobre el resto', () => {
+  it('se queda en Muy débil sin los ocho caracteres, cumpla lo que cumpla', () => {
+    // "Abc12" tiene mayúscula, minúscula y número: cuatro de cinco, y salía "Media".
+    expect(getPasswordStrength('Abc12')).toMatchObject({ label: 'Muy débil' })
+    expect(getPasswordStrength('Abc1!')).toMatchObject({ label: 'Muy débil' })
+  })
+
+  it('vuelve a puntuar en cuanto llega a ocho', () => {
+    expect(getPasswordStrength('Abc12345')).toMatchObject({ label: 'Casi lista' })
+    expect(getPasswordStrength('Abc12345!')).toMatchObject({ label: 'Fuerte' })
+  })
+})
