@@ -1,0 +1,43 @@
+# The headers Render serves for this site, in the repository rather than only in
+# the dashboard, so a change to them is reviewable and has a reason next to it.
+#
+# Render reads this when the service is synced from a blueprint. A service whose
+# headers were typed into the dashboard keeps using those until the blueprint is
+# synced, so changing this file alone does not change what is served.
+services:
+  - type: web
+    runtime: static
+    name: smartcattle2-frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    # Any path serves index.html: the routes live in the browser.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        # wasm-unsafe-eval, and not unsafe-eval: it allows compiling WebAssembly and
+        # nothing else, so eval() and new Function() stay blocked. Three.js needs it
+        # for the Draco decoder that unpacks the 3D models in the pasture and behind
+        # the login; without it the browser refuses the module and the scene never
+        # appears, with "WebAssembly.instantiate() violates CSP" in the console.
+        value: >-
+          default-src 'self';
+          script-src 'self' 'wasm-unsafe-eval';
+          style-src 'self' 'unsafe-inline';
+          img-src 'self' data: blob: https:;
+          media-src 'self' data: blob: https:;
+          font-src 'self' data:;
+          connect-src 'self' https: wss:;
+          object-src 'none';
+          base-uri 'self';
+          form-action 'self';
+          frame-ancestors 'none'
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=315360000; includeSubdomains; preload
