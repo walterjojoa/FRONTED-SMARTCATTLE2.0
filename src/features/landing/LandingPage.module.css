@@ -27,26 +27,13 @@
 }
 .page::before {
   content: '';
-  position: absolute;
+  position: fixed;
   inset: 0;
-  border: 14px solid var(--color-alarm);
-  opacity: 0;
+  z-index: 0;
+  width: min(100%, var(--rail-max));
+  margin-inline: auto;
+  border-inline: 1px solid var(--land-line);
   pointer-events: none;
-  transition: opacity 240ms var(--ease-out);
-}
-.stage[data-breached]::after { opacity: 1; }
-
-.photo, .canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.photo { object-fit: cover; }
-.mask { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; pointer-events: none; }
-
-.staticHero { position: absolute; inset: 0; display: grid; align-content: center; padding: var(--space-16) var(--space-4) 0; }
-.staticTitle {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 15vw, 15rem);
-  line-height: 1;
-  text-transform: uppercase;
-  color: var(--ink-papel);
 }
 
 .heroCopy {
