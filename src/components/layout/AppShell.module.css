@@ -1,4 +1,13 @@
-.shell { position: relative; min-height: 100dvh; }
+.shell {
+  position: relative;
+  min-height: 100dvh;
+  background:
+    radial-gradient(60rem 36rem at 18% -8%, rgb(49 242 191 / 0.16), transparent 60%),
+    radial-gradient(48rem 30rem at 100% 0%, rgb(52 188 255 / 0.12), transparent 60%),
+    radial-gradient(40rem 30rem at 70% 100%, rgb(228 255 51 / 0.1), transparent 60%),
+    var(--color-ground);
+  background-attachment: fixed;
+}
 
 /* Visually hidden until it receives keyboard focus. */
 .skipLink {
