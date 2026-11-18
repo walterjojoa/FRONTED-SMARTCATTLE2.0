@@ -27,31 +27,31 @@
   --color-rule-strong: #C3D2C9;
 
   /* Color - ink */
-  --color-ink: #1F2A24;
-  --color-ink-muted: #46524B;
-  --color-ink-subtle: #5B6660;
+  --color-ink: #10241F;
+  --color-ink-muted: #2C433A;
+  --color-ink-subtle: #4F635B;
 
   /* Color - brand */
-  --color-brand: #1F5E3B;
-  --color-brand-strong: #174A2E;
-  --color-brand-hover: #174A2E;
-  --color-on-brand: #F7F3EA;
-  --color-on-brand-muted: #DCEBDF;
+  --color-brand: #0A7F5F;
+  --color-brand-strong: #066B50;
+  --color-brand-hover: #066B50;
+  --color-on-brand: #FFFFFF;
+  --color-on-brand-muted: #D8F7EC;
 
   /* Color - pastel accents (legacy earth tokens now carry the sky role) */
-  --color-mint: #DCEBDF;
-  --color-mint-ink: #1F5E3B;
-  --color-sky: #DEEAF0;
-  --color-sky-ink: #22526A;
+  --color-mint: #E3FBF3;
+  --color-mint-ink: #066B50;
+  --color-sky: #E6F3FB;
+  --color-sky-ink: #075E8F;
   --color-butter: #FBEBD6;
-  --color-butter-ink: #1F2A24;
-  --color-peach: #F7E2DE;
-  --color-peach-ink: #8E2E1F;
-  --color-lilac: #DCEBDF;
-  --color-lilac-ink: #1F5E3B;
-  --color-earth: #2F6F8F;
-  --color-earth-surface: #DEEAF0;
-  --color-earth-ink: #22526A;
+  --color-butter-ink: #10241F;
+  --color-peach: #F6E4D9;
+  --color-peach-ink: #7A3416;
+  --color-lilac: #E3FBF3;
+  --color-lilac-ink: #066B50;
+  --color-earth: #0A86C9;
+  --color-earth-surface: #E6F3FB;
+  --color-earth-ink: #075E8F;
   --color-on-brand-surface: rgb(255 255 255 / 0.14);
   --color-backdrop: rgb(20 35 27 / 0.48);
   --color-sage: #2E8B57;
