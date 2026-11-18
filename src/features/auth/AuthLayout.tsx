@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useDocumentTitle } from '../../app/useDocumentTitle'
 import { BrandMark } from '../../components/ui/BrandMark'
 import { duration, ease } from '../../motion'
-import { PastureScene } from './PastureScene'
+import { AuthShowcase } from './AuthShowcase'
 import styles from './AuthLayout.module.css'
 
 interface AuthLayoutProps {
@@ -28,7 +28,7 @@ export function AuthLayout({ mode, title, description, children, footer, wide = 
     transition: { duration: reduce ? duration.micro : duration.state, ease: ease.out },
   }
   return <main className={styles.layout}>
-    <div className={styles.scene}><PastureScene /></div>
+    <div className={styles.scene}><AuthShowcase /></div>
     <section className={styles.panel} aria-labelledby="auth-title">
       <motion.div className={wide ? ` ` : styles.panelInner}
         initial={{ opacity: 0, y: reduce ? 0 : 28, scale: reduce ? 1 : 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }}
