@@ -84,12 +84,12 @@
 .demo {
   margin-top: var(--space-5); overflow: hidden;
   border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
-  background: var(--ink-maiz);
+  background: var(--glass-fill-subtle);
   box-shadow: var(--glass-highlight);
 }
 .demo summary {
   display: flex; align-items: center; gap: var(--space-3); min-height: var(--touch-min); padding: var(--space-2) var(--space-3);
-  color: var(--color-mint-ink); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; list-style: none;
+  color: var(--color-ink); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; list-style: none;
 }
 .demo summary::-webkit-details-marker { display: none; }
 .demo summary:focus-visible { border-radius: var(--radius-lg); }
