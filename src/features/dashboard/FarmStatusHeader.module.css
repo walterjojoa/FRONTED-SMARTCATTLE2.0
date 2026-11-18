@@ -1,24 +1,33 @@
+/* A frosted status card. The farm's state only tints it and colours the headline; the AlarmBanner above does the shouting. */
 .band {
+  --tint: transparent;
+  --headline: var(--color-ink);
   position: relative;
   display: grid;
   gap: var(--space-4);
-  margin: calc(var(--page-pad-top, 0px) * -1) calc(var(--page-pad, 0px) * -1) 0;
-  padding: var(--space-8) var(--page-pad, var(--space-4)) var(--space-5);
+  margin: 0 0 var(--space-6);
+  padding: var(--space-8);
   overflow: hidden;
-  background: var(--route-ink);
-  color: var(--route-on-ink);
-  transition: background-color var(--duration-slow) var(--ease-out), color var(--duration-slow) var(--ease-out);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, var(--tint), transparent 70%), var(--glass-fill-strong);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  color: var(--color-ink);
+  transition: background-color var(--duration-slow) var(--ease-out);
 }
 
-/* The whole band reprints in the ink of the farm's state: alarm red for critical, maiz for a warning. */
-.band[data-condition='critical'] { background: var(--color-alarm-ink); color: #FFFFFF; }
-.band[data-condition='warning'] { background: var(--ink-maiz); color: var(--ink-tinta); }
-.band[data-condition='unknown'] { background: var(--ink-tinta); color: var(--ink-papel); }
-.band[data-condition='no-cameras'] { background: var(--ink-maiz); color: var(--ink-tinta); }
+.band[data-condition='critical'] { --tint: rgb(255 181 71 / 0.16); --headline: var(--color-alarm-ink); }
+.band[data-condition='warning'] { --tint: rgb(217 162 27 / 0.14); --headline: var(--color-warning-ink); }
+.band[data-condition='no-cameras'] { --tint: rgb(217 162 27 / 0.1); }
+.band[data-condition='safe'] { --tint: rgb(31 122 77 / 0.1); --headline: var(--color-brand-strong); }
 
 .farm {
-  font-family: var(--font-stamp);
-  font-size: var(--text-lg);
+  color: var(--color-ink-subtle);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
   line-height: var(--leading-tight);
   overflow-wrap: anywhere;
 }
