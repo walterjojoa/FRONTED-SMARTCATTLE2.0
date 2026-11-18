@@ -217,24 +217,28 @@
 .pairLead { color: var(--land-ink); }
 .pairCont { font-weight: var(--weight-regular); color: var(--land-ink-subtle); }
 
-.close {
-  position: relative;
-  display: grid;
-  justify-items: start;
-  gap: var(--space-6);
-  padding: var(--space-16) var(--space-4) 9rem;
-  overflow: hidden;
-  background: var(--route-ink);
-  color: var(--route-on-ink);
+/* ---------- Capability mosaic ---------- */
+.mosaic { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-6); margin-top: var(--space-16); }
+.tile {
+  position: relative; grid-column: span 12; min-height: 320px; padding: var(--space-6); overflow: hidden;
+  border: 1px solid var(--land-line); border-radius: 16px; background: var(--land-ground-deep);
+  transition: border-color 200ms var(--ease-product), box-shadow 400ms var(--ease-product), transform 400ms var(--ease-out);
 }
-.closeTitle {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 15vw, 14rem);
-  font-weight: 400;
-  line-height: 0.98;
-  text-transform: uppercase;
+/* A faint corner light follows each tile's accent. */
+.tile::before { content: ''; position: absolute; right: -120px; top: -140px; width: 320px; height: 320px; border-radius: 50%; background: var(--tile-glow, rgb(49 242 191 / 0.16)); filter: blur(70px); opacity: 0.7; transition: opacity 400ms var(--ease-product); pointer-events: none; }
+.tile > * { position: relative; }
+.tile:nth-child(2) { --tile-glow: rgb(52 188 255 / 0.16); }
+.tile:nth-child(3) { --tile-glow: rgb(228 255 51 / 0.22); }
+.tile:nth-child(4) { --tile-glow: rgb(140 249 124 / 0.2); }
+.tile:nth-child(5) { --tile-glow: rgb(51 223 223 / 0.18); }
+.tile:hover { border-color: var(--land-line-strong); box-shadow: 0 20px 40px -24px rgb(11 29 27 / 0.3); transform: translateY(-3px); }
+.tile:hover::before { opacity: 1; }
+.tileTitle { font-size: var(--text-xl); font-weight: var(--weight-medium); letter-spacing: -0.004em; line-height: 1.2; }
+.tileText { max-width: 34rem; margin-top: var(--space-2); font-size: var(--text-sm); color: var(--land-ink-soft); }
+@media (min-width: 900px) {
+  .span7 { grid-column: span 7; }
+  .span5 { grid-column: span 5; }
 }
-.close .cta { background: var(--ink-tinta); color: var(--ink-papel); }
 
 .parade { position: absolute; inset: auto 0 0; height: 6rem; }
 .paradeCow { position: absolute; bottom: 0; left: -6rem; animation: parade 42s linear infinite; color: var(--ink-tinta); }
