@@ -31,18 +31,20 @@
   padding: 4px 8px;
   border-radius: 8px;
   background: var(--color-stage-tag);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   color: var(--color-stage-ink);
   font-size: 12px;
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   font-variant-numeric: tabular-nums;
   line-height: 1;
   white-space: nowrap;
 }
-.label.alignRight { transform: translate(-100%, calc(-100% - 2px)); }
-.label.below { transform: translateY(2px); }
-.label.below.alignRight { transform: translate(-100%, 2px); }
+.label.alignRight { transform: translate(-100%, calc(-100% - 4px)); }
+.label.below { transform: translateY(4px); }
+.label.below.alignRight { transform: translate(-100%, 4px); }
 .label.person { background: var(--color-overlay-person); color: var(--color-stage); }
-.label.outside { background: var(--color-stage-tag-outside); color: var(--color-surface-raised); }
+.label.outside { background: var(--color-stage-tag-outside); color: #FFFFFF; }
 
 .zoneLabel {
   position: absolute;
@@ -50,15 +52,14 @@
   color: var(--color-overlay-lindero);
   font-size: 11px;
   font-weight: var(--weight-semibold);
-  font-stretch: var(--stretch-condensed);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
 }
 
 @media (max-width: 599px) {
-  .label { font-size: 10px; padding: 2px 4px; }
+  .label { font-size: 10px; padding: 3px 6px; }
   .label:not(.outside):not(.person) { display: none; }
 }
 
