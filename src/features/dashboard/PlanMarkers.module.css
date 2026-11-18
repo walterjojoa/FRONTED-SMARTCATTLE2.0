@@ -1,31 +1,26 @@
-/* Cow and person markers. Tone variables are set by the plan (inside = green, outside = alarm red). */
+/* Tracked-animal and person markers on the night map. Tone comes from --cow-status (mint inside, amber outside). */
 .shadow { pointer-events: none; }
 
-.halo, .body, .patch, .head, .ear, .tail, .tailTip, .blaze {
-  transition: fill var(--duration-fast) var(--ease-out), stroke var(--duration-fast) var(--ease-out);
+.halo, .bracket, .body, .heading, .core {
+  transition: fill var(--duration-base) var(--ease-out), stroke var(--duration-base) var(--ease-out);
 }
 
-/* Status ground ring: the state reads from the ring and the tag even at small sizes. */
 .halo {
-  fill: color-mix(in srgb, var(--cow-status, var(--color-safe)) 14%, transparent);
-  stroke: color-mix(in srgb, var(--cow-status, var(--color-safe)) 60%, transparent);
+  fill: color-mix(in srgb, var(--cow-status, var(--color-action)) 12%, transparent);
+  stroke: color-mix(in srgb, var(--cow-status, var(--color-action)) 30%, transparent);
+  stroke-width: 1;
+}
+.bracket {
+  fill: none;
+  stroke: color-mix(in srgb, var(--cow-status, var(--color-action)) 70%, #F2FBF7);
   stroke-width: 1.3;
-}
-
-.body {
-  fill: var(--cow-body, var(--color-surface-raised));
-  stroke: var(--cow-outline, var(--color-ink));
-  stroke-width: 1.1;
+  stroke-linecap: round;
   stroke-linejoin: round;
+  opacity: 0.85;
 }
-.patch { fill: var(--cow-patch, var(--color-ink)); }
-.sheen { pointer-events: none; }
-.tail { fill: none; stroke: var(--cow-patch, var(--color-ink)); stroke-width: 1.5; stroke-linecap: round; }
-.tailTip { fill: var(--cow-patch, var(--color-ink)); }
-.ear {
-  fill: var(--cow-patch, var(--color-ink));
-  stroke: var(--cow-outline, var(--color-ink));
-  stroke-width: 0.8;
+.body {
+  fill: var(--cow-status, var(--color-action));
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--cow-status, var(--color-action)) 80%, transparent));
 }
 .earInner { fill: var(--color-peach); opacity: 0.9; }
 .head {
