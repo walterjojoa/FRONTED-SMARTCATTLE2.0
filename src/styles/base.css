@@ -30,7 +30,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;
-  scrollbar-color: var(--ink-tinta) var(--color-ground);
+  scrollbar-color: rgb(0 0 0 / 0.28) transparent;
 }
 
 body {
@@ -41,6 +41,7 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   font-synthesis: none;
+  font-feature-settings: 'cv11', 'ss03';
   -webkit-font-smoothing: antialiased;
 }
 
@@ -56,6 +57,7 @@ h1,
 h2,
 h3,
 h4 {
+  letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
   text-wrap: balance;
   font-weight: var(--weight-semibold);
