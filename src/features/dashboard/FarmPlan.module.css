@@ -234,12 +234,14 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
 .legendName { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
 .legendMeta { overflow: hidden; color: var(--color-ink-subtle); font-size: var(--text-xs); text-overflow: ellipsis; white-space: nowrap; }
 .legendMeta .warning { color: var(--color-warning-ink); }
-.legendMeta .critical { color: var(--color-critical-ink); }
+.legendMeta .critical { color: var(--color-alarm-ink); }
 .legendChevron { flex-shrink: 0; color: var(--color-ink-subtle); }
 
 /* Motion: the linderos draw in once; the alert point pulses three times. */
 @media (prefers-reduced-motion: no-preference) {
   .lots { animation: reveal var(--duration-lindero-reveal) var(--ease-out) 120ms both; }
+  .lindero { animation: march 1.6s linear infinite; }
+  .track { animation: march 2.4s linear infinite; }
   .pulse { transform-box: fill-box; transform-origin: center; animation: pulse 1.8s var(--ease-out) 700ms 3 both; }
   .cowPulse { animation: cowAlarmPulse var(--duration-outside-pulse) var(--ease-out) infinite; }
 }
@@ -247,6 +249,7 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
   .cowTagBackground, .cowTagText, .tool { transition: none; }
   .cowPulse { opacity: 0.75; }
 }
+@keyframes march { to { stroke-dashoffset: -26; } }
 @keyframes reveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
 @keyframes pulse { from { opacity: 0.8; transform: scale(1); } to { opacity: 0; transform: scale(2.4); } }
 @keyframes cowAlarmPulse { from { opacity: 0.65; transform: scale(1); } to { opacity: 0; transform: scale(1.6); } }
