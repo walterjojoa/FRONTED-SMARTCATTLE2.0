@@ -1,43 +1,31 @@
-.page { background: var(--ink-tinta); color: var(--ink-papel); overflow-x: clip; }
+/*
+ * Landing palette: a sage-mist ground instead of plain white, deep pine-petrol chapters instead of slate,
+ * mint and lime for action, sky for water and depth, amber (not red) for the one alert.
+ */
+.page {
+  --land-ground: #EDF2EE;
+  --land-ground-deep: #E1EAE3;
+  --land-surface: #F7FAF7;
+  --land-line: rgb(16 36 31 / 0.08);
+  --land-line-strong: rgb(16 36 31 / 0.14);
+  --land-ink: #10241F;
+  --land-ink-soft: #33493F;
+  --land-ink-subtle: #556860;
+  --land-night: #0B1D1B;
+  --land-night-deep: #071412;
+  --land-night-raised: #132B28;
+  --land-night-line: rgb(214 255 236 / 0.1);
+  --land-night-copy: #B4C8C0;
+  --land-night-fine: #86A097;
+  --land-alert: #FFB547;
+  --land-alert-ink: #7A4A00;
 
-.bar {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: var(--z-overlay);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--ink-tinta);
+  position: relative;
+  background: var(--land-ground);
+  color: var(--land-ink);
+  overflow-x: clip;
 }
-.barLinks { display: flex; align-items: center; gap: var(--space-2); }
-.login, .register {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--touch-min);
-  padding-inline: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  text-decoration: none;
-  white-space: nowrap;
-}
-.login { color: var(--ink-papel); }
-.register { background: var(--ink-maiz); color: var(--ink-tinta); }
-
-/* Scroll story: the track gives the scroll length, the stage stays pinned while it plays. */
-.track { position: relative; height: 620vh; }
-.track[data-reduce] { height: 100dvh; }
-.stage {
-  position: sticky;
-  top: 0;
-  height: 100dvh;
-  overflow: hidden;
-  background: var(--ink-tinta);
-}
-
-/* The alert beat reprints the frame of the whole stage. */
-.stage::after {
+.page::before {
   content: '';
   position: absolute;
   inset: 0;
