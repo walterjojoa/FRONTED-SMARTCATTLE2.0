@@ -28,9 +28,9 @@
 .danger { background: var(--color-alarm-ink); color: var(--color-on-brand); }
 
 @media (hover: hover) and (pointer: fine) {
-  .primary:hover:not(:disabled) { background: var(--ink-maiz); color: var(--ink-tinta); }
-  .secondary:hover:not(:disabled) { background: var(--ink-maiz); }
-  .ghost:hover:not(:disabled) { background: var(--color-well); }
+  .primary:hover:not(:disabled) { background: var(--color-action-hover); }
+  .secondary:hover:not(:disabled) { background: #F5F8FA; }
+  .ghost:hover:not(:disabled) { background: var(--color-hover); }
   .danger:hover:not(:disabled) { background: var(--color-alarm-hover); }
 }
 .button:active:not(:disabled) { transform: scale(0.97); }
