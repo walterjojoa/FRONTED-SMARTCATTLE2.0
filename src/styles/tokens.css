@@ -129,7 +129,7 @@
 
   /* Type - tracking */
   --tracking-tight: -0.02em;
-  --tracking-label: 0.04em;
+  --tracking-label: 0;
 
   /* Spacing - 4px base */
   --space-1: 0.25rem;
@@ -144,16 +144,16 @@
   --space-16: 4rem;
 
   /* Radius */
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: 4px;
-  --radius-xl: 6px;
-  --radius-full: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
 
   /* Elevation */
-  --shadow-raised: 0 2px 4px rgb(31 42 36 / 0.08), 0 12px 24px -12px rgb(31 42 36 / 0.3);
-  --shadow-overlay: 0 24px 48px -16px rgb(31 42 36 / 0.45);
-  --shadow-glow-brand: 0 8px 18px -8px rgb(31 42 36 / 0.5);
+  --shadow-raised: 0 1px 2px rgb(21 30 41 / 0.05), 0 8px 24px -12px rgb(12 25 39 / 0.14);
+  --shadow-overlay: 0 6px 8px rgb(12 25 39 / 0.05), 0 16px 20px rgb(12 25 39 / 0.06), 0 50px 60px rgb(12 25 39 / 0.1);
+  --shadow-glow-brand: 0 8px 20px -8px rgb(49 242 191 / 0.55);
 
   /* Motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -161,6 +161,47 @@
   --duration-fast: 140ms;
   --duration-base: 220ms;
   --duration-slow: 600ms;
+
+
+  /* Increase-derived system: bright mint actions with ink text, lime chips, slate dark chapter, mono annotations. */
+  --color-action: #31F2BF;
+  --color-action-hover: #15CB9A;
+  --color-on-action: #10241F;
+  --color-lime: #E4FF33;
+  --color-lime-hover: #DAF200;
+  --color-proof: #F6FADF;
+  --color-dark: #0B1D1B;
+  --color-dark-raised: #132B28;
+  --color-dark-rule: rgb(255 255 255 / 0.1);
+  --color-dark-copy: #B4C8C0;
+  --color-dark-fine: #86A097;
+  --color-dark-edge: #4E6B63;
+  --color-rail: #DCE6DF;
+  --ribbon-1: #DEFF34;
+  --ribbon-2: #8CF97C;
+  --ribbon-3: #65F75F;
+  --ribbon-4: #12F0AA;
+  --ribbon-5: #45F4BC;
+  --ribbon-6: #33DFDF;
+  --ribbon-7: #01D3D8;
+  --ribbon-8: #02B7F1;
+  --ribbon-9: #34C8F4;
+  --ribbon-10: #34BCFF;
+  --ribbon-11: #02A7FF;
+  --font-mono: 'IBM Plex Mono', 'Input Mono', 'Courier New', monospace;
+  --rail-max: 1160px;
+  /* Deep pine night: side rail, alarm banner and the live map canvas. */
+  --night: #0B1D1B;
+  --night-deep: #071412;
+  --night-raised: #132B28;
+  --night-line: rgb(214 255 236 / 0.1);
+  --night-ink: #F2FBF7;
+  --night-copy: #B4C8C0;
+  --night-fine: #86A097;
+  --color-amber: #FFB547;
+  --color-amber-ink: #2A1A00;
+  --ease-product: cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-action: 0 1px 2px rgb(21 30 41 / 0.05);
 
   /* Layout */
   --rail-width: 232px;
