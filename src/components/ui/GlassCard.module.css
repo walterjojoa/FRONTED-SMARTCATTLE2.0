@@ -12,17 +12,19 @@
   transition: box-shadow var(--duration-base) var(--ease-out), background-color var(--duration-fast);
 }
 
-.default, .strong { background: var(--color-surface); }
-.subtle { background: var(--color-well); border-color: transparent; }
-.brand { background: var(--ink-maiz); color: var(--ink-tinta); }
+.default { background: var(--glass-fill); }
+.strong { background: var(--glass-fill-strong); }
+.subtle { background: var(--glass-fill-subtle); box-shadow: var(--glass-highlight); }
+.brand { background: var(--glass-fill-brand); border-color: rgb(31 122 77 / 0.18); }
 
 .pad-none { padding: 0; }
-.pad-sm { padding: var(--space-3); }
-.pad-md { padding: var(--space-5); }
-.pad-lg { padding: var(--space-6); }
+.pad-sm { padding: var(--space-4); }
+.pad-md { padding: var(--space-6); }
+.pad-lg { padding: var(--space-8); }
 
 .interactive { cursor: pointer; }
-.interactive:focus-visible { box-shadow: var(--focus-ring); border-radius: var(--radius-lg); }
+.interactive:hover { box-shadow: var(--glass-highlight), var(--glass-shadow-hover); }
+.interactive:focus-visible { box-shadow: var(--focus-ring); border-radius: var(--radius-xl); }
 
 @media (min-width: 1024px) {
   .pad-lg { padding: var(--space-8); }
