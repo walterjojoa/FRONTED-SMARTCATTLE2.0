@@ -21,10 +21,12 @@
   flex: 0 0 var(--glyph);
   width: var(--glyph);
   height: var(--glyph);
-  background: var(--ink-maiz);
-  color: var(--ink-tinta);
+  border-radius: 8px;
+  background: var(--color-action);
+  color: var(--color-on-action);
+  box-shadow: var(--shadow-action);
 }
 
-.glyph svg { width: 62%; height: 62%; }
+.glyph svg { width: 58%; height: 58%; }
 
-.onDark { color: var(--ink-papel); }
+.onDark { color: #fff; }
