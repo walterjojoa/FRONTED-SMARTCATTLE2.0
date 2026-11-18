@@ -1,0 +1,98 @@
+.scene {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--space-4);
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: var(--space-6);
+  overflow: hidden;
+  background: var(--color-dark);
+  color: #FFFFFF;
+}
+
+/* A 16px-pitch dot field behind everything. */
+.dots {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: radial-gradient(circle, rgb(255 255 255 / 0.14) 1px, rgb(0 0 0 / 0) 1.5px);
+  background-size: 16px 16px;
+  -webkit-mask-image: radial-gradient(120% 90% at 30% 20%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(120% 90% at 30% 20%, #000 30%, transparent 85%);
+}
+
+/* The sculpture climbs the right side; the feature list keeps the left clear. */
+.ribbon { position: absolute; right: 0; bottom: 0; z-index: -1; width: 70%; height: 52%; opacity: 0.95; }
+.float { animation: fold-float 9s var(--ease-in-out) infinite; transform-box: fill-box; }
+@keyframes fold-float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-10px, -14px); } }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.status { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-dark-copy); }
+.statusDot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--color-action); }
+.statusDot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--color-action); animation: ping 1.6s var(--ease-in-out) infinite; }
+@keyframes ping { from { transform: scale(1); opacity: 0.7; } to { transform: scale(2.8); opacity: 0; } }
+
+.stage { display: grid; align-content: center; justify-items: center; min-height: 0; }
+
+.camera {
+  position: relative;
+  width: min(100%, 38rem);
+  overflow: hidden;
+  border: 1px solid var(--color-dark-rule);
+  border-radius: var(--radius-xl);
+  background: #0D1726;
+  box-shadow: var(--shadow-overlay);
+}
+.cameraBar { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-dark-rule); }
+.mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-dark-copy); }
+.view { display: block; width: 100%; height: auto; aspect-ratio: 640 / 270; }
+
+.hillBack { fill: #151E29; }
+.hillFront { fill: #1D2A36; }
+.ridge { fill: none; stroke: #657482; stroke-width: 1; }
+
+.zone { fill: rgb(49 242 191 / 0.07); stroke: var(--color-action); stroke-width: 1.5; stroke-dasharray: 6 6; transition: fill 400ms var(--ease-product), stroke 400ms var(--ease-product); }
+.zoneBreach { fill: rgb(255 107 87 / 0.1); stroke: #FF6B57; }
+
+.box { fill: rgb(49 242 191 / 0.08); stroke: var(--color-action); stroke-width: 1.5; transition: stroke 300ms var(--ease-product), fill 300ms var(--ease-product); }
+.boxOut { fill: rgb(255 107 87 / 0.14); stroke: #FF6B57; }
+.centroid { fill: var(--color-action); transition: fill 300ms var(--ease-product); }
+.centroidOut { fill: #FF6B57; }
+.tag { font-family: var(--font-mono); font-size: 11px; fill: var(--color-dark-copy); }
+.tagOut { fill: #FF9A8B; }
+
+.alert {
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid rgb(255 107 87 / 0.4);
+  border-radius: var(--radius-lg);
+  background: rgb(21 30 41 / 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font-size: var(--text-sm);
+}
+.alert strong { display: block; font-weight: var(--weight-medium); }
+.alert small { display: block; margin-top: 2px; }
+.alertDot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: #FF6B57; box-shadow: 0 0 0 4px rgb(255 107 87 / 0.2); }
+
+.features { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.features li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--color-dark-copy); }
+.chip { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--color-lime); color: var(--color-ink); }
+
+@media (max-width: 1023px) {
+  .scene { padding: var(--space-4); grid-template-rows: auto 1fr; }
+  .features, .stage { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float, .statusDot::after { animation: none; }
+}
