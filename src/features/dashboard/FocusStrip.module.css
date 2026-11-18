@@ -1,18 +1,23 @@
 .strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 .item {
   display: grid;
   gap: var(--space-1);
   min-height: 100%;
-  padding: var(--space-4);
-  background: var(--ink-tinta);
-  color: var(--ink-papel);
+  padding: var(--space-5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  color: var(--color-ink);
   text-decoration: none;
-  transition: background-color var(--duration-fast), color var(--duration-fast);
+  transition: box-shadow var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
 }
 .name { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
 .value { font-family: var(--font-stamp); font-size: var(--text-lg); line-height: var(--leading-tight); }
