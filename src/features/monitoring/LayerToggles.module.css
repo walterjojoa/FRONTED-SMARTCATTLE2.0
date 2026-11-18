@@ -14,10 +14,17 @@
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   cursor: pointer;
-  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast) var(--ease-out);
+  transition: background var(--duration-fast), color var(--duration-fast), transform var(--duration-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .toggle:hover:not(:disabled):not([aria-pressed='true']) { background: rgb(255 255 255 / 0.14); color: #FFFFFF; }
 }
 .toggle:active:not(:disabled) { transform: scale(0.97); }
-.toggle[aria-pressed='true'] { border-color: color-mix(in srgb, var(--color-brand) 55%, transparent); background: var(--glass-fill-brand); color: var(--color-brand-strong); }
-.toggle:disabled { opacity: 0.5; cursor: not-allowed; }
+.toggle[aria-pressed='true'] { background: rgb(255 255 255 / 0.94); color: var(--color-ink); }
+.toggle:disabled { opacity: 0.4; cursor: not-allowed; }
+.toggle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 1px; box-shadow: none; }
 
-@media (pointer: coarse) { .toggle { min-height: var(--touch-min); } }
+@media (pointer: coarse) { .toggle { min-height: 40px; } }
+@media (max-width: 599px) {
+  .toggle { padding: 0 var(--space-2); }
+}
