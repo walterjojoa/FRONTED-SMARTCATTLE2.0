@@ -71,6 +71,7 @@
 @media (prefers-reduced-motion: reduce) {
   .mute { transition: none; }
   .mute:active { transform: none; }
+  .accent { animation: none; background-size: 100% 100%; }
 }
 @media (min-width: 1024px) {
   .banner { grid-column: 2; grid-row: 1; top: 0; padding-inline: var(--space-8); }
