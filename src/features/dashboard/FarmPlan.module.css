@@ -98,25 +98,27 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
 }
 
 .canvas svg { display: block; width: 100%; height: auto; }
+.dot { fill: rgb(214 255 236 / 0.1); }
 
 /* Terrain */
-.terrain path { fill: none; stroke: color-mix(in srgb, var(--color-rule) 80%, transparent); stroke-width: 1; }
-.trackBed { fill: none; stroke: color-mix(in srgb, var(--color-earth-surface) 85%, transparent); stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
-.track { fill: none; stroke: var(--color-earth); stroke-width: 1.2; stroke-dasharray: 2 6; stroke-linecap: round; opacity: 0.55; }
+.terrain path { fill: none; stroke: rgb(140 249 124 / 0.2); stroke-width: 1; }
+.trackBed { fill: none; stroke: rgb(52 188 255 / 0.1); stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
+.track { fill: none; stroke: rgb(52 188 255 / 0.7); stroke-width: 1.4; stroke-dasharray: 3 6; stroke-linecap: round; }
 
-/* Lots and linderos: glass-tinted paddocks with crisp dashed boundaries */
-.lotStopTop { stop-color: var(--color-surface-raised); stop-opacity: 0.7; }
-.lotStopBottom { stop-color: var(--color-mint); stop-opacity: 0.75; }
-.lotStopAlarm { stop-color: var(--color-alarm-surface); stop-opacity: 0.95; }
+/* Lots and linderos: faintly lit paddocks with marching dashed boundaries */
+.lotStopTop { stop-color: var(--color-action); stop-opacity: 0.1; }
+.lotStopBottom { stop-color: var(--color-action); stop-opacity: 0.03; }
+.lotStopAlarm { stop-color: var(--color-amber); stop-opacity: 0.14; }
 .lot { transition: opacity var(--duration-base); }
-.lotInner { fill: none; stroke: var(--color-surface-raised); stroke-width: 5; stroke-linejoin: round; opacity: 0.55; }
-.lindero { fill: none; stroke: var(--color-brand); stroke-width: 1.75; stroke-dasharray: 7 5; stroke-linecap: round; stroke-linejoin: round; }
-.vertex { fill: var(--color-surface-raised); stroke: var(--color-brand); stroke-width: 1.75; }
+.lotInner { fill: none; stroke: rgb(214 255 236 / 0.05); stroke-width: 5; stroke-linejoin: round; }
+.lindero { fill: none; stroke: var(--color-action); stroke-width: 1.6; stroke-dasharray: 7 6; stroke-linecap: round; stroke-linejoin: round; }
+.vertex { fill: var(--night); stroke: var(--color-action); stroke-width: 1.6; }
 .lotLabel {
-  fill: var(--color-safe-ink);
-  font-size: 12px;
-  font-weight: var(--weight-bold);
-  letter-spacing: 0.1em;
+  fill: rgb(214 255 236 / 0.82);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   paint-order: stroke;
   stroke: var(--color-surface-raised);
