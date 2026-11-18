@@ -54,10 +54,11 @@ export function CamerasPage() {
 
     {session && can(session.user.role, 'cameras:configure') && <FadeUp delay={staggerDelay(1)}>
       <CloudConnect onChanged={cameras.reload} />
-      <details className={styles.otherWays}>
-        <summary>Otras formas de conectar: PC de la finca, celular o webcam</summary>
-        <CameraConnect cameras={list} onChanged={cameras.reload} previews={false} />
-      </details>
+      {/* Not behind a disclosure any more. The phone is the first thing inside, and
+          folding it away put the option that needs no address, no password and no
+          hardware two taps further than the one that needs all three. The scan and
+          the QR keep their own "Otras formas" inside, so this is one level, not two. */}
+      <CameraConnect cameras={list} onChanged={cameras.reload} previews={false} />
       <p className={styles.next}><Link to="/" onClick={skipCameraSetup}>Continuar al panel</Link></p>
     </FadeUp>}
 

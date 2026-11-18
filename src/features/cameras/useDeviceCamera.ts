@@ -9,6 +9,13 @@ export function useDeviceCamera(onEnded: (message: string) => void) {
   const finish = useRef<(() => void) | null>(null)
   const [activeId, setActiveId] = useState('')
   const [weakSignal, setWeakSignal] = useState(false)
+  // Which way the camera points. Back by default -- the phone is tied to a post
+  // looking at the cattle -- but a webcam on a laptop only has a front one, and
+  // someone aiming by hand may want to see what they are pointing at.
+  const [facing, setFacing] = useState<'environment' | 'user'>('environment')
+
+  /** The other side, for the button that flips it. Takes effect on the next open. */
+  const flip = useCallback(() => setFacing(side => side === 'environment' ? 'user' : 'environment'), [])
 
   const stop = useCallback(() => {
     finish.current?.()
@@ -21,15 +28,20 @@ export function useDeviceCamera(onEnded: (message: string) => void) {
   useEffect(() => stop, [stop])
 
   /** Asks for the camera first: a refusal must not leave anything connected. Throws a text for the person. */
-  const open = useCallback(async (): Promise<MediaStream> => {
+  const open = useCallback(async (side: 'environment' | 'user' = facing): Promise<MediaStream> => {
+    // Checked before asking: inside another app's browser getUserMedia either
+    // throws something unreadable or hands back a track that never yields a frame.
+    if (typeof navigator.mediaDevices?.getUserMedia !== 'function') {
+      throw new Error('Abre esta página en Safari o Chrome para usar la cámara.')
+    }
     try {
       return await navigator.mediaDevices.getUserMedia({
-        audio: false, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } },
+        audio: false, video: { facingMode: { ideal: side }, width: { ideal: 1280 } },
       })
     } catch (error) {
       throw new Error(deviceCameraProblem(error), { cause: error })
     }
-  }, [])
+  }, [facing])
 
   const send = useCallback((media: MediaStream, baseUrl: string, cameraId: string) => {
     const video = videoRef.current
@@ -91,5 +103,5 @@ export function useDeviceCamera(onEnded: (message: string) => void) {
     })()
   }, [onEnded, stop])
 
-  return { videoRef, activeId, weakSignal, open, send, stop }
+  return { videoRef, activeId, weakSignal, facing, flip, open, send, stop }
 }

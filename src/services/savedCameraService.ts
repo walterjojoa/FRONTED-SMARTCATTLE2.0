@@ -51,11 +51,31 @@ export async function savePairedCamera(code: string, name: string, source: strin
   return toSaved(await postJson<unknown>('/api/cameras/paired', { code, name: name.trim(), source: source.trim() }, { ...options, token: null }))
 }
 
-/** Where this account's PC at the farm is reached right now; null while it is off or not linked yet. */
-export async function getFarmPc(options: ServiceOptions = {}): Promise<Sourced<string | null>> {
-  if ((options.mode ?? dataMode) === 'mock') return { source: 'mock', data: null }
-  const body = await getJson<{ url?: unknown }>('/api/farm-pc', options)
-  return { source: 'api', data: typeof body.url === 'string' ? body.url : null }
+/** This account's own PC, and the shared service every account can use without one. */
+export interface VisionService {
+  /** The PC at this farm, reachable right now; null while it is off or not linked. */
+  pc: string | null
+  /** SMARTCATTLE_AI_URL, the service the backend offers to accounts with no PC; null when none is configured. */
+  shared: string | null
+}
+
+/**
+ * Where video from this account can be sent.
+ *
+ * Only `pc` used to come back, so an account without one had nowhere to stream
+ * to and "Transmitir" stayed disabled without saying why. The backend had the
+ * shared address all along and only ever reported whether it existed.
+ */
+export async function getFarmPc(options: ServiceOptions = {}): Promise<Sourced<VisionService>> {
+  if ((options.mode ?? dataMode) === 'mock') return { source: 'mock', data: { pc: null, shared: null } }
+  const body = await getJson<{ url?: unknown; service_url?: unknown }>('/api/farm-pc', options)
+  return {
+    source: 'api',
+    data: {
+      pc: typeof body.url === 'string' ? body.url : null,
+      shared: typeof body.service_url === 'string' ? body.service_url : null,
+    },
+  }
 }
 
 /** A code short enough to type on the farm's PC, which links it to this account. */
