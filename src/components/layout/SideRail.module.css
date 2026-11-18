@@ -1,6 +1,6 @@
 .rail { display: none; }
 
-.wordmark { padding: var(--space-2) var(--space-2) var(--space-1); color: var(--ink-papel); }
+.wordmark { padding: var(--space-2) var(--space-3) var(--space-1); color: var(--night-ink); }
 
 .section { display: none; }
 
@@ -14,11 +14,12 @@
   gap: var(--space-3);
   min-height: var(--touch-min);
   padding: var(--space-2) var(--space-3);
-  color: var(--ink-papel);
+  border-radius: var(--radius-md);
+  color: var(--night-copy);
   font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   text-decoration: none;
-  transition: color var(--duration-fast);
+  transition: color var(--duration-fast), background-color var(--duration-fast);
 }
 
 .icon { display: grid; place-items: center; flex-shrink: 0; }
