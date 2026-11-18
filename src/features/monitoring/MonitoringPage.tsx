@@ -99,33 +99,28 @@ export function MonitoringPage() {
 
     <div className={styles.layout}>
       <FadeUp delay={staggerDelay(1)} className={styles.main}>
-        <div className={styles.switcherMobile}>
-          {cameras.data && <CameraSwitcher cameras={cameras.data} selectedId={camera?.id ?? null} alertByCamera={alertByCamera} withVideo={withVideo} />}
-        </div>
         <div className={styles.stageFrame}>
           <CameraStage camera={camera} stream={stream.data} streamLoading={stream.status === 'loading' || cameras.status === 'loading'}
             frame={frame.data} zones={zones.data ?? []} layers={layers}
-            aiConfigured={status.data?.aiConfigured ?? null} now={now} />
-          {live && !burnedIn && <div className={styles.toolbar}>
-            <LayerToggles layers={layers} onChange={setLayers} disabled={false} />
-            {synthetic && <p className={styles.synthetic}>Imagen ilustrativa con detecciones simuladas</p>}
-          </div>}
+            aiConfigured={status.data?.aiConfigured ?? null} now={now}
+            controls={live && !burnedIn ? <LayerToggles layers={layers} onChange={setLayers} disabled={false} /> : undefined} />
         </div>
+        {synthetic && <p className={styles.synthetic}>Imagen ilustrativa con detecciones simuladas</p>}
+        {cameras.data && <section aria-labelledby="cameras-title">
+          <h2 id="cameras-title" className="visually-hidden">Cámaras</h2>
+          <CameraSwitcher cameras={cameras.data} selectedId={camera?.id ?? null} alertByCamera={alertByCamera} withVideo={withVideo} thumbs={thumbs} />
+        </section>}
       </FadeUp>
 
       <aside className={styles.aside}>
-        <FadeUp delay={staggerDelay(2)} className={`${styles.card} ${styles.switcherDesktop}`}>
-          <section aria-labelledby="cameras-title">
-            <h2 id="cameras-title" className={styles.sectionTitle}>Cámaras</h2>
-            {cameras.data && <CameraSwitcher cameras={cameras.data} selectedId={camera?.id ?? null} alertByCamera={alertByCamera} withVideo={withVideo} />}
-          </section>
-        </FadeUp>
-
-        <FadeUp delay={staggerDelay(3)} className={styles.card}>
-          <section aria-labelledby="camera-events-title">
-            <h2 id="camera-events-title" className={styles.sectionTitle}>
-              Eventos{camera ? ` · ${camera.name}` : ''}
-            </h2>
+        <FadeUp delay={staggerDelay(2)} className={styles.card}>
+          <details className={styles.fold} open>
+            <summary className={styles.foldSummary}>
+              <h2 id="camera-events-title" className={styles.sectionTitle}>
+                Eventos{camera ? ` · ${camera.name}` : ''}
+              </h2>
+              <ChevronDown className={styles.chevron} size={18} strokeWidth={2} aria-hidden="true" />
+            </summary>
             {events.status === 'error' && !events.data
               ? <ErrorState description="No se pudieron cargar los eventos." onRetry={events.reload} />
               : cameraEvents.length === 0 && events.status === 'success'
