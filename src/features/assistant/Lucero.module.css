@@ -1,8 +1,8 @@
 .star { display: block; flex-shrink: 0; overflow: visible; }
 
 .back, .front, .eye { transform-box: view-box; transform-origin: 50% 50%; }
-.back { fill: var(--lucero-back, var(--ink-fucsia)); }
-.front { fill: var(--lucero-front, var(--ink-maiz)); }
+.back { fill: var(--lucero-back, #9ED9B6); }
+.front { fill: var(--lucero-front, var(--color-brand)); }
 .eye { fill: var(--ink-tinta); }
 
 /* Alive at rest: the inks swap in print steps and the star breathes slowly. */
@@ -25,10 +25,10 @@
   to { transform: scale(0.82); }
 }
 @keyframes lucero-inks {
-  0% { fill: var(--ink-fucsia); }
-  25% { fill: var(--ink-cobalto); }
-  50% { fill: var(--ink-naranja); }
-  75% { fill: var(--ink-verde); }
+  0% { fill: #9ED9B6; }
+  25% { fill: #6CC596; }
+  50% { fill: #3FA874; }
+  75% { fill: #1F7A4D; }
 }
 
 @media (prefers-reduced-motion: reduce) {
