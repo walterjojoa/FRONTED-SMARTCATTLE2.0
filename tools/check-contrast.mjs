@@ -1,47 +1,38 @@
 /**
- * WCAG contrast for every text/background pair the palette puts on screen.
+ * WCAG contrast for every text/background pair the light palette puts on screen.
  *
- * The palette's colours were picked against white. On a tinted surface the same
- * colour often falls under 4.5:1, which is why each state has a darker ink; this
- * is what says whether those inks are actually dark enough, instead of trusting
- * that they look fine.
+ * Glass panels are translucent white over a near-white page, so they are measured
+ * as white. On a tinted surface the same colour often falls under 4.5:1, which is why
+ * each state has a darker ink; this says whether those inks are dark enough instead of
+ * trusting that they look fine.
  *
  *   node tools/check-contrast.mjs
  *
  * Exits non-zero when a pair fails, so it can gate a build.
  */
 
-const palette = {
-  // The poster inks, as base.css pairs each with the text that goes on it.
-  inkVerde: '#1F5E3B',
-  inkMaiz: '#E08A2E',
-  inkFucsia: '#C2412D',
-  inkCobalto: '#2F6F8F',
-  inkNaranja: '#D9A21B',
-  inkTinta: '#1F2A24',
-  inkPapel: '#F7F3EA',
-  inkMaizClaro: '#F5C98B',
-  inkVerdeHondo: '#174A2E',
-  white: '#FFFFFF',
-
-  bg: '#F7F3EA',
-  surface: '#FFFFFF',
-  surfaceAlt: '#EFE8DA',
-  border: '#E3DCCD',
-  text: '#1F2A24',
-  textMuted: '#5B6660',
-  textInverse: '#F7F3EA',
-  primary: '#1F5E3B',
-  primaryHover: '#174A2E',
-  primarySoft: '#DCEBDF',
-  accent: '#E08A2E',
-  accentHover: '#C9761F',
-  accentSoft: '#FBEBD6',
-  sidebar: '#14231B',
-  sidebarText: '#D9E3DC',
-  success: '#2E8B57',
-  successInk: '#1E5C39',
-  successSoft: '#DCEBDF',
+const c = {
+  white: '#F7FAF7',
+  ground: '#EDF2EE',
+  well: '#E3EBE5',
+  ink: '#10241F',
+  inkMuted: '#2C433A',
+  inkSubtle: '#4F635B',
+  brand: '#0A7F5F',
+  brandStrong: '#066B50',
+  mint: '#E3FBF3',
+  action: '#31F2BF',
+  actionHover: '#15CB9A',
+  onAction: '#10241F',
+  lime: '#E4FF33',
+  proof: '#F6FADF',
+  dark: '#0B1D1B',
+  darkRaised: '#132B28',
+  darkCopy: '#B4C8C0',
+  darkFine: '#86A097',
+  footerCopy: '#9FB6AD',
+  safeInk: '#066B50',
+  safe: '#0A9B73',
   warning: '#D9A21B',
   warningInk: '#6E5009',
   warningStrong: '#A87912',
