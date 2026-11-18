@@ -33,10 +33,10 @@
   padding: var(--space-3) var(--space-5);
   overflow: visible;
   clip-path: none;
-  border: 2px solid var(--ink-tinta);
-  background: var(--ink-maiz);
-  color: var(--ink-tinta);
-  font-weight: var(--weight-bold);
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+  color: #FFFFFF;
+  font-weight: var(--weight-medium);
   text-decoration: none;
 }
 
