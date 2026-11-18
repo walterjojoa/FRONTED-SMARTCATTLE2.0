@@ -1,25 +1,29 @@
-.stage { min-width: 0; }
+/* The glass frame hugs the picture: its width follows the picture's proportion, capped by the screen height. */
+.stage {
+  min-width: 0;
+  width: min(100%, max(24rem, calc((100dvh - 17rem) * var(--ar, 1.7778) + var(--space-4))));
+  margin-inline: auto;
+  padding: var(--space-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+}
 
 /* The viewfinder: dark, 16:9, picture letterboxed inside it. */
 .viewport {
   position: relative;
-  container-type: size;
   aspect-ratio: 16 / 9;
-  /* With a picture the stage takes its proportion; it never grows past the screen height. */
-  max-height: calc(100dvh - 11rem);
+  width: 100%;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: var(--color-stage);
   color: var(--color-stage-ink);
 }
 
-.frame {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(100cqw, 100cqh * var(--ar));
-  transform: translate(-50%, -50%);
-}
+.frame { position: absolute; inset: 0; }
 
 .media { display: block; width: 100%; height: 100%; object-fit: fill; }
 
@@ -34,7 +38,9 @@
 }
 
 .topBar { top: 0; justify-content: space-between; background: linear-gradient(to bottom, var(--color-stage-scrim), transparent); }
-.bottomBar { bottom: 0; flex-wrap: wrap; background: linear-gradient(to top, var(--color-stage-scrim), transparent); }
+.bottomBar { bottom: 0; flex-wrap: wrap; justify-content: space-between; padding-top: var(--space-8); background: linear-gradient(to top, var(--color-stage-scrim), transparent); }
+.readout { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); min-width: 0; }
+.controls { flex-shrink: 0; margin-left: auto; }
 
 .identity { min-width: 0; }
 .name { font-size: var(--text-md); font-weight: var(--weight-semibold); font-stretch: var(--stretch-wide); }
