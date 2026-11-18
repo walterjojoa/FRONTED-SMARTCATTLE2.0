@@ -126,41 +126,68 @@
     var(--land-night);
   color: #F2FBF7;
 }
-.split { display: grid; gap: var(--space-8); align-items: center; }
-.blockTitle {
-  font-family: var(--font-display);
-  font-size: clamp(3.5rem, 11vw, 9.5rem);
-  font-weight: 400;
-  line-height: 1;
-  text-transform: uppercase;
-}
-.blockText { max-width: 60ch; font-size: var(--text-lg); line-height: var(--leading-snug); font-weight: var(--weight-medium); }
-.plain { display: grid; gap: var(--space-4); font-size: var(--text-lg); }
+.mapStage { position: sticky; top: 0; display: grid; align-items: center; gap: var(--space-6); height: 100dvh; max-width: var(--rail-max); margin-inline: auto; padding: 88px var(--space-6) var(--space-6); }
+@media (min-width: 960px) { .mapStage { grid-template-columns: 4fr 7fr; gap: var(--space-16); padding-top: var(--space-16); } }
+@media (max-width: 959px) { .mapStage { align-content: center; } .stepStack { min-height: 10.5rem; } }
 
-.miniForm { display: grid; gap: var(--space-2); max-width: 30rem; width: 100%; }
-.miniField {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: 4rem;
-  padding-inline: var(--space-4);
-  border: 3px solid var(--ink-tinta);
-  background: var(--color-surface);
-  color: var(--ink-tinta);
-  font-size: var(--text-lg);
-  font-weight: var(--weight-semibold);
+.storyCopy { display: grid; gap: var(--space-6); align-content: center; }
+.progress { display: flex; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.progress li { position: relative; overflow: hidden; height: 3px; width: 44px; border-radius: 2px; background: var(--land-night-line); }
+.progress li span { position: absolute; inset: 0; transform: scaleX(0); transform-origin: left; background: linear-gradient(90deg, var(--ribbon-1), var(--color-action)); transition: transform 600ms var(--ease-out); }
+.progress li[data-on] span { transform: scaleX(1); }
+.stepStack { display: grid; }
+.step { grid-area: 1 / 1; align-self: start; }
+.stepLabel { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-action); }
+.stepTitle { margin-top: var(--space-2); font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: 1.15; color: #F2FBF7; }
+.stepText { margin-top: var(--space-4); max-width: 30rem; font-size: var(--text-md); line-height: var(--leading-normal); color: var(--land-night-copy); }
+
+.mapCard {
+  position: relative; overflow: hidden; border-radius: 20px;
+  border: 1px solid var(--land-night-line);
+  background: linear-gradient(160deg, #10302B 0%, #0C2320 55%, #0A1C1A 100%);
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.6), inset 0 1px 0 rgb(214 255 236 / 0.06);
 }
-.miniField span { overflow-wrap: anywhere; }
-.miniSubmit {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: 4rem;
-  background: var(--ink-tinta);
-  color: var(--ink-papel);
-  font-family: var(--font-stamp);
-  font-size: var(--text-md);
+.mapSvg { display: block; width: 100%; height: auto; max-height: calc(100dvh - 260px); }
+@media (min-width: 960px) { .mapSvg { max-height: calc(100dvh - 140px); } }
+.contour { fill: none; stroke: rgb(140 249 124 / 0.22); stroke-width: 1; }
+.contourTag { font-family: var(--font-mono); font-size: 9px; fill: rgb(180 200 192 / 0.55); }
+.river { fill: none; stroke: rgb(52 188 255 / 0.55); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 10 8; animation: march 2.4s linear infinite; }
+.lot { fill: rgb(49 242 191 / 0.06); transition: fill 600ms var(--ease-out); }
+.lotEdge { fill: none; stroke: var(--color-action); stroke-width: 1.6; stroke-dasharray: 7 6; stroke-linejoin: round; animation: march 1.6s linear infinite; transition: stroke 500ms var(--ease-out); }
+.mapSvg[data-alert] .lot { fill: rgb(255 181 71 / 0.06); }
+.mapSvg[data-alert] .lotEdge { stroke: var(--land-alert); }
+.lotTag { font-family: var(--font-mono); font-size: 11px; fill: rgb(214 255 236 / 0.7); }
+.sweep { animation: sweep 6s var(--ease-in-out) infinite alternate; transform-box: view-box; }
+@keyframes sweep { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+.cam { fill: var(--color-lime); }
+.camHalo { fill: none; stroke: rgb(228 255 51 / 0.5); stroke-width: 1; transform-box: fill-box; transform-origin: center; animation: halo 2.4s var(--ease-out) infinite; }
+@keyframes halo { from { transform: scale(0.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.camTag { font-family: var(--font-mono); font-size: 11px; fill: #E8F5EF; }
+.animal { fill: rgb(214 255 236 / 0.35); transition: fill 500ms var(--ease-out), filter 500ms var(--ease-out); }
+.animal[data-seen] { fill: var(--color-action); filter: drop-shadow(0 0 6px rgb(49 242 191 / 0.8)); }
+.animal[data-out] { fill: var(--land-alert); filter: drop-shadow(0 0 8px rgb(255 181 71 / 0.9)); }
+.bracket { fill: none; stroke: rgb(214 255 236 / 0.85); stroke-width: 1.2; stroke-linecap: round; transition: stroke 400ms; }
+.bracket[data-out] { stroke: var(--land-alert); }
+.animalTag { font-family: var(--font-mono); font-size: 10px; fill: rgb(214 255 236 / 0.75); }
+.animalTag[data-out] { fill: var(--land-alert); }
+.ping { fill: none; stroke: var(--land-alert); stroke-width: 1.4; transform-box: fill-box; transform-origin: center; animation: ping 1.8s var(--ease-out) infinite; }
+
+.mapTag, .mapCount {
+  position: absolute; top: var(--space-3); display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 4px 10px; border-radius: 8px; border: 1px solid var(--land-night-line);
+  background: rgb(7 20 18 / 0.6); backdrop-filter: blur(8px);
+  font-family: var(--font-mono); font-size: var(--text-xs); color: #E8F5EF;
+}
+.mapTag { left: var(--space-3); }
+.mapCount { right: var(--space-3); }
+.liveDot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-action); box-shadow: 0 0 0 3px rgb(49 242 191 / 0.25); animation: pulse 1.6s var(--ease-in-out) infinite; }
+
+.mapAlert, .dayPanel {
+  position: absolute; left: var(--space-3); right: var(--space-3); bottom: var(--space-3);
+  border-radius: 12px; border: 1px solid var(--land-night-line);
+  background: rgb(7 20 18 / 0.78); backdrop-filter: blur(10px);
+  opacity: 0; transform: translateY(14px); pointer-events: none;
+  transition: opacity 450ms var(--ease-out), transform 450ms var(--ease-out);
 }
 
 .sample { margin: 0; padding: var(--space-5); background: var(--color-surface); color: var(--ink-tinta); max-width: 30rem; width: 100%; }
