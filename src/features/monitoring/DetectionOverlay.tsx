@@ -1,4 +1,4 @@
-import { useId, type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import { detectedObjectLabel } from '../../lib/eventCatalog'
 import { formatConfidence } from '../../lib/format'
 import type { Detection, SafeZone } from '../../types/domain'
@@ -21,19 +21,10 @@ const kindClass = (detection: Detection) =>
 
 /** Safe zones and detection boxes drawn over the camera picture. Decorative for assistive tech; the stage summarizes it in text. */
 export function DetectionOverlay({ width, height, detections, zones, layers }: DetectionOverlayProps) {
-  const hatchId = `outside-hatch-${useId()}`
   const placement = placeLabels(detections)
   const breached = detections.some(detection => detection.insideSafeZone === false)
   return <>
     <svg className={styles.svg} viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <defs>
-        <pattern id={hatchId} width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <path d="M 0 0 V 12" className={styles.hatch} />
-        </pattern>
-        <pattern id={`${hatchId}-outside`} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <path d="M 0 0 V 14" className={styles.hatchOutside} />
-        </pattern>
-      </defs>
       {layers.zones && zones.map(zone => {
         const outline = zone.outline ?? [
           [zone.bounds[0], zone.bounds[1]], [zone.bounds[2], zone.bounds[1]],
@@ -41,20 +32,19 @@ export function DetectionOverlay({ width, height, detections, zones, layers }: D
         ] as const
         const points = outline.map(([x, y]) => [x * width, y * height] as const)
         const polygon = points.map(point => point.join(',')).join(' ')
-        // Signature move: when an animal leaves, the lindero turns critical and the outside is hatched.
+        // When an animal leaves, the lindero turns critical and everything outside it takes a soft red tint.
         return <g key={zone.id} className={`${styles.zone} ${breached ? styles.breached : ''}`}>
-          {breached && <path className={styles.outsideArea} fillRule="evenodd" fill={`url(#${hatchId}-outside)`}
+          {breached && <path className={styles.outsideArea} fillRule="evenodd"
             d={`M0 0 H${width} V${height} H0 Z M${points.map(point => point.join(' ')).join(' L')} Z`} />}
           <polygon points={polygon} vectorEffect="non-scaling-stroke" />
-          {points.map(([x, y]) => <rect key={`${x}-${y}`} x={x - 6} y={y - 6} width="12" height="12" />)}
+          {points.map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="5" />)}
         </g>
       })}
       {layers.boxes && detections.map(detection => <rect key={detection.id}
         className={`${styles.box} ${kindClass(detection)}`}
         x={detection.box.x * width} y={detection.box.y * height}
         width={detection.box.width * width} height={detection.box.height * height}
-        rx="3" vectorEffect="non-scaling-stroke"
-        fill={detection.insideSafeZone === false ? `url(#${hatchId})` : 'none'} />)}
+        rx="6" vectorEffect="non-scaling-stroke" />)}
     </svg>
     {layers.boxes && layers.labels && <div className={styles.labels} aria-hidden="true">
       {detections.map(detection => {
