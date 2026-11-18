@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef } from 'react'
-import { TriangleAlert } from 'lucide-react'
+import { TriangleAlert, VideoOff } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router'
 import type { Camera, Severity } from '../../types/domain'
@@ -11,6 +11,8 @@ interface CameraSwitcherProps {
   alertByCamera: ReadonlyMap<string, Severity>
   /** Cameras that deliver a picture; others are labeled "sin video" when online. */
   withVideo?: ReadonlySet<string>
+  /** Still-image URLs by camera id. Cameras without one (MJPEG streams, no picture) show a placeholder. */
+  thumbs?: ReadonlyMap<string, string>
 }
 
 const statusLabel: Record<Camera['status'], string> = {
@@ -19,11 +21,10 @@ const statusLabel: Record<Camera['status'], string> = {
 
 const indicatorSpring = { type: 'spring', stiffness: 380, damping: 30 } as const
 
-/** Focus one camera while keeping the others in view. A list on desktop, a scrollable strip on phones. */
-export function CameraSwitcher({ cameras, selectedId, alertByCamera, withVideo }: CameraSwitcherProps) {
+/** A strip of camera thumbnails under the viewfinder: pick one, keep the others in sight. */
+export function CameraSwitcher({ cameras, selectedId, alertByCamera, withVideo, thumbs }: CameraSwitcherProps) {
   const listRef = useRef<HTMLUListElement>(null)
   const reduce = useReducedMotion()
-  // The page renders a phone and a desktop switcher; each needs its own sliding indicator.
   const indicatorId = `camera-indicator-${useId()}`
   // On the horizontal phone strip, bring the selected camera into view without scrolling the page.
   useEffect(() => {
