@@ -31,9 +31,10 @@ export function CameraStage({ camera, stream, streamLoading, frame, zones, layer
   const media = state === 'live' && stream && (stream.kind === 'image' || stream.kind === 'mjpeg') ? stream : null
   const burnedIn = media?.kind === 'mjpeg' && media.annotated === true
 
-  return <section className={styles.stage} aria-label={camera ? `Cámara ${camera.name}` : 'Cámara'}>
+  return <section className={styles.stage} aria-label={camera ? `Cámara ${camera.name}` : 'Cámara'}
+    style={media ? { '--ar': media.width / media.height } as CSSProperties : undefined}>
     <div className={styles.viewport} style={media ? { aspectRatio: `${media.width} / ${media.height}` } : undefined}>
-      {media && <div className={styles.frame} style={{ aspectRatio: `${media.width} / ${media.height}`, '--ar': media.width / media.height } as CSSProperties}>
+      {media && <div className={styles.frame}>
         {/* MJPEG streams render through <img> as well; both keep the overlay registered to the picture. */}
         <img className={styles.media} src={media.url} alt="" />
         {!burnedIn && <DetectionOverlay width={media.width} height={media.height} detections={detections} zones={zones} layers={layers} />}
@@ -51,16 +52,19 @@ export function CameraStage({ camera, stream, streamLoading, frame, zones, layer
       </div>}
 
       {state === 'live' && <div className={styles.bottomBar}>
-        <p className={styles.counts} aria-live="polite">
-          {aiConfigured === false ? 'Visión sin configurar: sin detecciones' : detections.length === 0 ? 'Sin detecciones en esta imagen' : detectionSummaryText(summary)}
-        </p>
-        {summary.outside > 0 && <p className={styles.outsideChip} role="status">
-          <OctagonAlert size={14} strokeWidth={2} aria-hidden="true" />
-          {summary.outside === 1 ? '1 fuera de zona' : `${summary.outside} fuera de zona`}
-        </p>}
-        {frame && <p className={styles.frameTime}>
-          <time className="tabular" dateTime={frame.capturedAt.toISOString()}>{formatTime(frame.capturedAt)}</time>
-        </p>}
+        <div className={styles.readout}>
+          <p className={styles.counts} aria-live="polite">
+            {aiConfigured === false ? 'Visión sin configurar: sin detecciones' : detections.length === 0 ? 'Sin detecciones en esta imagen' : detectionSummaryText(summary)}
+          </p>
+          {summary.outside > 0 && <p className={styles.outsideChip} role="status">
+            <OctagonAlert size={14} strokeWidth={2} aria-hidden="true" />
+            {summary.outside === 1 ? '1 fuera de zona' : `${summary.outside} fuera de zona`}
+          </p>}
+          {frame && <p className={styles.frameTime}>
+            <time className="tabular" dateTime={frame.capturedAt.toISOString()}>{formatTime(frame.capturedAt)}</time>
+          </p>}
+        </div>
+        {controls && <LiquidGlass tone="dark" radius="999px" refract className={styles.controls}>{controls}</LiquidGlass>}
       </div>}
     </div>
   </section>
