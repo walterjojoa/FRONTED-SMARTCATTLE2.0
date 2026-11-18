@@ -121,41 +121,39 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
   letter-spacing: 0.04em;
   text-transform: uppercase;
   paint-order: stroke;
-  stroke: var(--color-surface-raised);
+  stroke: var(--night);
   stroke-width: 3px;
   stroke-linejoin: round;
 }
 /* Hatching marks a lot with an alert without relying on color alone. */
 .hatchLine { stroke-width: 1.5; }
-.hatchLine.warning { stroke: var(--color-warning); }
-.hatchLine.critical { stroke: var(--color-critical); }
-.hatchLine.alarmHatch { stroke: var(--color-alarm); stroke-width: 2; }
-.lotHatch { opacity: 0.35; }
-.breachHatch { opacity: 0.1; }
-.lots .warning .lindero { stroke: var(--color-warning); }
-.lots .warning .vertex { stroke: var(--color-warning); }
-.lots .critical .lindero { stroke: var(--color-critical); }
-.lots .critical .vertex { stroke: var(--color-critical); }
-/* Breached: the same language as the video overlay (red lindero, hatched outside the boundary). */
-.lots .breached .lindero { stroke: var(--color-alarm); stroke-width: 2.25; }
-.lots .breached .vertex { stroke: var(--color-alarm); }
-.lots .breached .lotLabel { fill: var(--color-alarm-ink); }
-.outsideRing { fill: none; stroke-width: 28; stroke-linejoin: round; opacity: 0.65; }
+.hatchLine.warning { stroke: #E6B23A; }
+.hatchLine.critical { stroke: var(--color-amber); }
+.hatchLine.alarmHatch { stroke: var(--color-amber); stroke-width: 2; }
+.lotHatch { opacity: 0.25; }
+.breachHatch { opacity: 0.12; }
+.lots .warning .lindero, .lots .warning .vertex { stroke: #E6B23A; }
+.lots .critical .lindero, .lots .critical .vertex { stroke: var(--color-amber); }
+/* Breached: the same language as the video overlay (amber lindero, hatched outside the boundary). */
+.lots .breached .lindero { stroke: var(--color-amber); stroke-width: 2.1; }
+.lots .breached .vertex { stroke: var(--color-amber); }
+.lots .breached .lotLabel { fill: var(--color-amber); }
+.outsideRing { fill: none; stroke-width: 28; stroke-linejoin: round; opacity: 0.5; }
 
 /* Observation points */
-.wedge { fill: color-mix(in srgb, var(--color-brand) 8%, transparent); }
-.pointRing { fill: var(--color-surface-raised); stroke-width: 2.5; }
-.pointLabel { fill: var(--color-ink); font-size: 12px; font-weight: var(--weight-semibold); paint-order: stroke; stroke: var(--color-surface-raised); stroke-width: 4px; stroke-linejoin: round; }
-.point.online .pointRing { stroke: var(--color-safe); }
-.point.online .pointDot { fill: var(--color-safe); }
-.point.connecting .pointRing { stroke: var(--color-warning); }
-.point.connecting .pointDot { fill: var(--color-warning); }
-.point.offline .pointRing, .point.error .pointRing { stroke: var(--color-inactive); }
-.point.offline .pointDot { fill: var(--color-inactive); }
-.point.error .pointDot { fill: var(--color-critical); }
+.wedge { fill: rgb(49 242 191 / 0.1); }
+.pointRing { fill: var(--night); stroke-width: 2.2; }
+.pointLabel { fill: #E8F5EF; font-family: var(--font-mono); font-size: 11px; paint-order: stroke; stroke: var(--night); stroke-width: 4px; stroke-linejoin: round; }
+.point.online .pointRing { stroke: var(--color-lime); }
+.point.online .pointDot { fill: var(--color-lime); }
+.point.connecting .pointRing { stroke: #E6B23A; }
+.point.connecting .pointDot { fill: #E6B23A; }
+.point.offline .pointRing, .point.error .pointRing { stroke: #6A7D75; }
+.point.offline .pointDot { fill: #6A7D75; }
+.point.error .pointDot { fill: var(--color-amber); }
 .point.offline .wedge, .point.error .wedge, .point.stale .wedge { fill: transparent; }
-.point.stale .pointRing { stroke: var(--color-inactive); stroke-dasharray: 3 3; }
-.point.stale .pointDot { fill: var(--color-inactive); }
+.point.stale .pointRing { stroke: #6A7D75; stroke-dasharray: 3 3; }
+.point.stale .pointDot { fill: #6A7D75; }
 
 .pulse { fill: none; stroke-width: 2; }
 .pulse.warning { stroke: var(--color-warning); }
