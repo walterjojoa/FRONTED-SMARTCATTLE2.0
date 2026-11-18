@@ -34,7 +34,7 @@
   flex-shrink: 0;
   width: 64px;
   height: 64px;
-  border: 3px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   border-radius: var(--radius-full);
   background: var(--gradient-brand);
   box-shadow: var(--shadow-glow-brand);
