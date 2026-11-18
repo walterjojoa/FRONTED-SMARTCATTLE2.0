@@ -1,18 +1,18 @@
 .mark {
-  --glyph: 32px;
+  --glyph: 30px;
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   color: inherit;
   font-family: var(--font-display);
-  font-size: var(--text-lg);
-  letter-spacing: 0.01em;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.03em;
   line-height: 1;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.sm { --glyph: 28px; font-size: var(--text-md); }
+.sm { --glyph: 26px; font-size: var(--text-base); }
 .lg { --glyph: 40px; font-size: var(--text-xl); gap: var(--space-3); }
 
 .glyph {
