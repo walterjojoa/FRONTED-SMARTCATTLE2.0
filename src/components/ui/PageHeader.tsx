@@ -1,9 +1,8 @@
 import { useRef, type ReactNode } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { HerdStrip } from '../herd/HerdStrip'
 import styles from './PageHeader.module.css'
 
-/** The page's printed band: its ink edge to edge, its name in wood type, the herd walking along the bottom. */
+/** The page title block: a large heading with its description and actions. */
 export function PageHeader({ title, description, actions }: { title: string; description?: ReactNode; actions?: ReactNode }) {
   const reduce = useReducedMotion()
   const band = useRef<HTMLElement>(null)
@@ -16,6 +15,5 @@ export function PageHeader({ title, description, actions }: { title: string; des
       {actions && <div className={styles.actions}>{actions}</div>}
     </div>
     {description && <p className={styles.description}>{description}</p>}
-    <HerdStrip className={styles.herd} />
   </header>
 }
