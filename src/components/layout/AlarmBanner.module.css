@@ -1,4 +1,7 @@
-/* The alarm prints across the whole page in one ink: nothing about it asks to be read second. */
+/*
+ * The alarm is deep night with an amber light: it still owns the top of the page, but it shouts with
+ * contrast and a moving edge instead of a solid block of red.
+ */
 .banner {
   position: sticky;
   top: var(--topbar-height);
@@ -7,12 +10,27 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-alarm-ink);
-  color: #FFFFFF;
+  padding: var(--space-2) var(--space-4);
+  overflow: hidden;
+  background:
+    radial-gradient(28rem 8rem at 0% 50%, rgb(255 181 71 / 0.2), transparent 70%),
+    var(--night);
+  color: var(--night-ink);
+  box-shadow: 0 10px 30px -18px rgb(7 20 18 / 0.7);
 }
 
-.accent { display: none; }
+/* A thin amber line sweeps along the bottom edge. */
+.accent {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-amber) 40%, var(--color-amber) 60%, transparent);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: sweep 2.8s var(--ease-in-out) infinite;
+  pointer-events: none;
+}
+@keyframes sweep { from { background-position: -50% 0; } to { background-position: 150% 0; } }
 
 .iconRing { flex-shrink: 0; }
 .icon {
