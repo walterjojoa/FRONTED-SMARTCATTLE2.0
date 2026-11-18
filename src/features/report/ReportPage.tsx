@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight, OctagonAlert } from 'lucide-react'
 import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
 import { describeApiError } from '../../api/errors'
-import { PrintedCow } from '../../components/herd/PrintedCow'
 import { Button, EmptyState, ErrorState, PageHeader, Skeleton } from '../../components/ui'
 import { formatCount } from '../../lib/format'
 import { useResource } from '../../lib/useResource'
@@ -14,7 +13,6 @@ import { dayKey, dayTitle, observedText, postureShares, shiftDay } from './repor
 import styles from './ReportPage.module.css'
 
 const REFRESH_MS = 5 * 60_000
-const POSTURE = { lying: 'lying', standing: 'standing', walking: 'walking' } as const
 const NOTICE = {
   prolonged_lying: 'El ganado pasó echado la mayor parte del tiempo observado',
   little_lying: 'El ganado se echó poco durante el tiempo observado',
@@ -48,7 +46,6 @@ function Figures({ report }: { report: DailyReport }) {
         ? <p className={styles.quiet}>Las cámaras no registraron la postura de ningún animal este día.</p>
         : <ul className={styles.postures}>
           {rows.map((row, index) => <li key={row.key} className={styles.posture}>
-            <PrintedCow posture={POSTURE[row.key]} className={styles.cow} />
             <span className={styles.postureName}>{row.label}</span>
             <span className={styles.track}>
               <motion.span className={styles.fill} data-posture={row.key} style={{ transformOrigin: 'left' }}
