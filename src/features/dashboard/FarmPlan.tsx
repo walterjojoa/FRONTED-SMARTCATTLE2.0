@@ -329,14 +329,14 @@ export function FarmPlan({
         </g>
 
         <g className={styles.herd}>
-          {/* Cows outside are drawn last so their red marker and label are never covered. */}
+          {/* Cows outside are drawn last so their amber marker and label are never covered. */}
           {[...cows].sort((a, b) => Number(a.outside) - Number(b.outside)).map(cow => <g key={cow.id}
             data-walker={cow.id}
             className={`${styles.cow} ${cow.outside ? styles.cowOutside : ''}`}>
             <g className={styles.marker}>
               {cow.outside && <circle className={styles.cowPulse} r="21" />}
-              <CowFigure shadowId={`${hatchId}-shadow`} sheenId={`${hatchId}-sheen`} />
-              {tagOf(cow) && <g className={styles.cowTag} transform="translate(0 24)">
+              <CowFigure />
+              {tagOf(cow) && <g className={styles.cowTag} transform="translate(0 25)">
                 <rect className={styles.cowTagShadow} x="-15" y="-7" width="30" height="15" rx="7.5" />
                 <rect className={styles.cowTagBackground} x="-15" y="-8" width="30" height="15" rx="7.5" />
                 <text className={styles.cowTagText} x="0" y="3.4" textAnchor="middle">{tagOf(cow)}</text>
