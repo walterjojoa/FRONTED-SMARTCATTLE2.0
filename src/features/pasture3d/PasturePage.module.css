@@ -11,7 +11,7 @@
   padding: var(--space-1) var(--pill-padding-inline);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-full);
-  background: var(--ink-papel);
+  background: var(--glass-fill-strong);
   box-shadow: var(--glass-highlight), var(--glass-shadow);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -160,6 +160,8 @@
 
 /* People on the farm without any animal outside: a security notice, not an alarm. */
 .bannerWarning {
-  background: var(--color-warning-ink);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-warning) 30%, transparent), var(--shadow-overlay);
+  background: var(--glass-dark-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-warning) 70%, transparent), var(--shadow-overlay);
 }
