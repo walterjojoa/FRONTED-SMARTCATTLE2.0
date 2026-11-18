@@ -1,7 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { useSearchParams } from 'react-router'
 import { EventRow } from '../../components/events/EventRow'
-import { EmptyState, ErrorState, Notice, PageHeader, StatusPill } from '../../components/ui'
+import { EmptyState, ErrorState, Notice, StatusPill } from '../../components/ui'
 import { useResource } from '../../lib/useResource'
 import { FadeUp, staggerDelay } from '../../motion'
 import { getCameraStream, getFrameDetections, getSystemStatus, hasPicture, listEvents, listSafeZones, loadCameraSnapshots } from '../../services'
@@ -21,8 +22,11 @@ const cameraRefreshMs = 5_000
 
 function Header({ actions }: { actions?: ReactNode }) {
   return <FadeUp className={styles.head}>
-    <PageHeader title="En vivo" actions={actions} />
-    <p className={styles.lead}>Mira cada cámara con sus detecciones y la zona segura, actualizadas cada pocos segundos.</p>
+    <div className={styles.headText}>
+      <h1 className={styles.title}>En vivo</h1>
+      <p className={styles.lead}>Cada cámara con sus detecciones y la zona segura, actualizadas cada pocos segundos.</p>
+    </div>
+    {actions}
   </FadeUp>
 }
 
@@ -50,6 +54,12 @@ export function MonitoringPage() {
   const ids = (cameras.data ?? []).map(item => item.id)
   const snapshots = useResource(signal => loadCameraSnapshots(ids, signal), { key: ids.join(','), refreshMs: liveRefreshMs })
   const withVideo = snapshots.data ? new Set(ids.filter(id => hasPicture(snapshots.data?.[id]?.stream))) : undefined
+  // Still images only: an MJPEG thumbnail would hold a stream open per camera.
+  const thumbs = new Map<string, string>()
+  for (const id of ids) {
+    const source = snapshots.data?.[id]?.stream
+    if (source?.kind === 'image') thumbs.set(id, source.url)
+  }
 
   const alertByCamera = new Map<string, Severity>()
   for (const alert of alerts) if (!alertByCamera.has(alert.cameraId)) alertByCamera.set(alert.cameraId, alert.severity)
