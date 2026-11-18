@@ -32,9 +32,11 @@
 /* A person on the farm is a security signal: amber, the same weight as the outside-zone tag. */
 .person {
   padding: var(--space-1) var(--space-3) var(--space-1) var(--space-2);
-  background: var(--color-warning-ink);
-  box-shadow: var(--shadow-overlay);
-  color: var(--color-warning-surface);
+  background: var(--glass-dark-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-warning) 70%, transparent), var(--shadow-overlay);
+  color: #FFFFFF;
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
 }
