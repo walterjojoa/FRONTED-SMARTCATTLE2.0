@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useAuth } from '../../app/auth/useAuth'
 import { useDocumentTitle } from '../../app/useDocumentTitle'
-import { PrintedCow } from '../../components/herd/PrintedCow'
 import { ease } from '../../motion'
-import { Lucero } from '../assistant/Lucero'
+import { AssistantMark } from '../assistant/AssistantMark'
 import { ASSISTANT_NAME } from '../assistant/assistantEngine'
 import { firstNameOf } from '../../lib/personName'
 import { GOALS, saveOnboarding, START_PAGES, type Goal, type StartPage } from './onboardingModel'
@@ -52,7 +51,7 @@ export function OnboardingPage() {
         exit={{ opacity: 0 }}
         transition={{ duration: reduce ? 0.12 : 0.22, ease: ease.out }}>
         <div className={styles.voice}>
-          <Lucero size={72} mood="speaking" />
+          <AssistantMark size={44} />
           <p className={styles.who}>{ASSISTANT_NAME}, tu asistente</p>
         </div>
 
@@ -61,7 +60,6 @@ export function OnboardingPage() {
           <p className={styles.lead}>
             Te ayudo a cuidar tu finca con las cámaras que ya tienes. Son tres preguntas rápidas para mostrarte primero lo que te importa.
           </p>
-          <PrintedCow posture="walking" className={styles.cow} />
         </>}
 
         {step === 'goals' && <>
