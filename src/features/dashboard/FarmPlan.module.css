@@ -76,22 +76,25 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
 .markerLegend li { display: inline-flex; align-items: center; gap: var(--space-2); }
 .legendRing { border-radius: var(--radius-full); }
 .legendMarker { display: block; width: 10px; height: 10px; border-radius: var(--radius-full); }
-.safeMarker { background: var(--color-safe); box-shadow: 0 0 0 2px var(--color-safe-surface); }
-.outsideMarker { background: var(--color-critical); box-shadow: 0 0 0 2px var(--color-critical-surface); }
+.safeMarker { background: var(--color-action); box-shadow: 0 0 0 2px rgb(49 242 191 / 0.25); }
+.outsideMarker { background: var(--color-amber); box-shadow: 0 0 0 2px rgb(255 181 71 / 0.25); }
 .personMarker { background: var(--color-overlay-person); box-shadow: 0 0 0 1.5px var(--color-butter-ink); }
 .actionStatus { color: var(--color-brand-strong); font-size: var(--text-xs); font-weight: var(--weight-semibold); }
 .actionStatus:empty { display: none; }
 
-/* The canvas absorbs spare height when the card is stretched by its grid row. */
+/* The canvas is the night map: deep pine, a faint dot field and two soft lights. It absorbs spare height. */
 .canvas {
   display: grid;
   flex: 1 1 auto;
   align-content: center;
   overflow: hidden;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--night-line);
   border-radius: var(--radius-lg);
-  background: var(--color-well);
-  box-shadow: inset 0 1px 0 var(--glass-border), inset 0 0 0 1px var(--glass-border-subtle);
+  background:
+    radial-gradient(70% 60% at 85% 10%, rgb(49 242 191 / 0.1), transparent 70%),
+    radial-gradient(60% 50% at 5% 95%, rgb(52 188 255 / 0.08), transparent 70%),
+    linear-gradient(160deg, #10302B 0%, #0C2320 55%, #0A1C1A 100%);
+  box-shadow: inset 0 1px 0 rgb(214 255 236 / 0.06), 0 20px 50px -30px rgb(7 20 18 / 0.6);
 }
 
 .canvas svg { display: block; width: 100%; height: auto; }
