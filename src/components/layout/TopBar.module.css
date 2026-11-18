@@ -8,11 +8,14 @@
   gap: var(--space-3);
   height: var(--topbar-height);
   padding-inline: var(--space-4);
-  background: var(--ink-tinta);
-  color: var(--ink-papel);
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-ink);
 }
 
-.scrolled { background: var(--ink-tinta); }
+.scrolled { box-shadow: 0 8px 24px -16px rgb(0 0 0 / 0.25); }
 
 .lead { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
 .title {
@@ -20,10 +23,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.02em;
 }
 
 .actions { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
@@ -35,6 +37,7 @@
   height: var(--touch-min);
   padding: 0;
   border: 0;
+  border-radius: var(--radius-full);
   background: transparent;
   color: var(--ink-papel);
   cursor: pointer;
