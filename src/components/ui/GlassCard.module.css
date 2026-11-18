@@ -1,12 +1,15 @@
-/* A printed panel: flat paper, one thick rule. The name stays until pages stop importing it. */
+/* A frosted panel: translucent white over the page, a specular rim and a hairline shadow. */
 .card {
   position: relative;
   min-width: 0;
-  border: 2px solid var(--ink-tinta);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
   color: var(--color-ink);
-  transition: transform var(--duration-fast) var(--ease-out), background-color var(--duration-fast);
+  transition: box-shadow var(--duration-base) var(--ease-out), background-color var(--duration-fast);
 }
 
 .default, .strong { background: var(--color-surface); }
