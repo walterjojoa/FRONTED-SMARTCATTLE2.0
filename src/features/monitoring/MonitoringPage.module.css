@@ -77,17 +77,15 @@
 .services { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
 
 @media (max-width: 599px) {
-  .stageFrame { padding: var(--space-1); border-radius: var(--radius-lg); }
   .card { padding: var(--space-4); border-radius: var(--radius-lg); }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   /* The camera owns the page; context sits in a narrow column beside it. */
   .layout { grid-template-columns: minmax(0, 1fr) 20rem; gap: var(--space-6); }
-  .switcherMobile { display: none; }
-  .switcherDesktop { display: grid; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .liveDot::after { animation: none; opacity: 0; }
+  .chevron { transition: none; }
 }
