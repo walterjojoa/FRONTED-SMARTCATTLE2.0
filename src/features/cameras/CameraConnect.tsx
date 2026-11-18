@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { reachableShared } from './reachableShared'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Cctv, Laptop, Plug, QrCode as QrIcon, Radar, Smartphone, SwitchCamera, Trash2, Unplug, Usb, Wifi } from 'lucide-react'
 import { aiServiceUrl } from '../../api/config'
@@ -70,7 +71,8 @@ function Instructions() {
   </div>
 }
 
-const DOWNLOAD = 'https://github.com/GUERRREROALEXANDER/modelo-de-IA-yolo-ultralytics-SmartCattel/archive/refs/heads/main.zip'
+const DOWNLOAD = 'https://github.com/walterjojoa/MODELO-IA-YOLO-SMARTCATTLE2.0/archive/refs/heads/main.zip'
+
 
 /** Shown while no PC answers for this account: without one at the farm, nothing can open its cameras. */
 function FarmPcPanel() {
@@ -219,7 +221,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
   // own PC, the service the backend offers everyone. VITE_AI_SERVICE_URL is last and
   // is only set when the whole thing runs on one machine -- in production it is empty,
   // which is why this came out blank and the button stayed grey.
-  const serviceBase = activeService(cameras, farmPc.data?.pc || farmPc.data?.shared || aiServiceUrl)
+  const serviceBase = activeService(cameras, farmPc.data?.pc || reachableShared(farmPc.data?.shared) || aiServiceUrl)
   const [waitingForPhone, setWaitingForPhone] = useState(false)
   const saved = useResource(signal => listSavedCameras({ signal }))
   const [way, setWay] = useState<Way>('device')
@@ -480,7 +482,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
       {waking && <p className={styles.note} role="status">{WAKING_NOTE}</p>}
     </section>
 
-    {(needsFarmPc || !serviceBase) && !farmPc.data && farmPc.status !== 'loading' && <FarmPcPanel />}
+    {(needsFarmPc || !serviceBase) && !farmPc.data?.pc && farmPc.status !== 'loading' && <FarmPcPanel />}
     {result && <p className={result.tone === 'safe' ? styles.ok : styles.error} role="status">{result.text}</p>}
 
     <div className={styles.broadcast} hidden={!broadcastingId}>
