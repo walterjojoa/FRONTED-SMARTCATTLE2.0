@@ -348,7 +348,8 @@
 @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgb(49 242 191 / 0); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage::after, .cta { transition: none; }
-  .caption { animation: none; }
-  .paradeCow { animation: none; left: calc(var(--i, 0) * 1%); }
+  .nav, .progress li span, .mapAlert, .dayPanel, .dayFill, .dayEvent, .tile, .btnPrimary::after { transition: none; }
+  .marqueeTrack, .zonePoly, .zonePing, .flowLine, .proofGlow, .liveDot, .rows li[data-out] .rowDot,
+  .heroGlowA, .heroGlowB, .river, .lotEdge, .camHalo, .sweep, .ping { animation: none; }
+  .tile:hover { transform: none; }
 }
