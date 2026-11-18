@@ -10,16 +10,21 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: 0 var(--space-4) 0 var(--space-1);
-  border: 0;
-  background: var(--ink-tinta);
-  color: var(--ink-papel);
-  font-family: var(--font-stamp);
+  padding: 0 var(--space-5) 0 var(--space-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-full);
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+  box-shadow: var(--glass-highlight), var(--glass-shadow-hover);
+  color: var(--color-ink);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.02em;
   cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base);
 }
 .launcher:active { transform: scale(0.96); }
-.launcher svg { width: 3rem; height: 3rem; }
+.launcher { min-height: 3.25rem; }
 /* On a phone it stays out of the way of what is under it: the star alone is enough to know it. */
 .launcherName { display: none; font-size: var(--text-md); }
 @media (max-width: 1023px) {
@@ -27,7 +32,7 @@
 }
 
 .launcher:focus-visible, .close:focus-visible, .send:focus-visible, .suggestion:focus-visible, .input:focus-visible {
-  outline: 3px solid var(--ink-fucsia);
+  outline: 2px solid var(--color-brand);
   outline-offset: 2px;
   box-shadow: none;
 }
