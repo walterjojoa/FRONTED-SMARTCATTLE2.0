@@ -156,34 +156,21 @@ section.section { display: flex; min-width: 0; flex-direction: column; gap: var(
 .point.stale .pointDot { fill: #6A7D75; }
 
 .pulse { fill: none; stroke-width: 2; }
-.pulse.warning { stroke: var(--color-warning); }
-.pulse.critical { stroke: var(--color-critical); }
+.pulse.warning { stroke: #E6B23A; }
+.pulse.critical { stroke: var(--color-amber); }
 
 /* Live herd markers */
 .herd, .people { pointer-events: none; }
-.shadowStopIn { stop-color: var(--color-ink); stop-opacity: 0.22; }
-.shadowStopOut { stop-color: var(--color-ink); stop-opacity: 0; }
-.sheenTop { stop-color: var(--color-surface-raised); stop-opacity: 0.38; }
-.sheenMid { stop-color: var(--color-surface-raised); stop-opacity: 0; }
-.sheenBottom { stop-color: var(--color-ink); stop-opacity: 0.16; }
+.shadowStopIn { stop-color: #000; stop-opacity: 0.35; }
+.shadowStopOut { stop-color: #000; stop-opacity: 0; }
 
-/* Inside: a natural Holstein on a green status ring. Outside: the whole animal turns alarm red. */
-.cow {
-  --cow-status: var(--color-safe);
-  --cow-body: var(--color-surface-raised);
-  --cow-patch: var(--color-ink);
-  --cow-outline: color-mix(in srgb, var(--color-ink) 45%, transparent);
-}
-.cowOutside {
-  --cow-status: var(--color-alarm);
-  --cow-body: var(--color-alarm);
-  --cow-patch: var(--color-alarm-ink);
-  --cow-outline: var(--color-surface-raised);
-}
-.cowPulse { fill: none; stroke: var(--color-alarm); stroke-width: 3; transform-box: fill-box; transform-origin: center; }
+/* Inside: a mint tracked point. Outside: the point, corners and tag turn amber. */
+.cow { --cow-status: var(--color-action); }
+.cowOutside { --cow-status: var(--color-amber); }
+.cowPulse { fill: none; stroke: var(--color-amber); stroke-width: 2; transform-box: fill-box; transform-origin: center; }
 
-/* Glass tag with the animal number; it never rotates with the body. */
-.cowTagShadow { fill: color-mix(in srgb, var(--color-ink) 14%, transparent); }
+/* Number tag; it never rotates with the body. */
+.cowTagShadow { display: none; }
 .cowTagBackground {
   fill: color-mix(in srgb, var(--color-surface-raised) 86%, transparent);
   stroke: color-mix(in srgb, var(--cow-status) 55%, var(--color-surface-raised));
