@@ -1,30 +1,30 @@
 :root {
   color-scheme: light;
 
-  /* Poster inks in the "Pradera al atardecer" palette (Camilo's): cream paper, forest green, amber. */
-  --ink-verde: #1F5E3B;
-  --ink-maiz: #E08A2E;
-  --ink-fucsia: #C2412D;
+  /* Minimal light palette: near-white ground, graphite ink, one green accent. Names kept from the old poster inks. */
+  --ink-verde: #0A7F5F;
+  --ink-maiz: #B7791F;
+  --ink-fucsia: #B5502A;
   --ink-cobalto: #2F6F8F;
   --ink-naranja: #D9A21B;
-  --ink-tinta: #1F2A24;
-  --ink-papel: #F7F3EA;
+  --ink-tinta: #10241F;
+  --ink-papel: #EDF2EE;
   /*
    * Two accents for the inside of a coloured block, because one does not reach.
    * --ink-maiz over --ink-verde is 2.88:1 and over --ink-fucsia 1.92:1, under the
    * 3:1 a non-text graphic needs; these clear it on every ground they are used on.
    * Measured by tools/check-contrast.mjs, which fails the build if that stops being true.
    */
-  --ink-maiz-claro: #F5C98B;
-  --ink-verde-hondo: #174A2E;
+  --ink-maiz-claro: #F2D9A8;
+  --ink-verde-hondo: #066B50;
 
   /* Color - surfaces */
-  --color-ground: #F7F3EA;
-  --color-surface: #FFFFFF;
-  --color-surface-raised: #FFFFFF;
-  --color-well: #EFE8DA;
-  --color-rule: #E3DCCD;
-  --color-rule-strong: #1F2A24;
+  --color-ground: #EDF2EE;
+  --color-surface: #F7FAF7;
+  --color-surface-raised: #FAFCFA;
+  --color-well: #E3EBE5;
+  --color-rule: #D5E0D9;
+  --color-rule-strong: #C3D2C9;
 
   /* Color - ink */
   --color-ink: #1F2A24;
