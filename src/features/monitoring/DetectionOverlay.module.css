@@ -1,19 +1,20 @@
 .svg, .labels { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
 .zone polygon {
-  fill: color-mix(in srgb, var(--color-overlay-lindero) 7%, transparent);
+  fill: color-mix(in srgb, var(--color-overlay-lindero) 6%, transparent);
   stroke: var(--color-overlay-lindero);
-  stroke-width: 2;
-  stroke-dasharray: 10 7;
+  stroke-width: 1.75;
+  stroke-dasharray: 8 7;
+  stroke-linecap: round;
 }
-.zone rect { fill: var(--color-overlay-lindero); }
-.zone.breached polygon { fill: none; stroke: var(--color-overlay-outside); stroke-width: 2.5; }
-.zone.breached rect { fill: var(--color-overlay-outside); }
-/* Strong enough to read over a dark frame: the outside of a breached zone. */
-.outsideArea { opacity: 1; }
-.hatchOutside { stroke: var(--color-overlay-outside); stroke-opacity: 0.5; stroke-width: 3; }
+.zone circle { fill: var(--color-overlay-lindero); }
+.zone.breached polygon { fill: none; stroke: var(--color-overlay-outside); stroke-width: 2.25; }
+.zone.breached circle { fill: var(--color-overlay-outside); }
+/* A soft tint over everything outside the breached lindero: no stripes, the picture stays clean. */
+.outsideArea { fill: color-mix(in srgb, var(--color-overlay-outside) 16%, transparent); }
 
 .box {
+  fill: none;
   stroke-width: 1.75;
   /* Boxes glide between frames instead of jumping. */
   transition: x var(--duration-base) var(--ease-out), y var(--duration-base) var(--ease-out),
@@ -21,15 +22,14 @@
 }
 .box.cattle { stroke: var(--color-overlay-cattle); }
 .box.person { stroke: var(--color-overlay-person); stroke-width: 2.25; stroke-dasharray: 7 4; }
-.box.outside { stroke: var(--color-overlay-outside); stroke-width: 2.25; }
-.hatch { stroke: var(--color-overlay-outside); stroke-opacity: 0.28; stroke-width: 2; }
+.box.outside { stroke: var(--color-overlay-outside); stroke-width: 2.25; fill: color-mix(in srgb, var(--color-overlay-outside) 14%, transparent); }
 .zoneLabel.breached { color: var(--color-overlay-outside); }
 
 .label {
   position: absolute;
-  transform: translateY(calc(-100% - 2px));
-  padding: 3px 6px;
-  border-radius: 2px;
+  transform: translateY(calc(-100% - 4px));
+  padding: 4px 8px;
+  border-radius: 8px;
   background: var(--color-stage-tag);
   color: var(--color-stage-ink);
   font-size: 12px;
