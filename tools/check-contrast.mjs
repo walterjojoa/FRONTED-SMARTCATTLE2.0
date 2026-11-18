@@ -34,15 +34,21 @@ const c = {
   safeInk: '#066B50',
   safe: '#0A9B73',
   warning: '#D9A21B',
-  warningInk: '#6E5009',
   warningStrong: '#A87912',
-  warningSoft: '#FBEBD6',
-  danger: '#C2412D',
-  dangerInk: '#8E2E1F',
-  dangerSoft: '#F7E2DE',
-  info: '#2F6F8F',
-  infoInk: '#22526A',
-  infoSoft: '#DEEAF0',
+  warningInk: '#6E5009',
+  warningSurface: '#FBEBD6',
+  critical: '#B5502A',
+  criticalInk: '#7A3416',
+  criticalSurface: '#F6E4D9',
+  info: '#0A86C9',
+  infoInk: '#075E8F',
+  infoSurface: '#E6F3FB',
+  stage: '#0B1D1B',
+  stageInk: '#FFFFFF',
+  // The farm-status card tints, flattened over white.
+  tintCritical: '#F3E8E0',
+  tintWarning: '#F4EEDB',
+  tintSafe: '#E3F0E8',
 }
 
 /** Normal text needs 4.5:1; large text (>=24px, or >=18.66px bold) needs 3:1. */
@@ -50,8 +56,8 @@ const AA = 4.5
 const AA_LARGE = 3
 
 const channel = value => {
-  const c = value / 255
-  return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  const v = value / 255
+  return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
 }
 
 function luminance(hex) {
