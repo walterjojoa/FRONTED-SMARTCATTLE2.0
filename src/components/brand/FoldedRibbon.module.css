@@ -1,0 +1,11 @@
+.ribbon { display: block; width: 100%; height: auto; overflow: visible; }
+.float { animation: fold-float 10s var(--ease-in-out) infinite; }
+
+@keyframes fold-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-14px, -20px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float { animation: none; }
+}
