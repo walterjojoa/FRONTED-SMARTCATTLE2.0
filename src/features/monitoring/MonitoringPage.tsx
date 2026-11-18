@@ -126,10 +126,10 @@ export function MonitoringPage() {
               : cameraEvents.length === 0 && events.status === 'success'
                 ? <p className={styles.empty}>Sin eventos recientes en esta cámara.</p>
                 : <ol className={styles.events}>{cameraEvents.map(event => <EventRow key={event.id} event={event} now={now} />)}</ol>}
-          </section>
+          </details>
         </FadeUp>
 
-        <FadeUp delay={staggerDelay(4)} className={styles.card}>
+        <FadeUp delay={staggerDelay(3)} className={styles.card}>
           <section aria-labelledby="services-title">
             <h2 id="services-title" className={styles.sectionTitle}>Servicios</h2>
             <ul className={styles.services}>
