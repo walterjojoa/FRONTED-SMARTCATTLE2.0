@@ -1,5 +1,6 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import { Loader2, OctagonAlert, VideoOff, WifiOff, type LucideIcon } from 'lucide-react'
+import { LiquidGlass } from '../../components/glass'
 import { formatRelative, formatTime } from '../../lib/format'
 import type { Camera, FrameDetections, SafeZone, StreamSource } from '../../types/domain'
 import { DetectionOverlay, type OverlayLayers } from './DetectionOverlay'
@@ -15,13 +16,15 @@ interface CameraStageProps {
   layers: OverlayLayers
   aiConfigured: boolean | null
   now: Date
+  /** Floating controls on the picture (layer toggles). */
+  controls?: ReactNode
 }
 
 const connectionLabel: Record<Camera['status'], string> = {
   online: 'En línea', connecting: 'Conectando', offline: 'Sin conexión', error: 'Con error',
 }
 
-export function CameraStage({ camera, stream, streamLoading, frame, zones, layers, aiConfigured, now }: CameraStageProps) {
+export function CameraStage({ camera, stream, streamLoading, frame, zones, layers, aiConfigured, now, controls }: CameraStageProps) {
   const state = stageState(camera, stream, streamLoading)
   const detections = state === 'live' ? frame?.detections ?? [] : []
   const summary = summarizeDetections(detections)
