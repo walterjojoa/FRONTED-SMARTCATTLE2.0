@@ -110,7 +110,7 @@ export function FarmPlan({
   for (const alert of alerts) {
     if (alert.status === 'open' && alert.cameraId && !alertByCamera.has(alert.cameraId)) alertByCamera.set(alert.cameraId, alert.severity)
   }
-  // An animal outside its zone uses the lindero's breached language (red, hatched outside), the same as on video.
+  // An animal outside its zone uses the lindero's breached language (amber, hatched outside), the same as on video.
   const outsideCameras = new Set(alerts.filter(alert => alert.status === 'open' && alert.kind === 'cattle_out_of_zone' && alert.cameraId)
     .map(alert => alert.cameraId!))
   const lotState = new Map<string, LotState>(plan.cameras.filter(camera => alertByCamera.has(camera.cameraId))
@@ -265,13 +265,12 @@ export function FarmPlan({
             <stop offset="0" className={styles.shadowStopIn} />
             <stop offset="1" className={styles.shadowStopOut} />
           </radialGradient>
-          <linearGradient id={`${hatchId}-sheen`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" className={styles.sheenTop} />
-            <stop offset="0.5" className={styles.sheenMid} />
-            <stop offset="1" className={styles.sheenBottom} />
-          </linearGradient>
+          <pattern id={`${hatchId}-dots`} width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="8" cy="8" r="0.9" className={styles.dot} />
+          </pattern>
         </defs>
 
+        <rect width={plan.width} height={plan.height} fill={`url(#${hatchId}-dots)`} />
         <g className={styles.terrain}>
           {plan.contours.map(path => <path key={path} d={path} />)}
         </g>
