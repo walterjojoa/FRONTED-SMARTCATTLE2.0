@@ -37,11 +37,10 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
 }
-.actions > * { color: inherit; }
 
-.herd { margin-bottom: calc(var(--space-5) * -1); }
+.herd { margin-bottom: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .band { animation: none; }
