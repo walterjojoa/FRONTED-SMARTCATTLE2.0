@@ -249,21 +249,21 @@
 }
 
 :root {
-  /* Flat print: the old panel tokens now mean paper, one thick rule and no blur. */
-  --glass-backdrop: none;
-  --glass-fill: var(--color-surface);
-  --glass-fill-strong: var(--color-surface);
-  --glass-fill-subtle: var(--color-well);
-  --glass-fill-brand: rgb(224 138 46 / 0.22);
-  --glass-border: var(--ink-tinta);
-  --glass-border-subtle: rgb(31 42 36 / 0.16);
-  --glass-highlight: 0 0 #0000;
-  --glass-blur: 0px;
-  --glass-saturate: 100%;
-  --glass-shadow: 0 0 #0000;
-  --glass-shadow-hover: 0 12px 22px -14px rgb(31 42 36 / 0.5);
-  --glass-dark-fill: rgb(31 42 36 / 0.82);
-  --glass-dark-border: rgb(247 243 234 / 0.3);
-  --gradient-brand: linear-gradient(var(--ink-tinta), var(--ink-tinta));
-  --gradient-brand-soft: linear-gradient(var(--ink-maiz), var(--ink-maiz));
+  /* Liquid glass: translucent white, strong blur and saturation, a specular edge and a hairline. */
+  --glass-backdrop: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  --glass-fill: rgb(247 250 247 / 0.72);
+  --glass-fill-strong: rgb(247 250 247 / 0.86);
+  --glass-fill-subtle: rgb(247 250 247 / 0.45);
+  --glass-fill-brand: rgb(49 242 191 / 0.14);
+  --glass-border: rgb(250 252 250 / 0.75);
+  --glass-border-subtle: rgb(16 36 31 / 0.08);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -1px 0 rgb(255 255 255 / 0.25);
+  --glass-blur: 22px;
+  --glass-saturate: 180%;
+  --glass-shadow: 0 0 0 0.5px rgb(21 30 41 / 0.08), 0 10px 30px -12px rgb(12 25 39 / 0.2);
+  --glass-shadow-hover: 0 0 0 0.5px rgb(21 30 41 / 0.1), 0 18px 40px -14px rgb(12 25 39 / 0.28);
+  --glass-dark-fill: rgb(11 29 27 / 0.78);
+  --glass-dark-border: rgb(255 255 255 / 0.18);
+  --gradient-brand: linear-gradient(var(--color-brand), var(--color-brand));
+  --gradient-brand-soft: linear-gradient(var(--glass-fill-brand), var(--glass-fill-brand));
 }
