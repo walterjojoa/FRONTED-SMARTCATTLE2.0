@@ -22,25 +22,28 @@
   fill: var(--cow-status, var(--color-action));
   filter: drop-shadow(0 0 4px color-mix(in srgb, var(--cow-status, var(--color-action)) 80%, transparent));
 }
-.earInner { fill: var(--color-peach); opacity: 0.9; }
-.head {
-  fill: var(--cow-patch, var(--color-ink));
-  stroke: var(--cow-outline, var(--color-ink));
-  stroke-width: 1;
+.heading {
+  fill: none;
+  stroke: var(--cow-status, var(--color-action));
+  stroke-width: 1.8;
+  stroke-linecap: round;
   stroke-linejoin: round;
 }
-.blaze { fill: var(--cow-body, var(--color-surface-raised)); }
-.muzzle { fill: var(--color-peach); stroke: color-mix(in srgb, var(--color-peach-ink) 35%, transparent); stroke-width: 0.6; }
-.nostril { fill: var(--color-peach-ink); opacity: 0.65; }
+.core { fill: var(--night, #0B1D1B); opacity: 0.55; }
 
-/* Person: yellow glass badge with a dark figure seen from above. */
+/* Person: yellow badge with a dark figure seen from above. */
 .badge {
-  fill: color-mix(in srgb, var(--color-overlay-person) 80%, transparent);
-  stroke: var(--color-surface-raised);
+  fill: color-mix(in srgb, var(--color-overlay-person) 88%, transparent);
+  stroke: var(--night, #0B1D1B);
   stroke-width: 1.8;
+  filter: drop-shadow(0 0 6px rgb(228 255 51 / 0.55));
 }
 .badgeRing { fill: none; stroke: color-mix(in srgb, var(--color-butter-ink) 25%, transparent); stroke-width: 1; }
 .shoulders { fill: var(--color-butter-ink); }
 .hand { fill: var(--color-peach); stroke: var(--color-butter-ink); stroke-width: 0.8; }
 .personHead { fill: var(--color-ink); stroke: var(--color-butter); stroke-width: 1.2; }
 .facing { fill: var(--color-butter-ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .halo, .bracket, .body, .heading, .core { transition: none; }
+}
