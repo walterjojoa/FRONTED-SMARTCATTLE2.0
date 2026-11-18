@@ -19,9 +19,9 @@
   text-decoration: none;
   transition: box-shadow var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
 }
-.name { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
-.value { font-family: var(--font-stamp); font-size: var(--text-lg); line-height: var(--leading-tight); }
+.name { color: var(--color-ink-muted); font-size: var(--text-sm); font-weight: var(--weight-medium); }
+.value { font-size: var(--text-lg); font-weight: var(--weight-semibold); letter-spacing: -0.03em; line-height: var(--leading-tight); }
 
 @media (hover: hover) and (pointer: fine) {
-  .item:hover { background: var(--ink-maiz); color: var(--ink-tinta); }
+  .item:hover { box-shadow: var(--glass-highlight), var(--glass-shadow-hover); transform: translateY(-1px); }
 }
