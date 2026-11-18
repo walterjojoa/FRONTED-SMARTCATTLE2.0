@@ -84,8 +84,12 @@
     height: 100dvh;
     overflow-y: auto;
     padding: var(--space-5) var(--space-3);
-    background: var(--ink-tinta);
-    color: var(--ink-papel);
+    background:
+      radial-gradient(22rem 18rem at 0% 0%, rgb(49 242 191 / 0.12), transparent 70%),
+      radial-gradient(18rem 16rem at 100% 100%, rgb(52 188 255 / 0.08), transparent 70%),
+      var(--night);
+    border-right: 1px solid var(--night-line);
+    color: var(--night-ink);
     scrollbar-width: thin;
   }
 }
