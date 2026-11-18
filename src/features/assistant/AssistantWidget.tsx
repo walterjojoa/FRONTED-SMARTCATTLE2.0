@@ -8,7 +8,7 @@ import { useLive } from '../../live/useLive'
 import { askAssistantModel, getAlertReport, getDailyReport, type AssistantTurn } from '../../services'
 import { onboardingOf, suggestionsFor } from '../onboarding/onboardingModel'
 import { answer, ASSISTANT_NAME, greeting, suggestions, type AssistantData } from './assistantEngine'
-import { Lucero } from './Lucero'
+import { AssistantMark } from './AssistantMark'
 import styles from './AssistantWidget.module.css'
 
 interface Message { id: number; from: 'assistant' | 'user'; text: string }
@@ -86,7 +86,7 @@ export function AssistantWidget() {
 
   if (!open) {
     return <button type="button" className={styles.launcher} onClick={() => setOpen(true)} aria-label={`Abrir el asistente ${ASSISTANT_NAME}`}>
-      <Lucero size={56} />
+      <AssistantMark size={44} />
       <span className={styles.launcherName}>{ASSISTANT_NAME}</span>
     </button>
   }
@@ -96,7 +96,7 @@ export function AssistantWidget() {
     animate={{ opacity: 1, transform: 'translateY(0px) scale(1)' }}
     transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}>
     <header className={styles.head}>
-      <Lucero size={52} mood={busy ? 'thinking' : 'idle'} />
+      <AssistantMark size={40} thinking={busy} />
       <span className={styles.title}><strong>{ASSISTANT_NAME}</strong>
         <small>{usingModel === false ? 'Modo básico: reglas con los datos de tu finca' : 'Responde con los datos de tu finca'}</small></span>
       <button type="button" className={styles.close} onClick={() => setOpen(false)} aria-label="Cerrar el asistente">
