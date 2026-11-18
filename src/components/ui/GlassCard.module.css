@@ -27,5 +27,9 @@
 .interactive:focus-visible { box-shadow: var(--focus-ring); border-radius: var(--radius-xl); }
 
 @media (min-width: 1024px) {
-  .pad-lg { padding: var(--space-8); }
+  .pad-lg { padding: var(--space-10); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .card { background: var(--color-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
