@@ -5,16 +5,18 @@
   display: grid;
   gap: var(--space-4);
   padding: var(--space-5);
-  border: 4px solid var(--ink-tinta);
-  background: var(--color-surface);
-  color: var(--ink-tinta);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  background: var(--glass-fill-strong);
+  color: var(--color-ink);
   /* The form inside measures this, not the window. */
   container: camera-form / inline-size;
 }
-.quickTitle { font-family: var(--font-display); font-size: clamp(2.25rem, 6vw, 4rem); font-weight: 400; line-height: 1.02; text-transform: uppercase; }
+.quickTitle { font-size: clamp(1.75rem, 1rem + 3vw, 2.75rem); font-weight: var(--weight-semibold); letter-spacing: -0.045em; line-height: 1.05; }
 .quickForm { display: grid; gap: var(--space-3); align-items: start; }
 .quickSubmit { min-height: 3.25rem; font-size: var(--text-md); }
-.others { display: grid; gap: var(--space-4); padding: var(--space-4); border: 2px solid var(--ink-tinta); }
+.others { display: grid; gap: var(--space-4); padding: var(--space-4); border: 1px solid var(--color-rule-strong); border-radius: var(--radius-lg); }
 .others[open] > * + * { margin-top: var(--space-4); }
 .othersTitle { font-weight: var(--weight-bold); cursor: pointer; }
 /* Asked of the card, not of the window. In /setup this form sits inside the
