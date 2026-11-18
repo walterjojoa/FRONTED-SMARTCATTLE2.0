@@ -59,14 +59,15 @@
   background: rgb(214 255 236 / 0.08);
   color: var(--night-ink);
   font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-semibold);
   cursor: pointer;
   transition: transform var(--duration-fast) var(--ease-out), background-color var(--duration-fast);
 }
 @media (hover: hover) and (pointer: fine) {
-  .mute:hover { background: var(--ink-maiz); }
+  .mute:hover { background: rgb(214 255 236 / 0.16); }
 }
 .mute:active { transform: scale(0.97); }
+.mute:focus-visible { outline: 2px solid var(--color-action); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
   .mute { transition: none; }
   .mute:active { transform: none; }
