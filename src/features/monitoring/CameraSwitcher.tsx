@@ -26,7 +26,7 @@ export function CameraSwitcher({ cameras, selectedId, alertByCamera, withVideo, 
   const listRef = useRef<HTMLUListElement>(null)
   const reduce = useReducedMotion()
   const indicatorId = `camera-indicator-${useId()}`
-  // On the horizontal phone strip, bring the selected camera into view without scrolling the page.
+  // When the strip scrolls, bring the selected camera into view without moving the page.
   useEffect(() => {
     const list = listRef.current
     const selected = list?.querySelector<HTMLElement>('[aria-current="true"]')?.parentElement
@@ -39,18 +39,23 @@ export function CameraSwitcher({ cameras, selectedId, alertByCamera, withVideo, 
       {cameras.map(camera => {
         const severity = alertByCamera.get(camera.id)
         const selected = camera.id === selectedId
+        const thumb = thumbs?.get(camera.id)
+        const noVideo = camera.status === 'online' && withVideo && !withVideo.has(camera.id)
         return <li key={camera.id}>
           <Link className={`${styles.item} ${selected ? styles.selected : ''}`}
             to={`?camera=${encodeURIComponent(camera.id)}`} replace aria-current={selected ? 'true' : undefined}>
             {selected && <motion.span className={styles.indicator} layoutId={indicatorId} aria-hidden="true"
               transition={reduce ? { duration: 0 } : indicatorSpring} />}
-            <span className={`${styles.dot} ${styles[camera.status]}`} aria-hidden="true" />
-            <span className={styles.text}>
-              <span className={styles.name}>{camera.name}</span>
-              <span className={styles.meta}>{camera.location} · {statusLabel[camera.status]}{camera.status === 'online' && withVideo && !withVideo.has(camera.id) ? ' · sin video' : ''}</span>
+            <span className={styles.thumb}>
+              {thumb
+                ? <img className={styles.img} src={thumb} alt="" loading="lazy" />
+                : <span className={styles.placeholder} aria-hidden="true"><VideoOff size={18} strokeWidth={1.5} /></span>}
+              <span className={`${styles.dot} ${styles[camera.status]}`} aria-hidden="true" />
+              {severity && <TriangleAlert className={`${styles.alert} ${styles[severity]}`} size={14} strokeWidth={2.25}
+                role="img" aria-label="Con alerta reciente" />}
             </span>
-            {severity && <TriangleAlert className={`${styles.alert} ${styles[severity]}`} size={16} strokeWidth={2}
-              role="img" aria-label="Con alerta reciente" />}
+            <span className={styles.name}>{camera.name}</span>
+            <span className={styles.meta}>{camera.location} · {statusLabel[camera.status]}{noVideo ? ' · sin video' : ''}</span>
           </Link>
         </li>
       })}
