@@ -1,0 +1,72 @@
+/*
+ * Liquid glass: backdrop blur + a tint, an inner specular edge and an outer hairline.
+ * The refraction layer (SVG displacement) only turns on where backdrop-filter can take
+ * url() filters (Chromium); everywhere else it is plain frosted glass.
+ */
+.glass {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  border-radius: var(--glass-radius, var(--radius-xl));
+  color: var(--color-ink);
+  box-shadow: var(--glass-shadow);
+  transition: box-shadow var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.backdrop {
+  z-index: -3;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: var(--glass-backdrop);
+}
+
+.filterHost { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+
+.specular {
+  z-index: -2;
+  box-shadow: var(--glass-highlight);
+  border: 1px solid var(--glass-border);
+  /* Light catches the top-left rim and fades toward the opposite corner. */
+  -webkit-mask: linear-gradient(135deg, #000, rgb(0 0 0 / 0.35) 45%, #000);
+  mask: linear-gradient(135deg, #000, rgb(0 0 0 / 0.35) 45%, #000);
+}
+
+.content {
+  position: relative;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.strong .backdrop { background: var(--glass-fill-strong); }
+.subtle .backdrop { background: var(--glass-fill-subtle); }
+.brand .backdrop { background: var(--glass-fill-brand); }
+.dark { color: var(--color-stage-ink); }
+.dark .backdrop { background: var(--glass-dark-fill); }
+.dark .specular { border-color: var(--glass-dark-border); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18); }
+
+.interactive { cursor: pointer; }
+.interactive:hover { box-shadow: var(--glass-shadow-hover); transform: translateY(-1px); }
+.interactive:active { transform: translateY(0) scale(0.995); }
+
+/* No blur support: fall back to a solid, still-translucent surface. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .backdrop { background: var(--glass-fill-strong); }
+  .dark .backdrop { background: var(--color-stage); }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .backdrop { background: var(--color-surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .dark .backdrop { background: var(--color-stage); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass { transition: none; }
+  .interactive:hover { transform: none; }
+}
