@@ -43,25 +43,48 @@
   pointer-events: none;
 }
 
-.dot { width: 10px; height: 10px; flex-shrink: 0; border-radius: var(--radius-full); }
-.dot.online { background: var(--color-safe); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-safe) 22%, transparent); }
+.thumb {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: calc(var(--radius-lg) - 6px);
+  background: var(--color-stage);
+}
+.img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: rgb(255 255 255 / 0.5); }
+
+.dot {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 0.35);
+}
+.dot.online { background: #4FD189; }
 .dot.connecting { background: var(--color-warning); }
-.dot.offline { background: transparent; box-shadow: inset 0 0 0 2px var(--color-inactive); }
+.dot.offline { background: var(--color-inactive); }
 .dot.error { background: var(--color-critical); }
 
-.text { display: grid; min-width: 0; }
-.name { font-size: var(--text-sm); font-weight: var(--weight-semibold); white-space: nowrap; }
-.meta { color: var(--color-ink-muted); font-size: var(--text-xs); white-space: nowrap; }
-
-.alert { flex-shrink: 0; }
-.alert.warning { color: var(--color-warning); }
+.alert {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 3px;
+  box-sizing: content-box;
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+}
+.alert.warning { color: var(--color-warning-ink); }
 .alert.critical { color: var(--color-critical); }
 
-@media (min-width: 1024px) {
-  .list { flex-direction: column; margin: 0; padding: 0; overflow: visible; }
-  .item { width: 100%; background: var(--glass-fill-subtle); box-shadow: var(--glass-highlight); }
-  .name, .meta { overflow: hidden; text-overflow: ellipsis; }
-  .alert { margin-left: auto; }
+.name { margin-top: var(--space-1); padding-inline: 2px; font-size: var(--text-sm); font-weight: var(--weight-semibold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta { padding-inline: 2px; color: var(--color-ink-muted); font-size: var(--text-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 599px) {
+  .item { width: 10.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
