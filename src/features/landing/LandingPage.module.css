@@ -35,44 +35,39 @@
   border-inline: 1px solid var(--land-line);
   pointer-events: none;
 }
+.rail { position: relative; z-index: 1; width: 100%; max-width: var(--rail-max); margin-inline: auto; padding-inline: var(--space-6); }
+.mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--land-ink-subtle); }
+.eyebrow { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--land-ink-subtle); }
 
-.heroCopy {
-  position: absolute;
-  inset: auto 0 0;
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--ink-tinta);
+/* ---------- Nav ---------- */
+.navWrap { position: fixed; inset: var(--space-3) 0 auto; z-index: var(--z-banner); display: flex; justify-content: center; padding-inline: var(--space-4); pointer-events: none; }
+.nav { pointer-events: auto; width: min(100%, 880px); transition: width 600ms var(--ease-out); }
+.nav[data-compact] { width: min(100%, 700px); }
+.navInner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); }
+.navBrand { text-decoration: none; display: inline-flex; }
+.navLinks { display: none; gap: var(--space-6); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--land-ink-subtle); }
+.navLinks a { text-decoration: none; padding: 4px 8px; border-radius: var(--radius-md); transition: color 150ms var(--ease-product), background-color 150ms var(--ease-product); }
+.navLinks a:hover { color: var(--land-ink); background: var(--land-line); }
+.navCta { display: inline-flex; align-items: center; height: 36px; padding-inline: 14px; border-radius: var(--radius-md); background: var(--land-night); color: #F2FBF7; font-size: var(--text-sm); font-weight: var(--weight-medium); text-decoration: none; transition: background-color 150ms var(--ease-product); }
+.navCta:hover { background: var(--land-night-raised); }
+@media (min-width: 720px) { .navLinks { display: flex; } }
+
+/* ---------- Buttons: 8px rectangles, never pills ---------- */
+.btnPrimary, .btnOutline {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  height: 46px; padding: 12px 16px; border-radius: var(--radius-md);
+  font-size: var(--text-base); font-weight: var(--weight-medium); line-height: 20px; text-decoration: none;
+  box-shadow: var(--shadow-action);
+  transition: background-color 150ms var(--ease-product), transform 150ms var(--ease-product), box-shadow 200ms var(--ease-product);
 }
-.heroLead { max-width: 48ch; font-size: var(--text-md); font-weight: var(--weight-medium); }
-.heroActions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
-.hint { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--weight-semibold); }
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 3.5rem;
-  padding-inline: var(--space-6);
-  background: var(--ink-maiz);
-  color: var(--ink-tinta);
-  font-family: var(--font-stamp);
-  font-size: var(--text-md);
-  text-decoration: none;
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-.cta:active { transform: scale(0.97); }
-
-.beat {
-  position: absolute;
-  inset: auto var(--space-4) var(--space-6);
-  display: grid;
-  gap: var(--space-2);
-  max-width: 44rem;
-  padding: var(--space-5);
-  background: var(--ink-tinta);
-  color: var(--ink-papel);
-  transform-origin: left bottom;
+.btnPrimary { background: var(--color-action); color: var(--color-on-action); }
+.btnPrimary:hover { background: var(--color-action-hover); box-shadow: 0 6px 18px -8px rgb(21 203 154 / 0.7); }
+/* A single sheen crosses the primary action on hover. */
+.btnPrimary::after {
+  content: ''; position: absolute; inset: 0; transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+  pointer-events: none;
 }
 .beat[data-right] { background: var(--ink-maiz); color: var(--ink-tinta); }
 .stage[data-breached] .beat { background: var(--color-alarm-ink); color: #FFFFFF; }
