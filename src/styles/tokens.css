@@ -213,7 +213,7 @@
   --content-max: 1440px;
 
   /* Base UI components */
-  --color-hover: rgb(31 94 59 / 0.08);
+  --color-hover: rgb(16 36 31 / 0.06);
   --control-sm: 44px;
   --pill-padding-inline: 10px;
   --duration-spin: 700ms;
@@ -231,16 +231,16 @@
 
 :root {
   /* Camera stage overlays */
-  --color-stage-tag: rgb(20 35 27 / 0.78);
-  --color-stage-tag-outside: rgb(142 46 31 / 0.94);
-  --color-stage-scrim: rgb(20 35 27 / 0.64);
+  --color-stage-tag: rgb(7 20 18 / 0.78);
+  --color-stage-tag-outside: rgb(122 52 22 / 0.94);
+  --color-stage-scrim: rgb(7 20 18 / 0.64);
 
   /* Authentication scene */
   --color-auth-zone: rgb(220 235 223 / 0.12);
-  --color-auth-tag: rgb(20 35 27 / 0.78);
+  --color-auth-tag: rgb(13 23 38 / 0.78);
   --color-auth-outside-tag: rgb(142 46 31 / 0.94);
-  --color-auth-pill: rgb(20 35 27 / 0.62);
-  --color-auth-shade: rgb(20 35 27 / 0.68);
+  --color-auth-pill: rgb(13 23 38 / 0.62);
+  --color-auth-shade: rgb(13 23 38 / 0.68);
   --auth-scene-min-height: 220px;
   --duration-pasture-drift: 28s;
   --duration-lindero-reveal: 900ms;
