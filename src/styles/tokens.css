@@ -53,30 +53,30 @@
   --color-earth-surface: #E6F3FB;
   --color-earth-ink: #075E8F;
   --color-on-brand-surface: rgb(255 255 255 / 0.14);
-  --color-backdrop: rgb(20 35 27 / 0.48);
-  --color-sage: #2E8B57;
+  --color-backdrop: rgb(7 20 18 / 0.45);
+  --color-sage: #0A9B73;
 
   /* Color - states */
-  --color-safe: #2E8B57;
+  --color-safe: #0A9B73;
   /* Text on tinted state surfaces needs a darker ink to reach 4.5:1. */
-  --color-safe-ink: #1E5C39;
-  --color-inactive-ink: #5B6660;
-  --color-safe-surface: #DCEBDF;
+  --color-safe-ink: #066B50;
+  --color-inactive-ink: #4F635B;
+  --color-safe-surface: #E3FBF3;
   --color-warning: #D9A21B;
   --color-warning-ink: #6E5009;
   --color-warning-surface: #FBEBD6;
-  --color-critical: #C2412D;
-  --color-critical-ink: #8E2E1F;
-  --color-critical-surface: #F7E2DE;
-  --color-alarm: #C2412D;
-  --color-alarm-hover: #A33425;
-  --color-alarm-ink: #8E2E1F;
-  --color-alarm-surface: #F7E2DE;
-  --color-info: #2F6F8F;
-  --color-info-ink: #22526A;
-  --color-info-surface: #DEEAF0;
-  --color-inactive: #5B6660;
-  --color-inactive-surface: #EFE8DA;
+  --color-critical: #B5502A;
+  --color-critical-ink: #7A3416;
+  --color-critical-surface: #F6E4D9;
+  --color-alarm: #B5502A;
+  --color-alarm-hover: #9A4322;
+  --color-alarm-ink: #7A3416;
+  --color-alarm-surface: #F6E4D9;
+  --color-info: #0A86C9;
+  --color-info-ink: #075E8F;
+  --color-info-surface: #E6F3FB;
+  --color-inactive: #6A7D75;
+  --color-inactive-surface: #E3EBE5;
 
   /* Color - camera stage */
   --color-stage: #14231B;
