@@ -1,7 +1,6 @@
 import { CircleCheck, CircleDashed, Clock3, OctagonAlert, TriangleAlert, Video, type LucideIcon } from 'lucide-react'
 import { Link } from 'react-router'
 import { motion, useReducedMotion } from 'motion/react'
-import { HerdStrip } from '../../components/herd/HerdStrip'
 import { Skeleton } from '../../components/ui'
 import { formatTime } from '../../lib/format'
 import { duration, ease, staggerDelay } from '../../motion'
@@ -67,7 +66,6 @@ export function FarmStatusHeader({ farmName, condition, headline, status, camera
           : 'Cargando datos…'}
       </p>
     </div>
-    <HerdStrip className={styles.herd} />
   </header>
 }
 
