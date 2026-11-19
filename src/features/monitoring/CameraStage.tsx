@@ -18,13 +18,15 @@ interface CameraStageProps {
   now: Date
   /** Floating controls on the picture (layer toggles). */
   controls?: ReactNode
+  /** Remounts the picture (a stuck MJPEG restarts). Bumped by the refresh button. */
+  mediaKey?: number
 }
 
 const connectionLabel: Record<Camera['status'], string> = {
   online: 'En línea', connecting: 'Conectando', offline: 'Sin conexión', error: 'Con error',
 }
 
-export function CameraStage({ camera, stream, streamLoading, frame, zones, layers, aiConfigured, now, controls }: CameraStageProps) {
+export function CameraStage({ camera, stream, streamLoading, frame, zones, layers, aiConfigured, now, controls, mediaKey }: CameraStageProps) {
   const state = stageState(camera, stream, streamLoading)
   const detections = state === 'live' ? frame?.detections ?? [] : []
   const summary = summarizeDetections(detections)
@@ -36,7 +38,7 @@ export function CameraStage({ camera, stream, streamLoading, frame, zones, layer
     <div className={styles.viewport} style={media ? { aspectRatio: `${media.width} / ${media.height}` } : undefined}>
       {media && <div className={styles.frame}>
         {/* MJPEG streams render through <img> as well; both keep the overlay registered to the picture. */}
-        <img className={styles.media} src={media.url} alt="" />
+        <img className={styles.media} key={mediaKey ?? 'live'} src={media.url} alt="" />
         {!burnedIn && <DetectionOverlay width={media.width} height={media.height} detections={detections} zones={zones} layers={layers} />}
       </div>}
       {!media && <StageMessage state={state} camera={camera} now={now} />}

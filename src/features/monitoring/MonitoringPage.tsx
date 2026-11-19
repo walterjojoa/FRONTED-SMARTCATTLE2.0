@@ -1,8 +1,8 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { ChevronDown } from 'lucide-react'
-import { useSearchParams } from 'react-router'
+import { ChevronDown, RefreshCw, Video } from 'lucide-react'
+import { useNavigate, useSearchParams } from 'react-router'
 import { EventRow } from '../../components/events/EventRow'
-import { EmptyState, ErrorState, Notice, StatusPill } from '../../components/ui'
+import { Button, EmptyState, ErrorState, Notice, StatusPill } from '../../components/ui'
 import { useResource } from '../../lib/useResource'
 import { FadeUp, staggerDelay } from '../../motion'
 import { getCameraStream, getFrameDetections, getSystemStatus, hasPicture, listEvents, listSafeZones, loadCameraSnapshots } from '../../services'
@@ -31,6 +31,7 @@ function Header({ actions }: { actions?: ReactNode }) {
 }
 
 export function MonitoringPage() {
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const [layers, setLayers] = useState<OverlayLayers>({ boxes: true, zones: true, labels: true })
   const [now, setNow] = useState(() => new Date())
@@ -62,6 +63,13 @@ export function MonitoringPage() {
   }
 
   const alertByCamera = new Map<string, Severity>()
+  // One tap re-asks everything and restarts the picture: a stuck MJPEG remounts via mediaKey.
+  const [mediaKey, setMediaKey] = useState(0)
+  const refreshAll = () => {
+    cameras.reload(); events.reload(); status.reload()
+    stream.reload(); frame.reload(); zones.reload(); snapshots.reload()
+    setMediaKey(key => key + 1)
+  }
   for (const alert of alerts) if (!alertByCamera.has(alert.cameraId)) alertByCamera.set(alert.cameraId, alert.severity)
   const cameraEvents = (events.data ?? []).filter(event => event.cameraId === cameraId).slice(0, 5)
   const live = stream.data?.kind === 'image' || stream.data?.kind === 'mjpeg'
@@ -81,15 +89,19 @@ export function MonitoringPage() {
     return <div className={styles.page}>
       <Header />
       <FadeUp delay={staggerDelay(1)} className={styles.card}>
-        <EmptyState title="No hay cámaras conectadas" description="Enciende la cámara y el servicio de visión en la PC de la finca. El video aparecerá aquí solo." />
+        <EmptyState title="No hay cámaras conectadas" description="Usa este celular como cámara: sin instalar nada, solo dale a Transmitir."
+          action={<Button icon={Video} onClick={() => void navigate('/cameras?con=celular')}>Conectar en 1 paso</Button>} />
       </FadeUp>
     </div>
   }
 
   return <div className={styles.page}>
-    <Header actions={live && <span className={styles.livePill}>
-      <span className={styles.liveDot} aria-hidden="true" />{synthetic ? 'Demostración en vivo' : 'Transmisión en vivo'}
-    </span>} />
+    <Header actions={<>
+      {live && <span className={styles.livePill}>
+        <span className={styles.liveDot} aria-hidden="true" />{synthetic ? 'Demostración en vivo' : 'Transmisión en vivo'}
+      </span>}
+      <Button variant="secondary" size="sm" icon={RefreshCw} onClick={refreshAll}>Actualizar todo</Button>
+    </>} />
     {status.data?.backend === 'offline' && <Notice className={styles.notice} tone="critical" title="Sin conexión con el servidor">
       Las alertas y eventos pueden estar desactualizados. Se reintenta automáticamente.
     </Notice>}
@@ -101,7 +113,7 @@ export function MonitoringPage() {
       <FadeUp delay={staggerDelay(1)} className={styles.main}>
         <div className={styles.stageFrame}>
           <CameraStage camera={camera} stream={stream.data} streamLoading={stream.status === 'loading' || cameras.status === 'loading'}
-            frame={frame.data} zones={zones.data ?? []} layers={layers}
+            frame={frame.data} zones={zones.data ?? []} layers={layers} mediaKey={mediaKey}
             aiConfigured={status.data?.aiConfigured ?? null} now={now}
             controls={live && !burnedIn ? <LayerToggles layers={layers} onChange={setLayers} disabled={false} /> : undefined} />
         </div>

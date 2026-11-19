@@ -220,7 +220,8 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
   function fillDemo(role: 'owner' | 'worker') {
     const account = demoAccounts.find(account => account.role === role)
     if (!account) return
-    setValues({ identifier: account.username, username: '', email: '', password: demoPassword, confirmPassword: '' })
+    // The backend signs in by email and has no username; the demo form uses either.
+    setValues({ identifier: isDemoMode ? account.username : account.email, username: '', email: '', password: demoPassword, confirmPassword: '' })
     setServerErrors({})
     setSubmitted(false)
     setTouched({})
@@ -357,7 +358,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
       </motion.div></motion.div>
     </motion.form>
 
-    {!isRegistration && isDemoMode && <motion.details className={styles.demo} {...rise(4)}>
+    {!isRegistration && <motion.details className={styles.demo} {...rise(4)}>
       <summary>
         <span className={styles.demoIcon} aria-hidden="true"><UsersRound size={16} strokeWidth={2} /></span>
         <span className={styles.demoSummaryText}>Cuentas de demostración</span>

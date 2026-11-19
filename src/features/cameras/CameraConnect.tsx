@@ -458,7 +458,7 @@ export function CameraConnect({ cameras, onChanged, previews = true }: { cameras
     {/* First on the page, and not inside a disclosure: a phone is what most people
         have before they have an IP camera, and it needs no address at all. */}
     <section aria-labelledby="phone-camera-title" className={styles.quick}>
-      <h2 id="phone-camera-title" className={styles.quickTitle}>📱 Usar este celular como cámara</h2>
+      <h2 id="phone-camera-title" className={styles.quickTitle}>📱 Usar este celular como cámara <StatusPill tone="safe" label="Recomendado · sin instalar nada" /></h2>
       <p className={styles.note}>Sin IP, sin contraseña y sin instalar nada. Ponle un nombre y acepta el permiso de la cámara.</p>
       <form className={styles.anyForm} onSubmit={addDevice}>
         <TextField label="Nombre" value={deviceName} onChange={event => setDeviceName(event.target.value)} required maxLength={80}
